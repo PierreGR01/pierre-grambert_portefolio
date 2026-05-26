@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pierre Grambert - Product Designer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&family=Inter:wght@200&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (social icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       CSS Houdini — animatable custom properties for gradient
+    ───────────────────────────────────────────────────────── */
+    @property --x1 { syntax: "<percentage>"; inherits: false; initial-value: 80%;  }
+    @property --y1 { syntax: "<percentage>"; inherits: false; initial-value: 55%;  }
+    @property --x2 { syntax: "<percentage>"; inherits: false; initial-value: 20%;  }
+    @property --y2 { syntax: "<percentage>"; inherits: false; initial-value: 65%;  }
+    @property --x3 { syntax: "<percentage>"; inherits: false; initial-value: 50%;  }
+    @property --y3 { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+
+    @keyframes gradient {
+      0%   { --x1: 80%; --y1: 55%; --x2: 20%; --y2: 65%; --x3: 50%; --y3: 100%; }
+      50%  { --x1: 70%; --y1: 40%; --x2: 35%; --y2: 75%; --x3: 55%; --y3:  85%; }
+      100% { --x1: 75%; --y1: 65%; --x2: 25%; --y2: 60%; --x3: 45%; --y3: 110%; }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Reset
+    ───────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body — animated gradient background
+    ───────────────────────────────────────────────────────── */
+    body {
+      --x1: 80%; --y1: 55%;
+      --x2: 20%; --y2: 65%;
+      --x3: 50%; --y3: 100%;
+
+      background:
+        radial-gradient(circle at var(--x1) var(--y1), rgba(0, 0, 255, 0.5)  0%, transparent  40%),
+        radial-gradient(circle at var(--x2) var(--y2), rgb(40, 0, 90)         0%, transparent  90%),
+        radial-gradient(circle at var(--x3) var(--y3), rgb(30, 0, 5)         50%, transparent 200%);
+
+      min-height: 100vh;
+      animation: gradient 6s ease-in-out infinite alternate;
+
+      color: rgb(153, 153, 153);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Layout
+    ───────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section 1 — Header
+       Total height: 485px = title-row(231) + meta-row(174) + pb(80)
+    ───────────────────────────────────────────────────────── */
+    .section-header {
+      padding-bottom: 80px;
+    }
+
+    /* Title row: H1 at 105px line-height + 63px padding top/bottom = 231px */
+    .header-title-row {
+      padding: 63px 0;
+    }
+
+    .site-title {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 75px;
+      font-weight: 200;
+      letter-spacing: 37.5px;
+      line-height: 105px;
+      color: rgb(165, 165, 165);
+      text-transform: uppercase;
+      /* Remove trailing letter-spacing gap after last character */
+      margin-right: -37.5px;
+    }
+
+    /* Thin separator line under H1 */
+    .header-title-row hr {
+      border: none;
+      border-top: 1px solid rgb(165, 165, 165);
+      width: 300px;
+      margin: 12px 0 0 0;
+      opacity: 0.4;
+    }
+
+    /* Meta row: bio + button, 50px padding top/bottom = 174px */
+    .header-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 41px;
+      padding: 50px 0;
+    }
+
+    .bio {
+      font-family: Inter, sans-serif;
+      font-size: 26.6px;
+      font-weight: 200;
+      color: rgb(165, 165, 165);
+      line-height: 37.24px;
+      max-width: 658px;
+      text-align: center;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Button — "Access my resume"
+    ───────────────────────────────────────────────────────── */
+    .btn-resume {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 381px;
+      height: 42px;
+      border: 1px solid rgb(130, 225, 255);
+      color: rgb(19, 104, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-resume:hover {
+      background: rgba(130, 225, 255, 0.08);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section 2 — Projects grid
+       4 cols × 270px = 1080px, no gap
+       Lava lamp: WebGL canvas (color-dodge) creates colored metaball
+       blobs; image span (difference) overlays the logo.
+    ───────────────────────────────────────────────────────── */
+    .section-projects {
+      padding-top: 20px;
+    }
+
+    .projects-grid {
+      display: flex;
+    }
+
+    /* Each card IS the link (a tag) */
+    .project-card {
+      flex: 1;
+      display: flex;
+      text-decoration: none;
+    }
+
+    /* Figure: overflow MUST be visible so the WebGL canvas blends
+       against the body gradient (not an isolated compositing layer).
+       overflow:hidden + position:relative + WebGL child causes Chrome
+       to promote the figure to a GPU layer that isolates color-dodge. */
+    .project-figure {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      width: 100%;
+      height: 250px;
+      margin: 0;
+      background: transparent;
+    }
+
+    /* WebGL canvas — 120 % and centred via negative offset so the
+       soft blob edges bleed equally on all four sides of the card */
+    .lava-canvas {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      mix-blend-mode: color-dodge;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Logo: color-burn darkens the bright blob where the logo sits,
+       then difference on the img creates the dark-on-light silhouette.
+       This matches the x-image span in the WP original exactly. */
+    .project-blend {
+      display: block;
+      width: 55%;
+      position: relative;
+      z-index: 2;
+      filter: brightness(0.5);
+      mix-blend-mode: color-burn;
+    }
+
+    .project-blend img {
+      display: block;
+      width: 100%;
+      height: auto;
+      opacity: 0.66;
+      mix-blend-mode: difference;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section 3 — Footer
+       Single row: copyright (flex:1) + 3 social icon buttons
+    ───────────────────────────────────────────────────────── */
+    .section-footer {
+      display: flex;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .footer-text {
+      flex: 1;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11.2px;
+      font-weight: 700;
+      letter-spacing: 2.24px;
+      color: rgba(99, 173, 255, 0.52);
+      line-height: 17.92px;
+    }
+
+    /* Social icon links — plain, no border */
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(19, 104, 255);
+      font-size: 18px;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .social-link:hover {
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ── Section 1 : Header ── -->
+    <section class="section-header">
+
+      <div class="header-title-row">
+        <h1 class="site-title">Pierre Grambert</h1>
+        <hr>
+      </div>
+
+      <div class="header-meta-row">
+        <h2 class="bio">Hi and welcome here!<br>I'm a Product Designer based in Grenoble.</h2>
+        <a href="https://www.pierregrambert.fr/my-resume" class="btn-resume">Access my resume</a>
+      </div>
+
+    </section>
+
+    <!-- ── Section 2 : Projects ── -->
+    <section class="section-projects">
+      <div class="projects-grid">
+
+        <a class="project-card" href="https://www.pierregrambert.fr/bivouac/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2023/04/bivouac-1.png" alt="Bivouac">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="https://www.pierregrambert.fr/kairn-design-studio/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2022/04/kairn-scaled.png" alt="Kairn Design Studio">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="https://www.pierregrambert.fr/saprea-2/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2026/03/saprea1.png" alt="Saprea">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="https://www.pierregrambert.fr/georchestra/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2026/03/georchestraLogo1.png" alt="geOrchestra">
+            </span>
+          </figure>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── Section 3 : Footer ── -->
+    <footer class="section-footer">
+      <p class="footer-text">© Pierre Grambert 2026 - Website built by me, with the help of AI Wordpress &amp; Cornerstone</p>
+      <nav class="social-links" aria-label="Réseaux sociaux">
+        <a href="https://500px.com/p/PierreGrambert?view=photos"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="500px">
+          <i class="fa-brands fa-500px"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://www.instagram.com/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </nav>
+    </footer>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () { initLavaWebGL(); });
+    window.addEventListener('load', initLavaWebGL);
+    setTimeout(initLavaWebGL, 800);
+
+    function initLavaWebGL() {
+      var figures = document.querySelectorAll('figure.project-figure');
+
+      figures.forEach(function (figure, index) {
+        if (figure.dataset.webglLavaReady === '1') return;
+        figure.dataset.webglLavaReady = '1';
+
+        figure.style.setProperty('--mx', '50%');
+        figure.style.setProperty('--my', '50%');
+
+        var canvas = document.createElement('canvas');
+        canvas.className = 'lava-canvas';
+        figure.insertBefore(canvas, figure.firstChild);
+
+        var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false }) ||
+                 canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+
+        if (!gl) { console.warn('WebGL non disponible'); return; }
+
+        var vertexSource = [
+          'attribute vec2 a_position;',
+          'varying vec2 v_uv;',
+          'void main() {',
+          '  v_uv = a_position * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_position, 0.0, 1.0);',
+          '}'
+        ].join('');
+
+        var fragmentSource = [
+          'precision mediump float;',
+          'varying vec2 v_uv;',
+          'uniform vec2 u_resolution;',
+          'uniform float u_time;',
+          'uniform vec2 u_mouse;',
+          'uniform float u_seed;',
+
+          'vec3 palette(float t) {',
+          '  vec3 c1 = vec3(0.01, 0.05, 0.16);',
+          '  vec3 c2 = vec3(0.02, 0.18, 0.45);',
+          '  vec3 c3 = vec3(0.08, 0.35, 0.85);',
+          '  vec3 c4 = vec3(0.35, 0.22, 0.78);',
+          '  vec3 c5 = vec3(0.78, 0.88, 1.00);',
+          '  vec3 col = mix(c1, c2, smoothstep(0.0, 0.2, t));',
+          '  col = mix(col, c3, smoothstep(0.18, 0.5, t));',
+          '  col = mix(col, c4, smoothstep(0.45, 0.75, t));',
+          '  col = mix(col, c5, smoothstep(0.72, 1.0, t));',
+          '  return col;',
+          '}',
+
+          'float metaball(vec2 p, vec2 c, float r) {',
+          '  float d = length(p - c);',
+          '  return exp(-d*d / (r*r));',
+          '}',
+
+          'float lava(vec2 p, float t, vec2 mouse) {',
+          '  vec2 c1 = vec2(sin(t*1.05), cos(t*0.92)) * vec2(0.15,0.10);',
+          '  vec2 c2 = vec2(cos(t*0.82+1.2), sin(t*1.18+0.4)) * vec2(0.13,0.12);',
+          '  vec2 c3 = vec2(sin(t*1.28+2.1), cos(t*1.04+2.6)) * vec2(0.12,0.13);',
+          '  vec2 c4 = vec2(cos(t*0.88+3.2), sin(t*1.16+1.8)) * vec2(0.10,0.09);',
+          '  vec2 c5 = vec2(sin(t*0.72+4.4), cos(t*0.84+0.9)) * vec2(0.09,0.08);',
+          '  vec2 c6 = mouse * 0.8;',
+          '  float f = 0.0;',
+          '  f += metaball(p,c1,0.18);',
+          '  f += metaball(p,c2,0.17);',
+          '  f += metaball(p,c3,0.16);',
+          '  f += metaball(p,c4,0.14);',
+          '  f += metaball(p,c5,0.13);',
+          '  f += metaball(p,c6,0.14);',
+          '  return f;',
+          '}',
+
+          'void main() {',
+          '  vec2 uv = v_uv;',
+          '  vec2 p = uv - 0.5;',
+          '  p.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float t = u_time * 0.38 + u_seed * 5.7;',
+          '  vec2 mouse = u_mouse - 0.5;',
+          '  mouse.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float field = lava(p, t, mouse);',
+          '  float eps = 0.008;',
+          '  float dx = lava(p + vec2(eps, 0.0), t, mouse) - lava(p - vec2(eps, 0.0), t, mouse);',
+          '  float dy = lava(p + vec2(0.0, eps), t, mouse) - lava(p - vec2(0.0, eps), t, mouse);',
+          '  vec2 grad = vec2(dx, dy) * 0.5;',
+          '  vec2 warp = grad * 1.35;',
+          '  vec2 q = p + warp;',
+          '  float flow = sin(q.x * 4.0 + t * 1.3);',
+          '  flow += sin(q.y * 4.6 - t * 1.15);',
+          '  flow += sin((q.x + q.y) * 3.1 + t * 0.9);',
+          '  flow /= 3.0;',
+          '  flow = flow * 0.5 + 0.5;',
+          '  flow = pow(flow, 1.35);',
+          '  float micro = sin(q.x * 18.0 + t * 2.4) * sin(q.y * 18.0 - t * 2.1);',
+          '  micro = micro * 0.5 + 0.5;',
+          '  float rings = sin((field * 0.1 + flow * 0.05 - micro * 2.0) * 6.28318);',
+          '  rings = rings * 0.5 + 0.5;',
+          '  float sheen = flow * 0.92 + micro * 0.05 + rings * 0.05;',
+          '  vec2 ca = normalize(grad + vec2(0.0001)) * 0.09;',
+          '  float rField = clamp(lava(p + ca, t, mouse), 0.0, 1.0);',
+          '  float gField = clamp(field, 0.0, 1.0);',
+          '  float bField = clamp(lava(p - ca, t, mouse), 0.0, 1.0);',
+          '  float rMix = clamp(gField * 0.45 + sheen * 0.95 + rField * 0.25, 0.0, 1.0);',
+          '  float gMix = clamp(gField * 0.55 + sheen * 0.75, 0.0, 1.0);',
+          '  float bMix = clamp(gField * 0.40 + sheen * 1.05 + bField * 0.25, 0.0, 1.0);',
+          '  vec3 colR = palette(rMix);',
+          '  vec3 colG = palette(gMix);',
+          '  vec3 colB = palette(bMix);',
+          '  vec3 color = vec3(colR.r, colG.g, colB.b);',
+          '  float mask = smoothstep(0.42, 0.92, field);',
+          '  float edge = smoothstep(0.55, 1.05, field) - smoothstep(1.05, 1.45, field);',
+          '  float glow = edge * 0.22;',
+          '  vec3 normal = normalize(vec3(grad, 0.95));',
+          '  vec3 lightDir = normalize(vec3(-0.25, 0.45, 1.0));',
+          '  float lighting = clamp(dot(normal, lightDir), 0.0, 1.0);',
+          '  float spec = pow(clamp(dot(normal, normalize(lightDir + vec3(0.0, 0.0, 1.0))), 0.0, 1.0), 18.0);',
+          '  vec3 specCol = vec3(0.55, 0.72, 1.0) * spec * 0.22;',
+          '  vec3 base = color * (0.62 + lighting * 0.28);',
+          '  vec3 finalColor = base * (mask + glow) + specCol * mask;',
+          '  float alpha = clamp(mask * 0.88, 0.0, 0.82);',
+          '  gl_FragColor = vec4(finalColor, alpha);',
+          '}'
+        ].join('\n');
+
+        var program = createProgram(gl, vertexSource, fragmentSource);
+        if (!program) { console.warn('Shader WebGL non compilé'); return; }
+
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER,
+          new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),
+          gl.STATIC_DRAW);
+
+        var aPosition  = gl.getAttribLocation(program, 'a_position');
+        var uResolution = gl.getUniformLocation(program, 'u_resolution');
+        var uTime      = gl.getUniformLocation(program, 'u_time');
+        var uMouse     = gl.getUniformLocation(program, 'u_mouse');
+        var uSeed      = gl.getUniformLocation(program, 'u_seed');
+
+        var mouseX = 0.5, mouseY = 0.5;
+        var targetMouseX = 0.5, targetMouseY = 0.5;
+        var seed = (index + 1) * 0.173;
+
+        figure.addEventListener('mousemove', function (e) {
+          var rect = figure.getBoundingClientRect();
+          targetMouseX = (e.clientX - rect.left) / rect.width;
+          targetMouseY = 1.0 - ((e.clientY - rect.top) / rect.height);
+        });
+        figure.addEventListener('mouseleave', function () {
+          targetMouseX = 0.5; targetMouseY = 0.5;
+        });
+
+        function render(now) {
+          resizeCanvas(canvas, gl);
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          mouseX += (targetMouseX - mouseX) * 0.08;
+          mouseY += (targetMouseY - mouseY) * 0.08;
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(program);
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.enableVertexAttribArray(aPosition);
+          gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(uResolution, canvas.width, canvas.height);
+          gl.uniform1f(uTime, now * 0.001);
+          gl.uniform2f(uMouse, mouseX, mouseY);
+          gl.uniform1f(uSeed, seed);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      });
+    }
+
+    function resizeCanvas(canvas, gl) {
+      var rect = canvas.getBoundingClientRect();  /* canvas = 120% of figure → correct pixel fill */
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var width  = Math.max(1, Math.round(rect.width  * dpr));
+      var height = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width; canvas.height = height;
+      }
+    }
+
+    function createShader(gl, type, source) {
+      var shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    function createProgram(gl, vertexSource, fragmentSource) {
+      var vs = createShader(gl, gl.VERTEX_SHADER, vertexSource);
+      var fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vs || !fs) return null;
+      var program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+      }
+      return program;
+    }
+  </script>
+</body>
+</html>

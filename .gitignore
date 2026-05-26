@@ -1,0 +1,8 @@
+# Claude Code local settings (never commit — may contain API keys)
+.claude/settings.local.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp

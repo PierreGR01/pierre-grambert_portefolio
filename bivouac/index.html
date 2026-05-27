@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bivouac — UX &amp; Product Design for Outdoor Safety | Pierre Grambert</title>
+  <meta name="description" content="A long-term UX and product design project for responsible mountain bivouac. Combines field research, user interviews with PGHM Chamonix and ARVA, Figma prototyping, and Figma Make exploration. Solo project, 2018–2026." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bivouac — UX &amp; Product Design for Outdoor Safety" />
+  <meta property="og:description" content="A long-term UX and product design project combining field research, user interviews, and high-fidelity prototyping for responsible outdoor practice." />
+  <meta property="og:image" content="../assets/images/bivouac/IMAGE_01.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.pierregrambert.fr/bivouac/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&family=Inter:wght@200&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       CSS Houdini — animatable custom properties for gradient
+    ───────────────────────────────────────────────────────── */
+    @property --x1 { syntax: "<percentage>"; inherits: false; initial-value: 80%;  }
+    @property --y1 { syntax: "<percentage>"; inherits: false; initial-value: 55%;  }
+    @property --x2 { syntax: "<percentage>"; inherits: false; initial-value: 20%;  }
+    @property --y2 { syntax: "<percentage>"; inherits: false; initial-value: 65%;  }
+    @property --x3 { syntax: "<percentage>"; inherits: false; initial-value: 50%;  }
+    @property --y3 { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+
+    @keyframes gradient {
+      0%   { --x1: 80%; --y1: 55%; --x2: 20%; --y2: 65%; --x3: 50%; --y3: 100%; }
+      50%  { --x1: 70%; --y1: 40%; --x2: 35%; --y2: 75%; --x3: 55%; --y3:  85%; }
+      100% { --x1: 75%; --y1: 65%; --x2: 25%; --y2: 60%; --x3: 45%; --y3: 110%; }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Reset
+    ───────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body
+    ───────────────────────────────────────────────────────── */
+    body {
+      background: transparent;
+      min-height: 100vh;
+      color: rgb(200, 200, 205);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Page background — fixed div so backdrop-filter can blur it
+    ───────────────────────────────────────────────────────── */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at var(--x1) var(--y1), rgba(0, 0, 255, 0.5)  0%, transparent  40%),
+        radial-gradient(circle at var(--x2) var(--y2), rgb(40, 0, 90)         0%, transparent  90%),
+        radial-gradient(circle at var(--x3) var(--y3), rgb(30, 0, 5)         50%, transparent 200%);
+      animation: gradient 6s ease-in-out infinite alternate;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Layout
+    ───────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 54px 20px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section divider
+    ───────────────────────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(165, 165, 165, 0.15);
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Page header — back-link nav
+    ───────────────────────────────────────────────────────── */
+    .section-header {
+      padding-bottom: 0;
+    }
+
+    .header-title-row {
+      padding: 40px 0 32px;
+    }
+
+    .site-name {
+      display: inline-block;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s ease;
+    }
+
+    a.site-name:hover {
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Sticky header
+    ───────────────────────────────────────────────────────── */
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(200, 235, 255, 0.15);
+      backdrop-filter: blur(45px);
+      -webkit-backdrop-filter: blur(45px);
+      border-bottom: 1px solid rgba(130, 225, 255, 0.18);
+    }
+
+    .sticky-header__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+    }
+
+    .sticky-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-sticky-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 34px;
+      padding: 0 16px;
+      border: none;
+      background: rgb(130, 225, 255);
+      color: rgb(10, 15, 30);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-sticky-primary:hover { background: rgb(100, 200, 240); }
+
+    .btn-sticky-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 0 16px;
+      border: 1px solid rgba(130, 225, 255, 0.55);
+      color: rgb(130, 225, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-sticky-secondary:hover {
+      background: rgba(130, 225, 255, 0.08);
+      border-color: rgb(130, 225, 255);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section label — small uppercase tag
+    ───────────────────────────────────────────────────────── */
+    .section-label {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      opacity: 0.8;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section heading — h2 level
+    ───────────────────────────────────────────────────────── */
+    .section-heading {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+      letter-spacing: 6px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Hero section
+    ───────────────────────────────────────────────────────── */
+    .case-study__hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      padding: 32px 0 60px;
+    }
+
+    .case-study__hero h1 {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 34px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      line-height: 1.2;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-family: Inter, sans-serif;
+      font-size: 16px;
+      font-weight: 200;
+      color: rgb(190, 190, 195);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Tags — skills and meta rows
+    ───────────────────────────────────────────────────────── */
+    .tags {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tags li {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.3px;
+      color: rgb(130, 225, 255);
+      border: 1px solid rgba(130, 225, 255, 0.28);
+      padding: 3px 11px;
+      white-space: nowrap;
+    }
+
+    .tags--meta li {
+      color: rgb(145, 145, 152);
+      border-color: rgba(145, 145, 152, 0.25);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       CTA buttons
+    ───────────────────────────────────────────────────────── */
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: none;
+      background: rgb(130, 225, 255);
+      color: rgb(10, 15, 30);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: rgb(100, 200, 240);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: 1px solid rgb(130, 225, 255);
+      color: rgb(130, 225, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(130, 225, 255, 0.08);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Image placeholders & figures
+    ───────────────────────────────────────────────────────── */
+    .img-placeholder {
+      width: 100%;
+      background: rgba(130, 225, 255, 0.04);
+      border: 1px solid rgba(130, 225, 255, 0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(120, 120, 128);
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    figcaption {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      color: rgb(145, 145, 152);
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section content wrapper
+    ───────────────────────────────────────────────────────── */
+    .section-content {
+      padding: 60px 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body text
+    ───────────────────────────────────────────────────────── */
+    .body-text {
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 200;
+      color: rgb(190, 190, 195);
+      line-height: 1.85;
+      max-width: 760px;
+    }
+
+    .body-text + .body-text {
+      margin-top: 18px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Context grid — two-column meta
+    ───────────────────────────────────────────────────────── */
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .info-list dt {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      color: rgb(145, 145, 152);
+      text-transform: uppercase;
+      margin-top: 28px;
+      margin-bottom: 6px;
+    }
+
+    .info-list dt:first-child {
+      margin-top: 0;
+    }
+
+    .info-list dd {
+      font-family: Inter, sans-serif;
+      font-size: 13.5px;
+      font-weight: 200;
+      color: rgb(190, 190, 197);
+      line-height: 1.75;
+    }
+
+    .timeline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-list li {
+      font-family: Inter, sans-serif;
+      font-size: 13.5px;
+      font-weight: 200;
+      color: rgb(190, 190, 197);
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .timeline-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 1px;
+      background: rgb(130, 225, 255);
+      opacity: 0.55;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Callout — challenge paragraph accent
+    ───────────────────────────────────────────────────────── */
+    .callout {
+      border-left: 2px solid rgb(130, 225, 255);
+      padding-left: 22px;
+      margin-top: 24px;
+      max-width: 760px;
+    }
+
+    .callout p {
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      font-weight: 200;
+      color: rgb(220, 220, 225);
+      line-height: 1.75;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Blockquote
+    ───────────────────────────────────────────────────────── */
+    blockquote {
+      border-left: 2px solid rgb(130, 225, 255);
+      padding-left: 24px;
+      margin: 36px 0 0;
+      max-width: 720px;
+    }
+
+    blockquote p {
+      font-family: Inter, sans-serif;
+      font-size: 16px;
+      font-weight: 200;
+      font-style: italic;
+      color: rgb(210, 210, 215);
+      line-height: 1.7;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 14px;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      font-style: normal;
+      color: rgb(145, 145, 152);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Decision cards — 2×2 grid
+    ───────────────────────────────────────────────────────── */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .decision-card {
+      border: 1px solid rgba(130, 225, 255, 0.14);
+      padding: 28px 24px 32px;
+      background: rgba(130, 225, 255, 0.025);
+    }
+
+    .decision-card .card-label {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      opacity: 0.8;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .decision-card h3 {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 13px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(130, 225, 255, 0.18);
+    }
+
+    .decision-card p {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 200;
+      color: rgb(185, 185, 192);
+      line-height: 1.65;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Evolution paragraphs spacing
+    ───────────────────────────────────────────────────────── */
+    .evolution-text .body-text + .body-text {
+      margin-top: 18px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Project blobs section
+    ───────────────────────────────────────────────────────── */
+    .section-projects {
+      padding-top: 60px;
+      padding-bottom: 0;
+    }
+
+    .projects-grid {
+      display: flex;
+    }
+
+    .project-card {
+      flex: 1;
+      display: flex;
+      text-decoration: none;
+    }
+
+    .project-figure {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      width: 100%;
+      height: 250px;
+      margin: 0;
+      background: transparent;
+    }
+
+    .lava-canvas {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      mix-blend-mode: normal;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .project-blend {
+      display: block;
+      width: 55%;
+      position: relative;
+      z-index: 2;
+      filter: invert(1) brightness(0.6);
+      mix-blend-mode: color-dodge;
+    }
+
+    .project-blend img {
+      display: block;
+      width: 100%;
+      height: auto;
+      opacity: 0.9;
+      mix-blend-mode: normal;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Outcome CTAs
+    ───────────────────────────────────────────────────────── */
+    .outcome-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────────────────────── */
+    .section-footer {
+      display: flex;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .footer-text {
+      flex: 1;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11.2px;
+      font-weight: 700;
+      letter-spacing: 2.24px;
+      color: rgba(160, 200, 255, 0.80);
+      line-height: 17.92px;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(19, 104, 255);
+      font-size: 18px;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .social-link:hover {
+      opacity: 0.6;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — tablet (≤ 768px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .projects-grid { flex-wrap: wrap; }
+      .project-card  { flex: 0 0 50%; }
+
+      .case-study__hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 24px 0 48px;
+      }
+
+      .case-study__hero h1 {
+        font-size: 24px;
+        letter-spacing: 3px;
+      }
+
+      .context-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .decisions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .figure-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-content {
+        padding: 48px 0;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — mobile (≤ 480px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .project-card   { flex: 0 0 50%; }
+      .project-figure { height: 180px; }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .case-study__hero h1 {
+        font-size: 19px;
+        letter-spacing: 2px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .outcome-ctas {
+        flex-direction: column;
+      }
+
+      .section-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 30px 0;
+      }
+
+      .section-content {
+        padding: 40px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <!-- ── Sticky header ── -->
+  <header class="sticky-header">
+    <div class="sticky-header__inner">
+      <a href="https://www.pierregrambert.fr" class="site-name">← Pierre Grambert</a>
+      <nav class="sticky-header__nav" aria-label="Page actions">
+        <a href="https://next-broad-43789019.figma.site" class="btn-sticky-primary" target="_blank" rel="noopener">Visit prototype <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="#" class="btn-sticky-secondary">Next project →</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <main>
+      <article class="case-study" itemscope itemtype="https://schema.org/CreativeWork">
+
+        <!-- ── Section 01 — Hero ── -->
+        <header class="case-study__hero">
+
+          <div class="hero-text">
+            <h1 itemprop="name">Bivouac — UX &amp; Product Design for Outdoor Safety</h1>
+            <p class="hero-subtitle" itemprop="description">A long-term product exploration combining field research, user interviews, and high-fidelity prototyping — from master's thesis to vibe coding experiment.</p>
+
+            <ul class="tags" aria-label="Skills and tools">
+              <li>UX Design</li>
+              <li>Product Design</li>
+              <li>User Research</li>
+              <li>Prototyping</li>
+              <li>Figma</li>
+              <li>Figma Make</li>
+              <li>Civic Tech</li>
+            </ul>
+            <ul class="tags tags--meta" aria-label="Project meta">
+              <li>Solo project</li>
+              <li>2018 → 2026</li>
+              <li>Personal / R&amp;D Camptocamp</li>
+            </ul>
+
+            <div class="hero-ctas">
+              <a href="#design-decisions" class="btn-secondary">Jump to design decisions</a>
+            </div>
+          </div>
+
+          <div class="hero-image">
+            <figure>
+              <div class="img-placeholder" data-id="IMAGE_01" style="aspect-ratio: 16/9;">
+                IMAGE_01 — Hero map screen
+              </div>
+            </figure>
+          </div>
+
+        </header>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 02 — Project context ── -->
+        <section id="context" aria-labelledby="context-heading" class="section-content">
+          <h2 id="context-heading" class="section-heading">Project context</h2>
+          <div class="context-grid">
+
+            <div>
+              <dl class="info-list">
+                <dt>Role</dt>
+                <dd>Solo — UX research, product strategy, UI design, prototyping</dd>
+
+                <dt>Timeline</dt>
+                <dd>
+                  <ul class="timeline-list">
+                    <li>2018 — Master's thesis: field research, interviews, initial design exploration</li>
+                    <li>2023 — Reboot: product direction, information architecture, Figma prototype</li>
+                    <li>2025–2026 — Vibe coding phase: Figma Make, Claude, pre-industrialization, R&amp;D at Camptocamp</li>
+                  </ul>
+                </dd>
+              </dl>
+            </div>
+
+            <div>
+              <dl class="info-list">
+                <dt>Tools</dt>
+                <dd>Figma · Figma Make · Claude · User interviews · Field observation</dd>
+
+                <dt>Research partners</dt>
+                <dd>PGHM Chamonix (mountain rescue) · ARVA (avalanche safety equipment)</dd>
+
+                <dt>Project type</dt>
+                <dd>Personal project / R&amp;D exploration at Camptocamp</dd>
+              </dl>
+            </div>
+
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 03 — The problem ── -->
+        <section id="problem" aria-labelledby="problem-heading" class="section-content">
+          <h2 id="problem-heading" class="section-heading">The problem</h2>
+
+          <p class="body-text">Most outdoor apps optimize for discovery and engagement — surfacing "best spots," rankings, user-generated tips. In a mountain bivouac context, that logic backfires: it accelerates overuse, damages fragile ecosystems, and breeds a consumer mindset that conflicts with how mountain communities think about safety and responsibility.</p>
+
+          <div class="callout">
+            <p>The challenge wasn't to build a smarter recommendation engine. It was to design a decision-support tool — one that makes fragmented, localized regulations accessible and actionable, without encouraging harmful behavior in the process.</p>
+          </div>
+
+          <figure style="margin-top: 40px;">
+            <div class="img-placeholder" data-id="IMAGE_02" style="aspect-ratio: 16/9;">
+              IMAGE_02 — Research artifact or field photo
+            </div>
+            <figcaption>Field research, PGHM Chamonix interviews, 2018</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 04 — Research & field work ── -->
+        <section id="research" aria-labelledby="research-heading" class="section-content">
+          <h2 id="research-heading" class="section-heading">Research &amp; field work</h2>
+
+          <p class="body-text">Research combined direct field observation with semi-structured interviews. Conversations with actors from PGHM Chamonix (mountain rescue) and ARVA (avalanche safety equipment) shaped a clearer picture of how information circulates — and sometimes fails to — in high-stakes outdoor contexts.</p>
+
+          <p class="body-text">Early work also surfaced a consistent pattern: regulations exist, but they are buried across dozens of jurisdictions with no consistent format, no unified access point, and no adaptation for mobile or field use.</p>
+
+          <blockquote>
+            <p>"Regulations exist — but users can't find them in time. The problem isn't access to rules, it's that rules are scattered across dozens of jurisdictions with no consistent format."</p>
+            <cite>Synthesized from field interviews, 2018</cite>
+          </blockquote>
+
+          <div class="figure-grid">
+            <figure>
+              <div class="img-placeholder" data-id="IMAGE_03a" style="aspect-ratio: 4/3;">
+                IMAGE_03a — Field/context photo
+              </div>
+              <figcaption>Mountain bivouac field context, Chamonix area</figcaption>
+            </figure>
+            <figure>
+              <div class="img-placeholder" data-id="IMAGE_03b" style="aspect-ratio: 4/3;">
+                IMAGE_03b — Research synthesis artifact
+              </div>
+              <figcaption>Research synthesis — fragmented bivouac regulations across French mountain jurisdictions</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 05 — Design decisions ── -->
+        <section id="design-decisions" aria-labelledby="decisions-heading" class="section-content">
+          <h2 id="decisions-heading" class="section-heading">Design decisions</h2>
+
+          <p class="body-text">Every significant design decision was a deliberate departure from standard outdoor app patterns. The goal was to redesign the relationship between the user and official information — not to make discovery frictionless, but to make decision-making more reliable.</p>
+
+          <div class="decisions-grid">
+            <article class="decision-card">
+              <span class="card-label">Decision 01</span>
+              <h3>No "secret spots" or ranking logic</h3>
+              <p>Removed all user-generated content and ranking features. The app surfaces only official sources — national parks, municipalities, prefectures — reducing virality risk while building trustworthiness.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 02</span>
+              <h3>Regulation as a geographic UI layer</h3>
+              <p>Regulations are presented as a map layer, not a legal document. Users see what is allowed at their current location in real time — actionable, not advisory.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 03</span>
+              <h3>Understanding over passive consumption</h3>
+              <p>The interface is designed to reduce ambiguity. Each regulation is displayed with its source, its geographic scope, and a plain-language summary — supporting judgment, not just compliance.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 04</span>
+              <h3>Official data only — no UGC</h3>
+              <p>No community spots, no tips, no ratings. The product's value proposition is reliability and official accuracy, not engagement or social features.</p>
+            </article>
+          </div>
+
+          <div class="figure-grid" style="margin-top: 48px;">
+            <figure>
+              <div class="img-placeholder" data-id="IMAGE_04a" style="aspect-ratio: 9/16;">
+                IMAGE_04a — Regulation layer screen (core UI)
+              </div>
+              <figcaption>Bivouac app — regulation layer on map, zone detail panel</figcaption>
+            </figure>
+            <figure>
+              <div class="img-placeholder" data-id="IMAGE_04b" style="aspect-ratio: 9/16;">
+                IMAGE_04b — Design iteration / second key screen
+              </div>
+              <figcaption>Bivouac app — design iteration, information architecture</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 06 — Project evolution ── -->
+        <section id="evolution" aria-labelledby="evolution-heading" class="section-content">
+          <h2 id="evolution-heading" class="section-heading">From master's thesis to vibe coding experiment</h2>
+
+          <div class="evolution-text">
+            <p class="body-text">This project has gone through three distinct lives.</p>
+            <p class="body-text">It started in 2018 as a master's thesis — a structured research exercise that shaped the product's ethical framing and surfaced the core tension between engagement logic and responsible outdoor practice. That work was rigorous but static: a design that existed on paper, never tested in the wild.</p>
+            <p class="body-text">It then sat dormant for years. That's not a failure — it's a common fate for academic work that was ahead of its tooling.</p>
+            <p class="body-text">In 2023, Bivouac was revived as a design exploration. The initial research had aged well; the product direction needed grounding. That phase produced the Figma prototype visible throughout this page.</p>
+            <p class="body-text">Most recently, the project became a testing ground for a different kind of question: how far can a designer push product development without traditional engineering resources? Using Figma Make, the project moved from static prototyping toward something closer to a testable, near-production interface. Not as a demo — as a form of pre-industrialization work that reduces uncertainty before engineering gets involved.</p>
+            <p class="body-text">At Camptocamp, this approach has become part of how R&amp;D exploration is structured: using vibe coding tools to validate product directions earlier, with less friction, and with a tighter feedback loop between design intent and built behavior.</p>
+          </div>
+
+          <figure style="margin-top: 48px;">
+            <div class="img-placeholder" data-id="IMAGE_05" style="aspect-ratio: 16/7;">
+              IMAGE_05 — Three-phase comparison
+            </div>
+            <figcaption>Bivouac across three phases: 2018 thesis prototype · 2023 Figma redesign · 2025–2026 Figma Make exploration</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 07 — Outcome & reflections ── -->
+        <section id="outcome" aria-labelledby="outcome-heading" class="section-content">
+          <h2 id="outcome-heading" class="section-heading">Outcome &amp; reflections</h2>
+
+          <p class="body-text">Bivouac is not a finished product. It is a design argument — that responsible product thinking starts before the first wireframe, in the choice of what not to build.</p>
+          <p class="body-text">The project also reflects a broader shift in design practice: as prototyping tools gain the ability to produce testable, near-production interfaces, the boundary between design and engineering becomes a design decision in itself. Bivouac is one attempt to explore what that boundary looks like in practice.</p>
+
+          <ul class="tags" style="margin-top: 28px;" aria-label="Key learnings">
+            <li>Product ethics before features</li>
+            <li>Official data over UGC</li>
+            <li>Prototyping as pre-industrialization</li>
+            <li>Vibe coding as design exploration</li>
+            <li>Responsibility as a product constraint</li>
+          </ul>
+
+          <figure style="margin-top: 40px;">
+            <div class="img-placeholder" data-id="IMAGE_06" style="aspect-ratio: 16/9;">
+              IMAGE_06 — Prototype in context / device mockup
+            </div>
+          </figure>
+
+        </section>
+
+      </article>
+    </main>
+
+    <!-- ── Projects blobs — other projects nav ── -->
+    <hr class="section-divider">
+    <section class="section-projects">
+      <p class="section-label">More projects</p>
+      <div class="projects-grid">
+
+        <a class="project-card" href="https://www.pierregrambert.fr/kairn-design-studio/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2022/04/kairn-scaled.png" alt="Kairn Design Studio">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="https://www.pierregrambert.fr/saprea-2/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2026/03/saprea1.png" alt="Saprea">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="https://www.pierregrambert.fr/georchestra/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="https://www.pierregrambert.fr/wp-content/uploads/2026/03/georchestraLogo1.png" alt="geOrchestra">
+            </span>
+          </figure>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <hr class="section-divider">
+    <footer class="section-footer">
+      <p class="footer-text">© Pierre Grambert 2026 - Website built by me, with the help of AI Wordpress &amp; Cornerstone</p>
+      <nav class="social-links" aria-label="Social links">
+        <a href="https://500px.com/p/PierreGrambert?view=photos"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="500px">
+          <i class="fa-brands fa-500px"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://www.instagram.com/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </nav>
+    </footer>
+
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () { initLavaWebGL(); });
+    window.addEventListener('load', initLavaWebGL);
+    setTimeout(initLavaWebGL, 800);
+
+    function initLavaWebGL() {
+      var figures = document.querySelectorAll('figure.project-figure');
+
+      figures.forEach(function (figure, index) {
+        if (figure.dataset.webglLavaReady === '1') return;
+        figure.dataset.webglLavaReady = '1';
+
+        figure.style.setProperty('--mx', '50%');
+        figure.style.setProperty('--my', '50%');
+
+        var canvas = document.createElement('canvas');
+        canvas.className = 'lava-canvas';
+        figure.insertBefore(canvas, figure.firstChild);
+
+        var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false }) ||
+                 canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+
+        if (!gl) { return; }
+
+        var vertexSource = [
+          'attribute vec2 a_position;',
+          'varying vec2 v_uv;',
+          'void main() {',
+          '  v_uv = a_position * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_position, 0.0, 1.0);',
+          '}'
+        ].join('');
+
+        var fragmentSource = [
+          'precision mediump float;',
+          'varying vec2 v_uv;',
+          'uniform vec2 u_resolution;',
+          'uniform float u_time;',
+          'uniform vec2 u_mouse;',
+          'uniform float u_seed;',
+
+          'vec3 palette(float t) {',
+          '  vec3 c1 = vec3(0.01, 0.05, 0.16);',
+          '  vec3 c2 = vec3(0.02, 0.18, 0.45);',
+          '  vec3 c3 = vec3(0.20, 0.42, 0.90);',
+          '  vec3 c4 = vec3(0.82, 0.10, 0.82);',
+          '  vec3 c5 = vec3(0.45, 0.78, 1.00);',
+          '  vec3 col = mix(c1, c2, smoothstep(0.0, 0.2, t));',
+          '  col = mix(col, c3, smoothstep(0.18, 0.5, t));',
+          '  col = mix(col, c4, smoothstep(0.45, 0.75, t));',
+          '  col = mix(col, c5, smoothstep(0.72, 1.0, t));',
+          '  return col;',
+          '}',
+
+          'float metaball(vec2 p, vec2 c, float r) {',
+          '  float d = length(p - c);',
+          '  return exp(-d*d / (r*r));',
+          '}',
+
+          'float lava(vec2 p, float t, vec2 mouse) {',
+          '  vec2 c1 = vec2(sin(t*1.05), cos(t*0.92)) * vec2(0.15,0.10);',
+          '  vec2 c2 = vec2(cos(t*0.82+1.2), sin(t*1.18+0.4)) * vec2(0.13,0.12);',
+          '  vec2 c3 = vec2(sin(t*1.28+2.1), cos(t*1.04+2.6)) * vec2(0.12,0.13);',
+          '  vec2 c4 = vec2(cos(t*0.88+3.2), sin(t*1.16+1.8)) * vec2(0.10,0.09);',
+          '  vec2 c5 = vec2(sin(t*0.72+4.4), cos(t*0.84+0.9)) * vec2(0.09,0.08);',
+          '  vec2 c6 = mouse * 0.8;',
+          '  float f = 0.0;',
+          '  f += metaball(p,c1,0.18);',
+          '  f += metaball(p,c2,0.17);',
+          '  f += metaball(p,c3,0.16);',
+          '  f += metaball(p,c4,0.14);',
+          '  f += metaball(p,c5,0.13);',
+          '  f += metaball(p,c6,0.14);',
+          '  return f;',
+          '}',
+
+          'void main() {',
+          '  vec2 uv = v_uv;',
+          '  vec2 p = uv - 0.5;',
+          '  p.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float t = u_time * 0.38 + u_seed * 5.7;',
+          '  vec2 mouse = u_mouse - 0.5;',
+          '  mouse.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float field = lava(p, t, mouse);',
+          '  float eps = 0.008;',
+          '  float dx = lava(p + vec2(eps, 0.0), t, mouse) - lava(p - vec2(eps, 0.0), t, mouse);',
+          '  float dy = lava(p + vec2(0.0, eps), t, mouse) - lava(p - vec2(0.0, eps), t, mouse);',
+          '  vec2 grad = vec2(dx, dy) * 0.5;',
+          '  vec2 warp = grad * 1.35;',
+          '  vec2 q = p + warp;',
+          '  float flow = sin(q.x * 4.0 + t * 1.3);',
+          '  flow += sin(q.y * 4.6 - t * 1.15);',
+          '  flow += sin((q.x + q.y) * 3.1 + t * 0.9);',
+          '  flow /= 3.0;',
+          '  flow = flow * 0.5 + 0.5;',
+          '  flow = pow(flow, 1.35);',
+          '  float micro = sin(q.x * 18.0 + t * 2.4) * sin(q.y * 18.0 - t * 2.1);',
+          '  micro = micro * 0.5 + 0.5;',
+          '  float rings = sin((field * 0.1 + flow * 0.05 - micro * 2.0) * 6.28318);',
+          '  rings = rings * 0.5 + 0.5;',
+          '  float sheen = flow * 0.92 + micro * 0.05 + rings * 0.05;',
+          '  vec2 ca = normalize(grad + vec2(0.0001)) * 0.09;',
+          '  float rField = clamp(lava(p + ca, t, mouse), 0.0, 1.0);',
+          '  float gField = clamp(field, 0.0, 1.0);',
+          '  float bField = clamp(lava(p - ca, t, mouse), 0.0, 1.0);',
+          '  float rMix = clamp(gField * 0.45 + sheen * 0.95 + rField * 0.25, 0.0, 1.0);',
+          '  float gMix = clamp(gField * 0.55 + sheen * 0.75, 0.0, 1.0);',
+          '  float bMix = clamp(gField * 0.40 + sheen * 1.05 + bField * 0.25, 0.0, 1.0);',
+          '  vec3 colR = palette(rMix);',
+          '  vec3 colG = palette(gMix);',
+          '  vec3 colB = palette(bMix);',
+          '  vec3 color = vec3(colR.r, colG.g, colB.b);',
+          '  float mask = smoothstep(0.42, 0.92, field);',
+          '  float edge = smoothstep(0.55, 1.05, field) - smoothstep(1.05, 1.45, field);',
+          '  float glow = edge * 0.22;',
+          '  vec3 normal = normalize(vec3(grad, 0.95));',
+          '  vec3 lightDir = normalize(vec3(-0.25, 0.45, 1.0));',
+          '  float lighting = clamp(dot(normal, lightDir), 0.0, 1.0);',
+          '  float spec = pow(clamp(dot(normal, normalize(lightDir + vec3(0.0, 0.0, 1.0))), 0.0, 1.0), 18.0);',
+          '  vec3 specCol = vec3(0.51, 0.88, 1.0) * spec * 0.28;',
+          '  vec3 base = color * (0.62 + lighting * 0.28);',
+          '  vec3 finalColor = base * (mask + glow) + specCol * mask;',
+          '  float alpha = clamp(mask * 0.88, 0.0, 0.82);',
+          '  gl_FragColor = vec4(finalColor, alpha);',
+          '}'
+        ].join('\n');
+
+        var program = createProgram(gl, vertexSource, fragmentSource);
+        if (!program) { return; }
+
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER,
+          new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),
+          gl.STATIC_DRAW);
+
+        var aPosition   = gl.getAttribLocation(program, 'a_position');
+        var uResolution = gl.getUniformLocation(program, 'u_resolution');
+        var uTime       = gl.getUniformLocation(program, 'u_time');
+        var uMouse      = gl.getUniformLocation(program, 'u_mouse');
+        var uSeed       = gl.getUniformLocation(program, 'u_seed');
+
+        var mouseX = 0.5, mouseY = 0.5;
+        var targetMouseX = 0.5, targetMouseY = 0.5;
+        var seed = (index + 1) * 0.173;
+
+        figure.addEventListener('mousemove', function (e) {
+          var rect = figure.getBoundingClientRect();
+          targetMouseX = (e.clientX - rect.left) / rect.width;
+          targetMouseY = 1.0 - ((e.clientY - rect.top) / rect.height);
+        });
+        figure.addEventListener('mouseleave', function () {
+          targetMouseX = 0.5; targetMouseY = 0.5;
+        });
+
+        function render(now) {
+          resizeCanvas(canvas, gl);
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          mouseX += (targetMouseX - mouseX) * 0.08;
+          mouseY += (targetMouseY - mouseY) * 0.08;
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(program);
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.enableVertexAttribArray(aPosition);
+          gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(uResolution, canvas.width, canvas.height);
+          gl.uniform1f(uTime, now * 0.001);
+          gl.uniform2f(uMouse, mouseX, mouseY);
+          gl.uniform1f(uSeed, seed);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      });
+    }
+
+    function resizeCanvas(canvas, gl) {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var width  = Math.max(1, Math.round(rect.width  * dpr));
+      var height = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width; canvas.height = height;
+      }
+    }
+
+    function createShader(gl, type, source) {
+      var shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    function createProgram(gl, vertexSource, fragmentSource) {
+      var vs = createShader(gl, gl.VERTEX_SHADER, vertexSource);
+      var fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vs || !fs) return null;
+      var program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+      }
+      return program;
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () { initLavaWebGL(); });
+    window.addEventListener('load', initLavaWebGL);
+    setTimeout(initLavaWebGL, 800);
+
+    function initLavaWebGL() {
+      var figures = document.querySelectorAll('figure.project-figure');
+
+      figures.forEach(function (figure, index) {
+        if (figure.dataset.webglLavaReady === '1') return;
+        figure.dataset.webglLavaReady = '1';
+
+        figure.style.setProperty('--mx', '50%');
+        figure.style.setProperty('--my', '50%');
+
+        var canvas = document.createElement('canvas');
+        canvas.className = 'lava-canvas';
+        figure.insertBefore(canvas, figure.firstChild);
+
+        var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false }) ||
+                 canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+
+        if (!gl) { console.warn('WebGL non disponible'); return; }
+
+        var vertexSource = [
+          'attribute vec2 a_position;',
+          'varying vec2 v_uv;',
+          'void main() {',
+          '  v_uv = a_position * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_position, 0.0, 1.0);',
+          '}'
+        ].join('');
+
+        var fragmentSource = [
+          'precision mediump float;',
+          'varying vec2 v_uv;',
+          'uniform vec2 u_resolution;',
+          'uniform float u_time;',
+          'uniform vec2 u_mouse;',
+          'uniform float u_seed;',
+
+          'vec3 palette(float t) {',
+          '  vec3 c1 = vec3(0.01, 0.05, 0.16);',
+          '  vec3 c2 = vec3(0.02, 0.18, 0.45);',
+          '  vec3 c3 = vec3(0.20, 0.42, 0.90);',
+          '  vec3 c4 = vec3(0.82, 0.10, 0.82);',
+          '  vec3 c5 = vec3(0.45, 0.78, 1.00);',
+          '  vec3 col = mix(c1, c2, smoothstep(0.0, 0.2, t));',
+          '  col = mix(col, c3, smoothstep(0.18, 0.5, t));',
+          '  col = mix(col, c4, smoothstep(0.45, 0.75, t));',
+          '  col = mix(col, c5, smoothstep(0.72, 1.0, t));',
+          '  return col;',
+          '}',
+
+          'float metaball(vec2 p, vec2 c, float r) {',
+          '  float d = length(p - c);',
+          '  return exp(-d*d / (r*r));',
+          '}',
+
+          'float lava(vec2 p, float t, vec2 mouse) {',
+          '  vec2 c1 = vec2(sin(t*1.05), cos(t*0.92)) * vec2(0.15,0.10);',
+          '  vec2 c2 = vec2(cos(t*0.82+1.2), sin(t*1.18+0.4)) * vec2(0.13,0.12);',
+          '  vec2 c3 = vec2(sin(t*1.28+2.1), cos(t*1.04+2.6)) * vec2(0.12,0.13);',
+          '  vec2 c4 = vec2(cos(t*0.88+3.2), sin(t*1.16+1.8)) * vec2(0.10,0.09);',
+          '  vec2 c5 = vec2(sin(t*0.72+4.4), cos(t*0.84+0.9)) * vec2(0.09,0.08);',
+          '  vec2 c6 = mouse * 0.8;',
+          '  float f = 0.0;',
+          '  f += metaball(p,c1,0.18);',
+          '  f += metaball(p,c2,0.17);',
+          '  f += metaball(p,c3,0.16);',
+          '  f += metaball(p,c4,0.14);',
+          '  f += metaball(p,c5,0.13);',
+          '  f += metaball(p,c6,0.14);',
+          '  return f;',
+          '}',
+
+          'void main() {',
+          '  vec2 uv = v_uv;',
+          '  vec2 p = uv - 0.5;',
+          '  p.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float t = u_time * 0.38 + u_seed * 5.7;',
+          '  vec2 mouse = u_mouse - 0.5;',
+          '  mouse.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float field = lava(p, t, mouse);',
+          '  float eps = 0.008;',
+          '  float dx = lava(p + vec2(eps, 0.0), t, mouse) - lava(p - vec2(eps, 0.0), t, mouse);',
+          '  float dy = lava(p + vec2(0.0, eps), t, mouse) - lava(p - vec2(0.0, eps), t, mouse);',
+          '  vec2 grad = vec2(dx, dy) * 0.5;',
+          '  vec2 warp = grad * 1.35;',
+          '  vec2 q = p + warp;',
+          '  float flow = sin(q.x * 4.0 + t * 1.3);',
+          '  flow += sin(q.y * 4.6 - t * 1.15);',
+          '  flow += sin((q.x + q.y) * 3.1 + t * 0.9);',
+          '  flow /= 3.0;',
+          '  flow = flow * 0.5 + 0.5;',
+          '  flow = pow(flow, 1.35);',
+          '  float micro = sin(q.x * 18.0 + t * 2.4) * sin(q.y * 18.0 - t * 2.1);',
+          '  micro = micro * 0.5 + 0.5;',
+          '  float rings = sin((field * 0.1 + flow * 0.05 - micro * 2.0) * 6.28318);',
+          '  rings = rings * 0.5 + 0.5;',
+          '  float sheen = flow * 0.92 + micro * 0.05 + rings * 0.05;',
+          '  vec2 ca = normalize(grad + vec2(0.0001)) * 0.09;',
+          '  float rField = clamp(lava(p + ca, t, mouse), 0.0, 1.0);',
+          '  float gField = clamp(field, 0.0, 1.0);',
+          '  float bField = clamp(lava(p - ca, t, mouse), 0.0, 1.0);',
+          '  float rMix = clamp(gField * 0.45 + sheen * 0.95 + rField * 0.25, 0.0, 1.0);',
+          '  float gMix = clamp(gField * 0.55 + sheen * 0.75, 0.0, 1.0);',
+          '  float bMix = clamp(gField * 0.40 + sheen * 1.05 + bField * 0.25, 0.0, 1.0);',
+          '  vec3 colR = palette(rMix);',
+          '  vec3 colG = palette(gMix);',
+          '  vec3 colB = palette(bMix);',
+          '  vec3 color = vec3(colR.r, colG.g, colB.b);',
+          '  float mask = smoothstep(0.42, 0.92, field);',
+          '  float edge = smoothstep(0.55, 1.05, field) - smoothstep(1.05, 1.45, field);',
+          '  float glow = edge * 0.22;',
+          '  vec3 normal = normalize(vec3(grad, 0.95));',
+          '  vec3 lightDir = normalize(vec3(-0.25, 0.45, 1.0));',
+          '  float lighting = clamp(dot(normal, lightDir), 0.0, 1.0);',
+          '  float spec = pow(clamp(dot(normal, normalize(lightDir + vec3(0.0, 0.0, 1.0))), 0.0, 1.0), 18.0);',
+          '  vec3 specCol = vec3(0.51, 0.88, 1.0) * spec * 0.28;',
+          '  vec3 base = color * (0.62 + lighting * 0.28);',
+          '  vec3 finalColor = base * (mask + glow) + specCol * mask;',
+          '  float alpha = clamp(mask * 0.88, 0.0, 0.82);',
+          '  gl_FragColor = vec4(finalColor, alpha);',
+          '}'
+        ].join('\n');
+
+        var program = createProgram(gl, vertexSource, fragmentSource);
+        if (!program) { console.warn('Shader WebGL non compilé'); return; }
+
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER,
+          new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),
+          gl.STATIC_DRAW);
+
+        var aPosition   = gl.getAttribLocation(program, 'a_position');
+        var uResolution = gl.getUniformLocation(program, 'u_resolution');
+        var uTime       = gl.getUniformLocation(program, 'u_time');
+        var uMouse      = gl.getUniformLocation(program, 'u_mouse');
+        var uSeed       = gl.getUniformLocation(program, 'u_seed');
+
+        var mouseX = 0.5, mouseY = 0.5;
+        var targetMouseX = 0.5, targetMouseY = 0.5;
+        var seed = (index + 1) * 0.173;
+
+        figure.addEventListener('mousemove', function (e) {
+          var rect = figure.getBoundingClientRect();
+          targetMouseX = (e.clientX - rect.left) / rect.width;
+          targetMouseY = 1.0 - ((e.clientY - rect.top) / rect.height);
+        });
+        figure.addEventListener('mouseleave', function () {
+          targetMouseX = 0.5; targetMouseY = 0.5;
+        });
+
+        function render(now) {
+          resizeCanvas(canvas, gl);
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          mouseX += (targetMouseX - mouseX) * 0.08;
+          mouseY += (targetMouseY - mouseY) * 0.08;
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(program);
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.enableVertexAttribArray(aPosition);
+          gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(uResolution, canvas.width, canvas.height);
+          gl.uniform1f(uTime, now * 0.001);
+          gl.uniform2f(uMouse, mouseX, mouseY);
+          gl.uniform1f(uSeed, seed);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      });
+    }
+
+    function resizeCanvas(canvas, gl) {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var width  = Math.max(1, Math.round(rect.width  * dpr));
+      var height = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width; canvas.height = height;
+      }
+    }
+
+    function createShader(gl, type, source) {
+      var shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    function createProgram(gl, vertexSource, fragmentSource) {
+      var vs = createShader(gl, gl.VERTEX_SHADER, vertexSource);
+      var fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vs || !fs) return null;
+      var program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+      }
+      return program;
+    }
+  </script>
+</body>
+</html>

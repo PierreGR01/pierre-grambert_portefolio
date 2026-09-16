@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kairn Design Studio — Embedded UI Design for Hardware Products | Pierre Grambert</title>
-  <meta name="description" content="Freelance mission designing embedded interfaces for two physical products — an e-bike motor ecosystem and an avalanche transceiver (DVA) — under real hardware and safety constraints. Figma design system, interaction design, safety-critical UX." />
+  <title>Kairn Design Studio — Embedded Interfaces for Two Hardware Products | Pierre Grambert</title>
+  <meta name="description" content="Product design case study by Pierre Grambert. Embedded interfaces for an Aventon e-bike motor ecosystem and a networked avalanche transceiver: hardware constraints, safety-critical interaction design, and a Figma design system delivered for firmware handoff." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Kairn Design Studio — Embedded UI Design for Hardware Products" />
-  <meta property="og:description" content="Freelance product design mission: embedded interfaces for an e-bike motor ecosystem and an avalanche transceiver, designed under hardware constraints, physical stress conditions, and zero-error-tolerance requirements." />
-  <meta property="og:image" content="../assets/images/kairn/IMAGE_01.png" />
+  <meta property="og:title" content="Kairn Design Studio — Embedded Interfaces for Two Hardware Products" />
+  <meta property="og:description" content="A freelance mission designing screens for an e-bike motor ecosystem and a networked avalanche transceiver, under hardware constraints, gloved-hand interaction and zero-margin safety requirements." />
+  <meta property="og:image" content="../assets/build/KAIRN/selec/IMAGE_01.png" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://www.pierregrambert.fr/kairn-design-studio/" />
+  <meta property="og:url" content="https://www.pierregrambert.fr/kairn/" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -218,6 +218,17 @@
       margin-bottom: 20px;
     }
 
+    /* Extension — secondary title line under the h1 (reused from bivouac) */
+    .hero-tagline {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 20px;
+      font-weight: 200;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      color: rgb(200, 200, 205);
+      margin-bottom: 20px;
+    }
+
     .hero-subtitle {
       font-family: Inter, sans-serif;
       font-size: 16px;
@@ -255,20 +266,120 @@
     }
 
     /* ─────────────────────────────────────────────────────────
-       Image placeholders & figures
+       CTA buttons (reused from bivouac)
     ───────────────────────────────────────────────────────── */
-    .img-placeholder {
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: none;
+      background: rgb(130, 225, 255);
+      color: rgb(10, 15, 30);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: rgb(100, 200, 240);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: 1px solid rgb(130, 225, 255);
+      color: rgb(130, 225, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(130, 225, 255, 0.08);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Figures — real images (reused from bivouac)
+    ───────────────────────────────────────────────────────── */
+    .figure-image {
+      display: block;
       width: 100%;
-      background: rgba(130, 225, 255, 0.04);
-      border: 1px solid rgba(130, 225, 255, 0.10);
+      height: auto;
+      cursor: zoom-in;
+    }
+
+    /* Extension — fullscreen lightbox for clicking a figure image
+       (reused from bivouac) */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10, 12, 20, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      cursor: zoom-out;
+    }
+
+    .lightbox-overlay.is-active {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(130, 225, 255, 0.4);
+      background: rgba(10, 12, 20, 0.6);
+      color: rgb(220, 235, 245);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgb(120, 120, 128);
-      font-family: "Titillium Web", sans-serif;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(130, 225, 255, 0.12);
     }
 
     figure {
@@ -290,6 +401,26 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-top: 40px;
+    }
+
+    /* Extension — forces two side-by-side photos of differing native
+       ratios to read at the same height (cropped, not stretched) */
+    .figure-grid--match-height .figure-image {
+      aspect-ratio: 3/2;
+      object-fit: cover;
+    }
+
+    /* Extension — 3-up row for a screen gallery; each image fills its
+       column edge to edge at a shared row height, cropped to match */
+    .figure-grid--3col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .figure-grid--3col .figure-image {
+      aspect-ratio: auto;
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
     }
 
     /* ─────────────────────────────────────────────────────────
@@ -413,6 +544,11 @@
       margin-top: 32px;
     }
 
+    /* Extension — 3-column variant for the takeaway cards (reused from bivouac) */
+    .decisions-grid--3col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
     .decision-card {
       border: 1px solid rgba(130, 225, 255, 0.14);
       padding: 28px 24px 32px;
@@ -449,6 +585,25 @@
       font-weight: 200;
       color: rgb(185, 185, 192);
       line-height: 1.65;
+    }
+
+    /* Extension — "Cost:" annotation line at the end of a decision card
+       (reused from bivouac) */
+    .decision-card .card-cost {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(130, 225, 255, 0.10);
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 200;
+      font-style: italic;
+      color: rgb(150, 150, 158);
+      line-height: 1.6;
+    }
+
+    .decision-card .card-cost strong {
+      font-style: normal;
+      color: rgb(170, 170, 177);
     }
 
     /* ─────────────────────────────────────────────────────────
@@ -588,17 +743,31 @@
         letter-spacing: 3px;
       }
 
+      .hero-tagline {
+        font-size: 17px;
+      }
+
       .context-grid {
         grid-template-columns: 1fr;
         gap: 0;
       }
 
-      .decisions-grid {
+      .decisions-grid,
+      .decisions-grid--3col {
         grid-template-columns: 1fr;
       }
 
-      .figure-grid {
+      .figure-grid,
+      .figure-grid--3col {
         grid-template-columns: 1fr;
+      }
+
+      .figure-grid--match-height .figure-image {
+        aspect-ratio: auto;
+      }
+
+      .figure-grid--3col .figure-image {
+        height: auto;
       }
 
       .section-content {
@@ -620,6 +789,20 @@
       .case-study__hero h1 {
         font-size: 19px;
         letter-spacing: 2px;
+      }
+
+      .hero-tagline {
+        font-size: 15px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
       }
 
       .section-footer {
@@ -657,36 +840,62 @@
         <header class="case-study__hero">
 
           <div class="hero-text">
-            <h1 itemprop="name">Kairn Design Studio — Embedded UI Design for Hardware Products</h1>
-            <p class="hero-subtitle" itemprop="description">A freelance product design mission at the intersection of hardware and digital experience — designing embedded interfaces for an e-bike motor ecosystem and an avalanche transceiver, where the interface cannot afford to fail.</p>
+            <h1 itemprop="name">Kairn Design Studio</h1>
+            <p class="hero-tagline">Embedded interfaces for two hardware products</p>
+            <p class="hero-subtitle" itemprop="description">A freelance mission designing the screens of an e-bike motor ecosystem for Aventon and of a networked avalanche transceiver for a major European brand. Fixed displays, no touch input, gloved hands, and information that has to be read while moving or while running a search.</p>
 
             <ul class="tags" aria-label="Skills and tools">
               <li>Embedded UI Design</li>
               <li>Interaction Design</li>
               <li>Safety-critical Design</li>
               <li>Design System</li>
-              <li>Figma</li>
               <li>Hardware UX</li>
               <li>Prototyping</li>
-              <li>Progressive Disclosure</li>
             </ul>
             <ul class="tags tags--meta" aria-label="Project meta">
-              <li>Freelance mission</li>
-              <li>2024 → 2025</li>
-              <li>Kairn Design Studio, Grenoble</li>
+              <li>2025</li>
+              <li>Freelance mission · Kairn Design Studio, Grenoble</li>
             </ul>
+
+            <div class="hero-ctas">
+              <a href="#design-decisions" class="btn-secondary">Jump to design decisions</a>
+            </div>
           </div>
 
           <div class="hero-image">
             <figure>
-              <div class="img-placeholder" data-id="IMAGE_01" style="aspect-ratio: 16/9;">
-                IMAGE_01 — E-bike handlebar interface or DVA directional UI
-              </div>
-              <figcaption>Kairn Design Studio — embedded interface design for physical products</figcaption>
+              <img class="figure-image" data-id="IMAGE_01" src="../assets/build/KAIRN/selec/IMAGE_01.png" alt="Aventon handlebar dashboard, in place on the bike">
+              <figcaption>Handlebar dashboard of the Aventon motor ecosystem, shipped hardware</figcaption>
             </figure>
           </div>
 
         </header>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 01b — What I want you to take from this project ── -->
+        <section id="takeaway" aria-labelledby="takeaway-heading" class="section-content">
+          <h2 id="takeaway-heading" class="section-heading">What I want you to take from this project</h2>
+
+          <p class="body-text">Three things, if you are deciding whether to talk to me.</p>
+
+          <div class="decisions-grid decisions-grid--3col">
+            <article class="decision-card">
+              <h3>I start from the physical limits of the device</h3>
+              <p>Screen dimensions, segment count, glare, viewing angle and glove interaction were documented per product before any wireframe existed. Everything after that followed from those numbers.</p>
+            </article>
+
+            <article class="decision-card">
+              <h3>I work where a misread has a cost</h3>
+              <p>On the transceiver, a second of hesitation during a search is a second of burial. That sets a different bar for what counts as a finished screen.</p>
+            </article>
+
+            <article class="decision-card">
+              <h3>My work ships in products people buy</h3>
+              <p>The Aventon UI system went through pre-production and is now in the hands of riders.</p>
+            </article>
+          </div>
+        </section>
 
         <hr class="section-divider">
 
@@ -698,26 +907,26 @@
             <div>
               <dl class="info-list">
                 <dt>Role</dt>
-                <dd>Freelance Product Designer — UX research, interaction design, UI system design, Figma prototyping and handoff</dd>
+                <dd>Freelance product designer at Kairn Design Studio. Constraint analysis, interaction design, UI system, Figma prototyping, developer handoff.</dd>
 
                 <dt>Timeline</dt>
-                <dd>2024–2025 · Two parallel product tracks, handled simultaneously</dd>
+                <dd>2025. Two product tracks running in parallel.</dd>
 
                 <dt>Tools</dt>
-                <dd>Figma · Figma Variables · Figma Auto Layout · Prototyping · Design system documentation</dd>
+                <dd>Figma · Figma Variables · Auto Layout · Interactive prototyping · Design system documentation</dd>
               </dl>
             </div>
 
             <div>
               <dl class="info-list">
                 <dt>Products designed</dt>
-                <dd>E-bike motor UI ecosystem: top-tube display (minimal, glanceable) + handlebar dashboard (structured navigation)<br><br>Avalanche transceiver (DVA): life-critical directional interface for search-and-rescue — ongoing</dd>
+                <dd>Aventon e-bike motor ecosystem: a top-tube display for glanceable reading, and a handlebar dashboard for structured navigation.<br><br>Networked avalanche transceiver for a major European brand: search interface for a device that exchanges data with the other transceivers around it.</dd>
 
                 <dt>Physical constraints</dt>
-                <dd>Hardware-bound screens. No touchscreen. Operated with gloves, in rain, direct sunlight, freezing temperatures. Real-time safety-critical feedback with zero margin for misinterpretation.</dd>
+                <dd>Hardware-bound screens, no touch input. Operated with gloves, in rain, direct sunlight and sub-zero temperatures. On the transceiver, a segment LCD with a fixed, countable vocabulary of shapes.</dd>
 
-                <dt>Why this project</dt>
-                <dd>After several years designing web interfaces and geospatial tools for professional users, this mission pushed that same logic into a radically more constrained context: screens you cannot touch, in conditions where a wrong read can cost a life.</dd>
+                <dt>Current status</dt>
+                <dd>Aventon UI system shipped in the production hardware. Transceiver track ongoing.</dd>
               </dl>
             </div>
 
@@ -730,59 +939,37 @@
         <section id="problem" aria-labelledby="problem-heading" class="section-content">
           <h2 id="problem-heading" class="section-heading">The problem</h2>
 
-          <p class="body-text">Two products, one shared constraint: the user cannot look away.</p>
-          <p class="body-text">Whether riding a trail at speed or searching for a buried person under avalanche stress, the interface has to deliver critical information at a glance — without demanding the cognitive load that the situation cannot afford. The challenge is not to design something beautiful. It is to design something that disappears when it needs to, and surfaces exactly the right signal at exactly the right moment.</p>
+          <p class="body-text">Both products are read by someone who cannot stop what they are doing. A rider on a trail keeps their hands on the bars and their attention on the ground ahead. A rescuer runs a search under time pressure, with degraded motor control from the cold.</p>
+          <p class="body-text">The e-bike question was one of subtraction. How small can a unit of information be and still be unambiguous at arm's length, in bright light, in half a second.</p>
+          <p class="body-text">The transceiver posed the opposite question. The brand is developing a networked generation of the device: each transceiver becomes a node, and searchers and buried victims form a temporary network in the avalanche field. A conventional transceiver picks up a transmitting device within roughly a hundred metres and shows a direction. A networked one can also report that a victim is already being searched by someone else, that a signal exists far beyond the usual range, and that a victim has been marked because they are located and being dug out.</p>
+          <p class="body-text">Knowing that changes what a rescuer does next, so the device also lets them choose which signal to pursue rather than always following the nearest one. That information matters most on large-scale, multi-victim rescues, which in practice means professional teams. The device still ships to anyone who walks into a shop. So the interface had to carry a larger set of states on a segment LCD, without making the basic search harder for the person who will only ever run one.</p>
 
-          <div class="callout">
-            <p>The real design problem wasn't "how do we show speed and battery level." It was: what is the minimum legible unit of information a rider or rescuer needs, and how do we make that unit unambiguous under the worst physical conditions we can anticipate?</p>
-          </div>
-
-          <div class="figure-grid">
+          <div class="figure-grid figure-grid--match-height">
             <figure>
-              <div class="img-placeholder" data-id="IMAGE_02" style="aspect-ratio: 3/2;">
-                IMAGE_02 — E-bike in use on trail
-              </div>
-              <figcaption>The interface is designed to be read in motion, in direct sunlight, without breaking focus from the trail</figcaption>
+              <img class="figure-image" data-id="IMAGE_02" src="../assets/build/KAIRN/selec/IMAGE_02.jpg" alt="E-bike in use on a trail">
+              <figcaption>Reading distance, viewing angle and sunlight set the type scale before any layout work</figcaption>
             </figure>
             <figure>
-              <div class="img-placeholder" data-id="IMAGE_03" style="aspect-ratio: 3/2;">
-                IMAGE_03 — DVA in field context
-              </div>
-              <figcaption>Avalanche rescue context — the user is operating under acute psychological stress and time pressure</figcaption>
+              <img class="figure-image" data-id="IMAGE_03" src="../assets/build/KAIRN/selec/IMAGE_03.jpg" alt="Transceiver search in field context">
+              <figcaption>Rescue context: gloves, cold, time pressure measured in minutes</figcaption>
             </figure>
           </div>
         </section>
 
         <hr class="section-divider">
 
-        <!-- ── Section 04 — Research & constraints ── -->
+        <!-- ── Section 04 — Research and constraints ── -->
         <section id="research" aria-labelledby="research-heading" class="section-content">
-          <h2 id="research-heading" class="section-heading">Research &amp; constraints</h2>
+          <h2 id="research-heading" class="section-heading">Research and constraints</h2>
 
-          <p class="body-text">The client had already conducted persona research. We used those personas as the foundation and extended them through our own constraint analysis — mapping the physical conditions each interface would have to survive before defining a single screen.</p>
-          <p class="body-text">For the e-bike, that meant understanding the difference between a casual urban rider checking battery levels at a red light and a trail rider who cannot take their hands off the bars. For the DVA, research focused on the cognitive state of the user during a rescue: acute stress, tunnel vision, degraded motor control from cold, time pressure measured in minutes.</p>
+          <p class="body-text">Aventon arrived with persona research already done, covering two rider profiles and their use contexts. That work was kept as the foundation and extended with a constraint analysis specific to each device.</p>
 
           <ul class="research-list" aria-label="Key research inputs">
-            <li><strong>Client-provided personas:</strong> two distinct rider profiles for the e-bike, with documented use contexts and environmental conditions</li>
-            <li><strong>Physical constraint mapping:</strong> screen size, ambient light levels, glove interaction, viewing angle and distance per product</li>
-            <li><strong>Competitive audit:</strong> analysis of existing e-bike HMI systems (Bosch, Shimano, Specialized) and professional DVA interfaces (Mammut, Ortovox, Arva)</li>
-            <li><strong>Scenario modelling:</strong> edge cases defined before wireframing — what happens in direct sunlight? What happens if the rider has one hand on the bar?</li>
+            <li><strong>Physical constraint mapping.</strong> Screen dimensions, ambient light levels, viewing distance and angle, glove interaction limits, documented per product.</li>
+            <li><strong>Segment budget.</strong> On the transceiver, the display is a finite set of segments defined by the hardware. Every state the network could produce had to be expressible inside that set, which capped the design vocabulary before the first sketch.</li>
+            <li><strong>Competitive audit.</strong> Existing e-bike HMI systems (Bosch, Shimano, Specialized) and professional transceivers (Mammut, Ortovox, Arva). The networked behaviour had no precedent to audit, so the reference points stopped at conventional search interfaces.</li>
+            <li><strong>Scenario modelling.</strong> Edge cases written before wireframing: direct sunlight, one hand on the bar, a multi-victim field where three states apply to three different signals at once.</li>
           </ul>
-
-          <div class="figure-grid">
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_04a" style="aspect-ratio: 16/9;">
-                IMAGE_04a — Constraint mapping / competitive HMI audit
-              </div>
-              <figcaption>Physical constraints defined before the first wireframe — screen dimensions, glare conditions, interaction limits</figcaption>
-            </figure>
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_04b" style="aspect-ratio: 16/9;">
-                IMAGE_04b — Persona / scenario artifact
-              </div>
-              <figcaption>Client-provided personas extended with physical use-context analysis</figcaption>
-            </figure>
-          </div>
         </section>
 
         <hr class="section-divider">
@@ -791,142 +978,118 @@
         <section id="design-decisions" aria-labelledby="decisions-heading" class="section-content">
           <h2 id="decisions-heading" class="section-heading">Design decisions</h2>
 
-          <p class="body-text">Every significant decision on this project was a trade-off between information richness and cognitive load — and the trade-off was never made in the designer's favour. The products set the terms. The design responded.</p>
-          <p class="body-text">The two products required distinct solutions, even when the underlying design language was shared.</p>
+          <p class="body-text">Every decision here traded information richness against reading effort, and the hardware set the terms each time.</p>
 
-          <!-- Track A — E-bike -->
+          <!-- Track A — Aventon motor ecosystem -->
           <div class="track-header">
-            <span class="section-label">Track A — E-bike motor ecosystem</span>
+            <span class="section-label">Track A — Aventon motor ecosystem</span>
           </div>
 
           <div class="decisions-grid">
             <article class="decision-card">
               <span class="card-label">Decision 01</span>
-              <h3>One visual system, two very different screens</h3>
-              <p>The top-tube display and the handlebar dashboard share a design language — type scale, colour coding, iconography — but serve completely different use cases. Figma Variables managed the shared tokens; the layout logic diverged deliberately from there.</p>
+              <h3>One design language, two divergent layouts</h3>
+              <p>The top-tube display and the handlebar dashboard share type scale, colour coding and iconography, managed as Figma Variables. Their layout logic separates from there, because one is read without looking and the other is navigated on purpose.</p>
+              <p class="card-cost"><strong>Cost:</strong> two layout systems maintained against a single token set, and every token change verified twice.</p>
             </article>
 
             <article class="decision-card">
               <span class="card-label">Decision 02</span>
-              <h3>Glanceability as the primary design constraint</h3>
-              <p>On the top-tube display, every element that was not readable in under 300ms was removed. Battery level, assist mode, a single speed indicator. The handlebar dashboard introduced progressive disclosure — deeper navigation only accessible through deliberate input.</p>
+              <h3>Three data points on the top-tube display</h3>
+              <p>Anything not readable in under 300 milliseconds came off the primary screen. What stayed: battery level, assist mode, speed. The rest moved to the dashboard, behind deliberate input.</p>
+              <p class="card-cost"><strong>Cost:</strong> riders who want more at a glance have to look at the second screen, and the split needs explaining once in the product.</p>
             </article>
           </div>
 
-          <div class="figure-grid">
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_05a" style="aspect-ratio: 16/9;">
-                IMAGE_05a — Top-tube display final screen
-              </div>
-              <figcaption>Top-tube interface — stripped to the three glanceable data points that matter in motion</figcaption>
-            </figure>
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_05b" style="aspect-ratio: 16/9;">
-                IMAGE_05b — Handlebar dashboard navigation state
-              </div>
-              <figcaption>Handlebar dashboard — richer navigation with progressive disclosure, accessible only through intentional input</figcaption>
-            </figure>
-          </div>
+          <figure style="margin-top: 40px;">
+            <div class="figure-grid figure-grid--3col" style="margin-top: 0;">
+              <img class="figure-image" data-id="IMAGE_05a-1" src="../assets/build/KAIRN/selec/IMAGE_05a-1.png" alt="Top-tube display, compass and slope screen">
+              <img class="figure-image" data-id="IMAGE_05a-2" src="../assets/build/KAIRN/selec/IMAGE_05a-2.jpg" alt="Top-tube display, range and trip time screen">
+              <img class="figure-image" data-id="IMAGE_05a-3" src="../assets/build/KAIRN/selec/IMAGE_05a-3.png" alt="Handlebar dashboard, status info menu">
+            </div>
+            <figcaption>Handlebar display screens — glanceable ride data alongside a deeper status menu, reached only through intentional input.</figcaption>
+          </figure>
 
-          <!-- Track B — DVA -->
+          <!-- Track B — Networked avalanche transceiver -->
           <div class="track-header">
-            <span class="section-label">Track B — Avalanche transceiver (DVA)</span>
+            <span class="section-label">Track B — Networked avalanche transceiver</span>
           </div>
 
           <div class="decisions-grid">
             <article class="decision-card">
               <span class="card-label">Decision 03</span>
-              <h3>Minimalism as a safety requirement, not an aesthetic choice</h3>
-              <p>Every element removed from the DVA interface was a deliberate functional decision. When the user is panicked and operating in freezing conditions, a cluttered screen is a dangerous screen. If an element didn't directly serve the search-and-rescue function, it was cut.</p>
+              <h3>The search screen keeps its conventional form</h3>
+              <p>Direction and distance stay where a rescuer trained on any other transceiver expects them. Network information attaches to the signals already displayed rather than opening a layer of its own. Someone switching brands mid-season loses nothing.</p>
+              <p class="card-cost"><strong>Cost:</strong> the innovation is invisible until it applies, and the brand gets no showcase screen out of it.</p>
             </article>
 
             <article class="decision-card">
               <span class="card-label">Decision 04</span>
-              <h3>Unambiguous directional feedback</h3>
-              <p>The core UI challenge was directional: guide a rescuer toward a buried victim using signal strength and bearing. High-contrast arrows, proximity rings with dynamic scaling, a reduced colour palette with a single high-salience accent — interpretable without any prior reading.</p>
+              <h3>Every signal carries a distance and a status</h3>
+              <p>Each victim the network reveals is listed with their distance and, where it applies, a status: under search by someone else, or marked as located. A signal at 70 m that is already marked and one at 90 m that nobody has reached are two different situations, and the screen has to show them as such. The segment budget set how many marks could be told apart at a glance, which in turn capped how many states the feature could carry.</p>
+              <p class="card-cost"><strong>Cost:</strong> the screen holds more than a conventional transceiver shows, and reading it takes longer than reading a single bearing. That cost is paid by every user, including the one who only ever needs the nearest signal.</p>
             </article>
 
             <article class="decision-card">
               <span class="card-label">Decision 05</span>
-              <h3>Transmit / Search mode states: visually undeniable</h3>
-              <p>Switching between Transmit and Search modes is the most critical transition in the device. The interface state change had to mirror the physical hardware switch — impossible to misread, impossible to miss.</p>
+              <h3>Proximity orders the list, the rescuer overrides it</h3>
+              <p>Conventional transceivers send the search to the closest signal and offer nothing else. Here proximity still orders the list, and the rescuer can select any other signal and work that one instead. The status marks are what make the choice worth having: the nearest victim being already marked is a reason to move on to the one at 90 m that no one has reached.</p>
+              <p class="card-cost"><strong>Cost:</strong> it introduces a decision into a moment that training has made automatic. Going for the nearest signal is a reflex built by every transceiver on the market, and overriding it demands a judgement call under stress that a conventional device never asks for.</p>
             </article>
           </div>
 
-          <div class="figure-grid" style="margin-top: 40px;">
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_05c" style="aspect-ratio: 3/4;">
-                IMAGE_05c — DVA directional search screen
-              </div>
-              <figcaption>DVA interface — directional search screen, proximity ring, signal strength indicator</figcaption>
-            </figure>
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_05d" style="aspect-ratio: 3/4;">
-                IMAGE_05d — DVA Transmit / Search mode comparison
-              </div>
-              <figcaption>Mode state comparison — Transmit (passive) vs. Search (active rescue), designed to match the physical switch</figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <hr class="section-divider">
-
-        <!-- ── Section 06 — Process & iterations ── -->
-        <section id="process" aria-labelledby="process-heading" class="section-content">
-          <h2 id="process-heading" class="section-heading">Process &amp; iterations</h2>
-
-          <p class="body-text">The iteration process on both products followed the same logic: start from the constraint, not from convention. Existing HMI patterns for e-bikes assume touchscreens and seated users. They were useful as reference points and as things to consciously reject.</p>
-          <p class="body-text">Early wireframes were deliberately rough — the goal was to pressure-test the information hierarchy before touching visual polish. Key questions at the wireframe stage: what survives when you squint at it? What survives when you hold it at arm's length in bright light? What survives when you only have half a second?</p>
-          <p class="body-text">For the DVA, iteration focused almost entirely on the directional feedback mechanism. The transition from abstract signal-strength numbers to a spatial, directional UI went through several failed attempts before reaching a solution that felt genuinely intuitive under simulated stress conditions.</p>
-
-          <div class="figure-grid">
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_06a" style="aspect-ratio: 16/9;">
-                IMAGE_06a — E-bike wireframe iteration v1
-              </div>
-              <figcaption>First iteration — information hierarchy test before any visual treatment</figcaption>
-            </figure>
-            <figure>
-              <div class="img-placeholder" data-id="IMAGE_06b" style="aspect-ratio: 16/9;">
-                IMAGE_06b — Rejected layout with annotation
-              </div>
-              <figcaption>Rejected approach — too much information on the primary surface, fails the 300ms glance test</figcaption>
-            </figure>
-          </div>
-
-          <figure style="margin-top: 20px;">
-            <div class="img-placeholder" data-id="IMAGE_06c" style="aspect-ratio: 16/7;">
-              IMAGE_06c — DVA directional UI iteration sequence
-            </div>
-            <figcaption>DVA directional feedback — iteration from abstract data display to spatially legible rescue interface</figcaption>
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_05c-1" src="../assets/build/KAIRN/selec/IMAGE_05c-1.png" alt="Transceiver segment-display icon set">
+            <img class="figure-image" data-id="IMAGE_05c-2" src="../assets/build/KAIRN/selec/IMAGE_05c-2.png" alt="Transceiver segment-display font specimen" style="margin-top: 16px;">
+            <figcaption>Segment-display icon set and font specimen for the transceiver — the fixed vocabulary each network state had to fit inside.</figcaption>
           </figure>
         </section>
 
         <hr class="section-divider">
 
-        <!-- ── Section 07 — Outcome & reflections ── -->
+        <!-- ── Section 06 — Process and iterations ── -->
+        <section id="process" aria-labelledby="process-heading" class="section-content">
+          <h2 id="process-heading" class="section-heading">Process and iterations</h2>
+
+          <p class="body-text">Wireframes stayed rough on purpose. The questions at that stage concerned legibility alone: what is still readable when you squint, at arm's length, in bright light, in half a second. Visual treatment came after the hierarchy held.</p>
+          <p class="body-text">The transceiver work ran against the segment budget throughout. Early versions expressed network states with short abbreviations, which the display could technically render and which failed as soon as they were read cold, without training. Moving to marks attached to each signal cost fewer segments and removed the reading step.</p>
+          <p class="body-text">Handoff for Aventon went to a firmware team working with pixel budgets rather than CSS. The design system was documented in those terms: fixed sizes, states enumerated one by one, nothing left to resolve at runtime.</p>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_06a-1" src="../assets/build/KAIRN/selec/IMAGE_06a-1.png" alt="Aventon UI design system board — icons, layout and settings specs">
+            <img class="figure-image" data-id="IMAGE_06a-2" src="../assets/build/KAIRN/selec/IMAGE_06a-2.png" alt="Remote control button task assignment mapping" style="margin-top: 16px;">
+            <img class="figure-image" data-id="IMAGE_06a-3" src="../assets/build/KAIRN/selec/IMAGE_06a-3.png" alt="Mode-metric screen variants — turbo, sport, eco, off" style="margin-top: 16px;">
+            <figcaption>Design system documentation — icon and layout specs, remote button mapping, and mode-metric screen variants used for firmware handoff.</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 07 — Outcome and reflections ── -->
         <section id="outcome" aria-labelledby="outcome-heading" class="section-content">
-          <h2 id="outcome-heading" class="section-heading">Outcome &amp; reflections</h2>
+          <h2 id="outcome-heading" class="section-heading">Outcome and reflections</h2>
 
-          <p class="body-text">The e-bike motor ecosystem is currently in its final pre-production phase — the product is expected to reach market in 2025. The UI system designed during this mission feeds directly into the shipped hardware.</p>
-          <p class="body-text">The DVA project is ongoing. It has already produced its most important output: a clear articulation of what safety-critical interface design actually requires in practice. Not the safety design principles you read in a textbook — the ones you arrive at when you spend time imagining the worst moment a user could face, and designing backwards from there.</p>
-          <p class="body-text">What this project reinforced: physical constraints are the most honest design brief you can receive. There is no room for decorative decisions. The interface either works under pressure or it doesn't. That discipline — designing for the person who has no attention to spare — is something I now bring to every project, including environments far less extreme than an avalanche field.</p>
+          <p class="body-text">The Aventon motor ecosystem reached the market with the UI system from this mission in the shipped hardware. The transceiver track is still running.</p>
 
-          <ul class="tags" style="margin-top: 28px;" aria-label="Outcomes">
-            <li>E-bike UI → in production (2025)</li>
-            <li>DVA → ongoing</li>
-            <li>Hardware UX</li>
-            <li>Safety-critical interfaces</li>
-            <li>Embedded systems design</li>
-            <li>Design under physical constraint</li>
-            <li>Figma design system delivered</li>
+          <span class="section-label" style="margin-top: 28px;">What this project sharpened in my practice</span>
+          <p class="body-text">A hardware budget settles arguments that research alone leaves open. When the display offers a countable number of segments, feature scope stops being a matter of opinion.</p>
+          <p class="body-text">Designing for a user with no attention to spare transfers well beyond hardware. Most professional tools are used by someone in the middle of something else, and the 300ms test applies to them too.</p>
+          <p class="body-text">A design system for firmware is a different object than one for the web. Enumerated states, fixed dimensions, no interpolation.</p>
+
+          <span class="section-label" style="margin-top: 28px;">What I would do differently</span>
+          <p class="body-text">Check the recreational user earlier. The network features were framed around professional rescue from the start, which is where they pay off, but the device sells to anyone. That group should have been in the room before the states were settled, not after.</p>
+
+          <ul class="tags" style="margin-top: 28px;" aria-label="Summary tags">
+            <li>Aventon e-bike UI system in production hardware</li>
+            <li>Networked avalanche transceiver, ongoing</li>
+            <li>Design under hardware constraint</li>
+            <li>Safety-critical interaction design</li>
+            <li>Figma design system delivered for firmware handoff</li>
           </ul>
 
           <figure style="margin-top: 40px;">
-            <div class="img-placeholder" data-id="IMAGE_07" style="aspect-ratio: 16/9;">
-              IMAGE_07 — E-bike product in real-world context
-            </div>
-            <figcaption>E-bike motor ecosystem — UI system currently in pre-production</figcaption>
+            <img class="figure-image" data-id="IMAGE_07" src="../assets/build/KAIRN/selec/IMAGE_07.png" alt="Aventon handlebar dashboard showing live ride data">
+            <figcaption>Motor ecosystem on the market, UI system from this mission</figcaption>
           </figure>
         </section>
 
@@ -987,6 +1150,57 @@
     </footer>
 
   </div>
+
+  <!-- ── Fullscreen image lightbox (reused from bivouac) ── -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('lightbox');
+      var overlayImg = document.getElementById('lightbox-img');
+      var closeBtn = overlay.querySelector('.lightbox-close');
+
+      function openLightbox(img) {
+        overlayImg.src = img.src;
+        overlayImg.alt = img.alt;
+        overlay.classList.add('is-active');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('is-active');
+        overlay.setAttribute('aria-hidden', 'true');
+        overlayImg.src = '';
+      }
+
+      document.querySelectorAll('.figure-image').forEach(function (img) {
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', 'View full screen: ' + img.alt);
+        img.addEventListener('click', function () { openLightbox(img); });
+        img.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(img);
+          }
+        });
+      });
+
+      overlay.addEventListener('click', closeLightbox);
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () { initLavaWebGL(); });

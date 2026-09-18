@@ -48,6 +48,10 @@
       padding: 0;
     }
 
+    html {
+      overflow-x: hidden;
+    }
+
     /* ─────────────────────────────────────────────────────────
        Body
     ───────────────────────────────────────────────────────── */
@@ -115,12 +119,12 @@
       color: rgb(130, 225, 255);
       text-transform: uppercase;
       text-decoration: none;
-      opacity: 0.65;
+      opacity: 1;
       transition: opacity 0.2s ease;
     }
 
     a.site-name:hover {
-      opacity: 1;
+      opacity: 0.7;
     }
 
     /* ─────────────────────────────────────────────────────────
@@ -200,6 +204,12 @@
     .btn-sticky-secondary:hover {
       background: rgba(130, 225, 255, 0.08);
       border-color: rgb(130, 225, 255);
+    }
+
+    /* Shorter labels swapped in at narrow widths so the sticky nav
+       never crowds or overflows (see mobile breakpoint below) */
+    .btn-label-short {
+      display: none;
     }
 
     /* ─────────────────────────────────────────────────────────
@@ -870,23 +880,29 @@
       .project-card   { flex: 0 0 50%; }
       .project-figure { height: 180px; }
 
-      /* Extension — the sticky-header nav on this page carries a longer
-         primary label ("Open the application") than the other case
-         studies; wrap it instead of overflowing at narrow widths */
       .sticky-header__inner {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 10px 16px;
-        row-gap: 8px;
+        padding: 0 16px;
       }
 
       .sticky-header__nav {
-        flex-wrap: wrap;
-        width: 100%;
+        gap: 8px;
+      }
+
+      .btn-sticky-primary,
+      .btn-sticky-secondary {
+        padding: 0 12px;
+      }
+
+      .btn-label-full {
+        display: none;
+      }
+
+      .btn-label-short {
+        display: inline;
       }
 
       .container {
-        padding: 140px 16px 0;
+        padding: 54px 16px 0;
       }
 
       .case-study__hero h1 {
@@ -932,8 +948,8 @@
     <div class="sticky-header__inner">
       <a href="../" class="site-name">← Pierre Grambert</a>
       <nav class="sticky-header__nav" aria-label="Page actions">
-        <a href="https://bivouac-proto.vercel.app/" class="btn-sticky-primary" target="_blank" rel="noopener">Open the application <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        <a href="../kairn/" class="btn-sticky-secondary" aria-label="Kairn design project">Next project <span aria-hidden="true">→</span></a>
+        <a href="https://bivouac-proto.vercel.app/" class="btn-sticky-primary" target="_blank" rel="noopener"><span class="btn-label-full">Open the application</span><span class="btn-label-short">View</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="../kairn/" class="btn-sticky-secondary" aria-label="Kairn design project"><span class="btn-label-full">Next project</span><span class="btn-label-short">Next</span> <span aria-hidden="true">→</span></a>
       </nav>
     </div>
   </header>

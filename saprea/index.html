@@ -417,6 +417,15 @@
       line-height: 1.5;
     }
 
+    /* Floats a figure so the surrounding paragraphs wrap around it
+       instead of leaving the column next to a left-aligned text
+       block empty */
+    .figure--float {
+      float: right;
+      width: 45%;
+      margin: 0 0 24px 40px;
+    }
+
     .figure-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -714,6 +723,12 @@
         gap: 0;
       }
 
+      .figure--float {
+        float: none;
+        width: 100%;
+        margin: 0 0 24px;
+      }
+
       .decisions-grid,
       .decisions-grid--3col {
         grid-template-columns: 1fr;
@@ -921,6 +936,11 @@
         <!-- ── Section 03 — The challenge ── -->
         <section id="challenge" aria-labelledby="challenge-heading" class="section-content">
           <h2 id="challenge-heading" class="section-heading">The challenge</h2>
+
+          <figure class="figure--float">
+            <img class="figure-image" data-id="IMAGE_00" src="../assets/build/SAPREA/IMAGE_00.jpg" alt="saprea.org page header, 'Understand the Issue of Child Sexual Abuse', with a mother comforting her child">
+            <figcaption>saprea.org, the educational content merged into the main site by the February 2022 rebrand</figcaption>
+          </figure>
 
           <p class="body-text">The organisation ran three platforms: The Younique Foundation as the public face, Defend Innocence for educational resources, Support Groups for creating and joining a group. Three services, three teams, and three navigation logics grown apart over the years. The February 2022 rebrand merged Defend Innocence into the main site, taking three platforms to two, and left the real question open: what the merged site is now for, and how someone crosses the seam that remains. Behavioural data answered part of it. The heaviest drop-off sat exactly at the handover from educational content to programme enrolment, where a person who has decided to ask for help has to learn the organisation a second time.</p>
           <p class="body-text">The rebrand also delivered a finished visual identity with general guidelines for its use, leaving a wide margin on specific applications: a screen, a research report, a gala campaign, the printed material a facilitator hands out in a support group. Translating it surface by surface was the creative team's work, my manager leading on print where it was her craft, me on digital and on the interaction patterns, both of us holding the two sides to each other. The audience set the standard for all of it — survivors, families and professionals are served by the quiet register, and clarity was the brief itself.</p>

@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="t d">
+  <title id="t">Two scales for one water column</title>
+  <desc id="d">The same water column drawn two ways, from 50 m above the surface to a seabed at 4,120 m. On one linear scale, the first 200 m take 5 % of the height, and 26 of the model's 50 depth levels and four key depths are crushed into a few pixels. On the three tiers of the design, 0 to 200 m, 200 to 1,000 m and 1,000 m to the seabed, following the sunlit and twilight zones, the first 200 m take 55 % of the height and the key depths separate: mixed layer 20 m, thermocline 45 m, chlorophyll maximum 62 m, euphotic zone 150 m, oxygen minimum 400 to 800 m. Each change of tier is a dotted line across the column.</desc>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 15px; }
+    .num { font-size: 15px; font-weight: 600; fill: #5A6870; }
+    .note { font-size: 13px; fill: #5A6870; }
+    .in-dark { font-size: 19px; font-weight: 700; fill: #FFFFFF; }
+    .in-light { font-size: 19px; font-weight: 700; fill: #2B3A42; }
+  </style>
+  <rect width="1200" height="800" fill="#FFFFFF"/>
+  <text class="h" x="140" y="72">One linear scale</text>
+  <text class="sub" x="140" y="96">+50 m to the seabed at 4 120 m,</text>
+  <text class="sub" x="140" y="116">evenly spread</text>
+  <rect x="236" y="196" width="36" height="6.2" fill="#F2F5F7"/>
+  <rect x="236" y="202.2" width="36" height="513.8" fill="#E4EEF1"/>
+  <line x1="236" y1="202.2" x2="272" y2="202.2" stroke="#2B3A42" stroke-width="1.5"/>
+  <line x1="236" y1="716" x2="272" y2="716" stroke="#2B3A42" stroke-width="2"/>
+  <line x1="272" y1="202.3" x2="282" y2="202.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="202.4" x2="282" y2="202.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="202.6" x2="282" y2="202.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="202.7" x2="282" y2="202.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="202.9" x2="282" y2="202.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="203.0" x2="282" y2="203.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="203.2" x2="282" y2="203.2" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="203.4" x2="282" y2="203.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="203.7" x2="282" y2="203.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="203.9" x2="282" y2="203.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="204.2" x2="282" y2="204.2" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="204.5" x2="282" y2="204.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="204.9" x2="282" y2="204.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="205.4" x2="282" y2="205.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="205.9" x2="282" y2="205.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="206.5" x2="282" y2="206.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="207.3" x2="282" y2="207.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="208.1" x2="282" y2="208.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="209.2" x2="282" y2="209.2" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="210.4" x2="282" y2="210.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="211.9" x2="282" y2="211.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="213.7" x2="282" y2="213.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="215.9" x2="282" y2="215.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="218.5" x2="282" y2="218.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="221.7" x2="282" y2="221.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="225.4" x2="282" y2="225.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="230.0" x2="282" y2="230.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="235.4" x2="282" y2="235.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="241.9" x2="282" y2="241.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="249.6" x2="282" y2="249.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="258.8" x2="282" y2="258.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="269.7" x2="282" y2="269.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="282.5" x2="282" y2="282.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="297.4" x2="282" y2="297.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="314.8" x2="282" y2="314.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="334.7" x2="282" y2="334.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="357.5" x2="282" y2="357.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="383.3" x2="282" y2="383.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="412.3" x2="282" y2="412.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="444.4" x2="282" y2="444.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="479.7" x2="282" y2="479.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="518.1" x2="282" y2="518.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="559.6" x2="282" y2="559.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="603.9" x2="282" y2="603.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="650.8" x2="282" y2="650.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="272" y1="700.1" x2="282" y2="700.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="230" y1="202.2" x2="236" y2="202.2" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="224" y="206.7" text-anchor="end">0</text>
+  <line x1="230" y1="326.9" x2="236" y2="326.9" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="224" y="331.4" text-anchor="end">1 000</text>
+  <line x1="230" y1="451.6" x2="236" y2="451.6" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="224" y="456.1" text-anchor="end">2 000</text>
+  <line x1="230" y1="576.3" x2="236" y2="576.3" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="224" y="580.8" text-anchor="end">3 000</text>
+  <line x1="230" y1="716.0" x2="236" y2="716.0" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="224" y="720.5" text-anchor="end">4 120</text>
+  <path d="M296,202.2 h6 V227.2 h-6" fill="none" stroke="#1D5C63" stroke-width="1.5"/>
+  <text class="lab" x="312" y="210"><tspan font-weight="600">First 200 m: 5 % of the height</tspan></text>
+  <text class="note" x="312" y="230">26 of the model's 50 depth levels and the four</text>
+  <text class="note" x="312" y="248">upper key depths share these few pixels</text>
+  <path d="M296,252.1 h6 V302.0 h-6" fill="none" stroke="#7A8890" stroke-width="1.5"/>
+  <text class="note" x="312" y="281.6">Oxygen min. 400–800 m</text>
+  <text class="note" x="312" y="720.5">Seabed 4 120 m</text>
+  <text class="h" x="664" y="72">Three tiers, as designed</text>
+  <text class="sub" x="664" y="96">0–200 m, 200–1 000 m, then the seabed,</text>
+  <text class="sub" x="664" y="116">at 55, 25 and 20 % of the water</text>
+  <rect x="760" y="196" width="36" height="44.0" fill="#F2F5F7"/>
+  <rect x="760" y="240.0" width="36" height="476.0" fill="#E4EEF1"/>
+  <line x1="760" y1="240.0" x2="796" y2="240.0" stroke="#2B3A42" stroke-width="1.5"/>
+  <line x1="760" y1="716" x2="796" y2="716" stroke="#2B3A42" stroke-width="2"/>
+  <line x1="796" y1="240.7" x2="806" y2="240.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="242.0" x2="806" y2="242.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="243.4" x2="806" y2="243.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="245.0" x2="806" y2="245.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="246.7" x2="806" y2="246.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="248.4" x2="806" y2="248.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="250.3" x2="806" y2="250.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="252.6" x2="806" y2="252.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="254.9" x2="806" y2="254.9" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="257.7" x2="806" y2="257.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="260.7" x2="806" y2="260.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="264.2" x2="806" y2="264.2" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="268.3" x2="806" y2="268.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="273.0" x2="806" y2="273.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="278.5" x2="806" y2="278.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="285.0" x2="806" y2="285.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="292.8" x2="806" y2="292.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="302.0" x2="806" y2="302.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="313.0" x2="806" y2="313.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="326.1" x2="806" y2="326.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="342.0" x2="806" y2="342.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="360.8" x2="806" y2="360.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="383.6" x2="806" y2="383.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="411.1" x2="806" y2="411.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="444.1" x2="806" y2="444.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="483.6" x2="806" y2="483.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="505.1" x2="806" y2="505.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="511.6" x2="806" y2="511.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="519.4" x2="806" y2="519.4" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="528.6" x2="806" y2="528.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="539.6" x2="806" y2="539.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="552.5" x2="806" y2="552.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="567.8" x2="806" y2="567.8" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="585.6" x2="806" y2="585.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="606.3" x2="806" y2="606.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="622.7" x2="806" y2="622.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="628.3" x2="806" y2="628.3" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="634.6" x2="806" y2="634.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="641.7" x2="806" y2="641.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="649.5" x2="806" y2="649.5" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="658.2" x2="806" y2="658.2" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="667.6" x2="806" y2="667.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="677.7" x2="806" y2="677.7" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="688.6" x2="806" y2="688.6" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="700.0" x2="806" y2="700.0" stroke="#7A8890" stroke-width="1"/>
+  <line x1="796" y1="712.1" x2="806" y2="712.1" stroke="#7A8890" stroke-width="1"/>
+  <line x1="754" y1="196.0" x2="760" y2="196.0" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="200.5" text-anchor="end">+50</text>
+  <line x1="754" y1="240.0" x2="760" y2="240.0" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="244.5" text-anchor="end">0</text>
+  <line x1="754" y1="370.9" x2="760" y2="370.9" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="375.4" text-anchor="end">100</text>
+  <line x1="754" y1="501.8" x2="760" y2="501.8" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="506.3" text-anchor="end">200</text>
+  <line x1="754" y1="546.4" x2="760" y2="546.4" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="550.9" text-anchor="end">500</text>
+  <line x1="754" y1="620.8" x2="760" y2="620.8" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="625.3" text-anchor="end">1 000</text>
+  <line x1="754" y1="651.3" x2="760" y2="651.3" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="655.8" text-anchor="end">2 000</text>
+  <line x1="754" y1="716.0" x2="760" y2="716.0" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="748" y="720.5" text-anchor="end">4 120</text>
+  <line x1="756" y1="501.8" x2="806" y2="501.8" stroke="#1D5C63" stroke-width="1.5" stroke-dasharray="2 3"/>
+  <line x1="756" y1="620.8" x2="806" y2="620.8" stroke="#1D5C63" stroke-width="1.5" stroke-dasharray="2 3"/>
+  <line x1="758" y1="266.2" x2="798" y2="266.2" stroke="#2B3A42" stroke-width="2"/>
+  <text class="note" x="836" y="270.7"><tspan fill="#2B3A42">Mixed layer</tspan>  20 m</text>
+  <line x1="758" y1="298.9" x2="798" y2="298.9" stroke="#2B3A42" stroke-width="2"/>
+  <text class="note" x="836" y="303.4"><tspan fill="#2B3A42">Thermocline</tspan>  45 m</text>
+  <line x1="758" y1="321.2" x2="798" y2="321.2" stroke="#2B3A42" stroke-width="2"/>
+  <text class="note" x="836" y="325.7"><tspan fill="#2B3A42">Chlorophyll max.</tspan>  62 m</text>
+  <line x1="758" y1="436.4" x2="798" y2="436.4" stroke="#2B3A42" stroke-width="2"/>
+  <text class="note" x="836" y="440.9"><tspan fill="#2B3A42">Euphotic zone</tspan>  150 m</text>
+  <path d="M820,531.5 h6 V591.0 h-6" fill="none" stroke="#2B3A42" stroke-width="1.5"/>
+  <text class="note" x="836" y="565.8"><tspan fill="#2B3A42">Oxygen min.</tspan>  400–800 m</text>
+  <text class="note" x="836" y="720.5"><tspan fill="#2B3A42">Seabed</tspan>  4 120 m</text>
+  <text class="note" x="676" y="375.4" text-anchor="end" font-style="italic">Sunlit zone</text>
+  <text class="note" x="676" y="565.8" text-anchor="end" font-style="italic">Twilight zone</text>
+  <text class="note" x="676" y="672.9" text-anchor="end" font-style="italic">Deep ocean</text>
+  <path d="M1010,240.0 h6 V501.8 h-6" fill="none" stroke="#1D5C63" stroke-width="1.5"/>
+  <text class="lab" x="1026" y="367"><tspan font-weight="600">First 200 m:</tspan></text>
+  <text class="lab" x="1026" y="387"><tspan font-weight="600">55 % of the height</tspan></text>
+  <line x1="60" y1="761" x2="70" y2="761" stroke="#7A8890" stroke-width="1"/>
+  <text class="note" x="78" y="766">One model depth level</text>
+  <line x1="250" y1="761" x2="282" y2="761" stroke="#1D5C63" stroke-width="1.5" stroke-dasharray="2 3"/>
+  <text class="note" x="290" y="766">Change of scale, drawn across the column, never as a gap</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 432" width="1200" height="432" role="img" aria-labelledby="t d">
+  <title id="t">Where each feature comes from</title>
+  <desc id="d">Stacked bars of the feature catalogues of four applications, by origin. Iceberg Navigation: 77 features, 20 owed under the specification, 27 committed in the offer, 27 proposed by the framing, 3 additions. Fish Stock: 76 features, 20 owed, 19 committed, 34 proposed, 3 additions. Protected Areas: 68 features, 22 owed, 14 committed, 29 proposed, 3 additions. MyOcean Mobile: 84 features, 39 owed, 16 committed, 27 proposed, 2 additions. Between a quarter and a half of each catalogue is owed.</desc>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 15px; }
+    .num { font-size: 15px; font-weight: 600; fill: #5A6870; }
+    .note { font-size: 13px; fill: #5A6870; }
+    .in-dark { font-size: 19px; font-weight: 700; fill: #FFFFFF; }
+    .in-light { font-size: 19px; font-weight: 700; fill: #2B3A42; }
+  </style>
+  <rect width="1200" height="432" fill="#FFFFFF"/>
+  <rect x="60" y="72" width="14" height="14" rx="3" fill="#005358"/>
+  <text class="sub" x="82" y="84">Owed under the specification</text>
+  <rect x="312" y="72" width="14" height="14" rx="3" fill="#1d777b"/>
+  <text class="sub" x="334" y="84">Committed in the offer</text>
+  <rect x="528" y="72" width="14" height="14" rx="3" fill="#4f9a9e"/>
+  <text class="sub" x="550" y="84">Proposed by the framing, to confirm</text>
+  <rect x="820" y="72" width="14" height="14" rx="3" fill="#83bdc0"/>
+  <text class="sub" x="842" y="84">Addition, flagged</text>
+  <text class="lab" x="60" y="153">Iceberg Navigation</text>
+  <rect x="270.0" y="136" width="164.7" height="24" fill="#005358"/>
+  <text class="in-dark" x="352.3" y="155" text-anchor="middle">20</text>
+  <rect x="436.7" y="136" width="223.0" height="24" fill="#1d777b"/>
+  <text class="in-dark" x="548.2" y="155" text-anchor="middle">27</text>
+  <rect x="661.7" y="136" width="223.0" height="24" fill="#4f9a9e"/>
+  <text class="in-light" x="773.2" y="155" text-anchor="middle">27</text>
+  <path d="M886.7,136 h21.0 a4,4 0 0 1 4,4 v16 a4,4 0 0 1 -4,4 h-21.0 z" fill="#83bdc0"/>
+  <text class="num" x="926" y="153">77</text>
+  <text class="note" x="956" y="153">26 % owed</text>
+  <text class="lab" x="60" y="217">Fish Stock</text>
+  <rect x="270.0" y="200" width="164.7" height="24" fill="#005358"/>
+  <text class="in-dark" x="352.3" y="219" text-anchor="middle">20</text>
+  <rect x="436.7" y="200" width="156.3" height="24" fill="#1d777b"/>
+  <text class="in-dark" x="514.8" y="219" text-anchor="middle">19</text>
+  <rect x="595.0" y="200" width="281.3" height="24" fill="#4f9a9e"/>
+  <text class="in-light" x="735.7" y="219" text-anchor="middle">34</text>
+  <path d="M878.3,200 h21.0 a4,4 0 0 1 4,4 v16 a4,4 0 0 1 -4,4 h-21.0 z" fill="#83bdc0"/>
+  <text class="num" x="917" y="217">76</text>
+  <text class="note" x="947" y="217">26 % owed</text>
+  <text class="lab" x="60" y="281">Protected Areas</text>
+  <rect x="270.0" y="264" width="181.3" height="24" fill="#005358"/>
+  <text class="in-dark" x="360.7" y="283" text-anchor="middle">22</text>
+  <rect x="453.3" y="264" width="114.7" height="24" fill="#1d777b"/>
+  <text class="in-dark" x="510.7" y="283" text-anchor="middle">14</text>
+  <rect x="570.0" y="264" width="239.7" height="24" fill="#4f9a9e"/>
+  <text class="in-light" x="689.8" y="283" text-anchor="middle">29</text>
+  <path d="M811.7,264 h21.0 a4,4 0 0 1 4,4 v16 a4,4 0 0 1 -4,4 h-21.0 z" fill="#83bdc0"/>
+  <text class="num" x="851" y="281">68</text>
+  <text class="note" x="881" y="281">32 % owed</text>
+  <text class="lab" x="60" y="345">MyOcean Mobile</text>
+  <rect x="270.0" y="328" width="323.0" height="24" fill="#005358"/>
+  <text class="in-dark" x="431.5" y="347" text-anchor="middle">39</text>
+  <rect x="595.0" y="328" width="131.3" height="24" fill="#1d777b"/>
+  <text class="in-dark" x="660.7" y="347" text-anchor="middle">16</text>
+  <rect x="728.3" y="328" width="223.0" height="24" fill="#4f9a9e"/>
+  <text class="in-light" x="839.8" y="347" text-anchor="middle">27</text>
+  <path d="M953.3,328 h12.7 a4,4 0 0 1 4,4 v16 a4,4 0 0 1 -4,4 h-12.7 z" fill="#83bdc0"/>
+  <text class="num" x="984" y="345">84</text>
+  <text class="note" x="1014" y="345">46 % owed</text>
+  <text class="note" x="60" y="398">Feature catalogues of four applications, September 2026. The immersive application keeps its catalogue in its design file.</text>
+</svg>

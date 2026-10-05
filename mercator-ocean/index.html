@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mercator Ocean — Product Design for Copernicus Marine Applications | Pierre Grambert</title>
+  <meta name="description" content="Product design case study by Pierre Grambert. UX lead at Camptocamp on five applications for Mercator Ocean International and the European Digital Twin of the Ocean: a framing method applied to five products, one shared design system, and interfaces that show the limits of model data." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mercator Ocean — Five Ocean-Data Applications, One Design System" />
+  <meta property="og:description" content="Four web apps and one mobile app that put Copernicus Marine models in front of non-specialists: one framing method, one shared Figma library, and verdicts that never leave their uncertainty." />
+  <meta property="og:image" content="https://pierregrambert.fr/assets/build/MERCATOR/IMAGE_01.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pierregrambert.fr/mercator-ocean/" />
+  <link rel="canonical" href="https://pierregrambert.fr/mercator-ocean/" />
+
+  <!-- Favicon — a small lava-blob glow echoing the project card blobs -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/build/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/build/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="../assets/build/favicon/apple-touch-icon.png">
+  <link rel="shortcut icon" href="../assets/build/favicon/favicon.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&family=Inter:wght@200&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       CSS Houdini — animatable custom properties for gradient
+    ───────────────────────────────────────────────────────── */
+    @property --x1 { syntax: "<percentage>"; inherits: false; initial-value: 80%;  }
+    @property --y1 { syntax: "<percentage>"; inherits: false; initial-value: 55%;  }
+    @property --x2 { syntax: "<percentage>"; inherits: false; initial-value: 20%;  }
+    @property --y2 { syntax: "<percentage>"; inherits: false; initial-value: 65%;  }
+    @property --x3 { syntax: "<percentage>"; inherits: false; initial-value: 50%;  }
+    @property --y3 { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+
+    @keyframes gradient {
+      0%   { --x1: 80%; --y1: 55%; --x2: 20%; --y2: 65%; --x3: 50%; --y3: 100%; }
+      50%  { --x1: 70%; --y1: 40%; --x2: 35%; --y2: 75%; --x3: 55%; --y3:  85%; }
+      100% { --x1: 75%; --y1: 65%; --x2: 25%; --y2: 60%; --x3: 45%; --y3: 110%; }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Reset
+    ───────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body
+    ───────────────────────────────────────────────────────── */
+    body {
+      background: transparent;
+      min-height: 100vh;
+      color: rgb(200, 200, 205);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Page background — fixed div so backdrop-filter can blur it
+    ───────────────────────────────────────────────────────── */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at var(--x1) var(--y1), rgba(0, 0, 255, 0.5)  0%, transparent  40%),
+        radial-gradient(circle at var(--x2) var(--y2), rgb(40, 0, 90)         0%, transparent  90%),
+        radial-gradient(circle at var(--x3) var(--y3), rgb(30, 0, 5)         50%, transparent 200%);
+      animation: gradient 6s ease-in-out infinite alternate;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Layout
+    ───────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 54px 20px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section divider
+    ───────────────────────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(165, 165, 165, 0.15);
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Sticky header
+    ───────────────────────────────────────────────────────── */
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(200, 235, 255, 0.15);
+      backdrop-filter: blur(45px);
+      -webkit-backdrop-filter: blur(45px);
+      border-bottom: 1px solid rgba(130, 225, 255, 0.18);
+    }
+
+    .sticky-header__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+    }
+
+    .sticky-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .site-name {
+      display: inline-block;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    a.site-name:hover {
+      opacity: 0.7;
+    }
+
+    .btn-sticky-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 0 16px;
+      border: 1px solid rgba(130, 225, 255, 0.55);
+      color: rgb(130, 225, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-sticky-secondary:hover {
+      background: rgba(130, 225, 255, 0.08);
+      border-color: rgb(130, 225, 255);
+    }
+
+    /* Shorter labels swapped in at narrow widths so the sticky nav
+       never crowds or overflows (see mobile breakpoint below) */
+    .btn-label-short {
+      display: none;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section label — small uppercase tag
+    ───────────────────────────────────────────────────────── */
+    .section-label {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      opacity: 1;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section heading — h2 level
+    ───────────────────────────────────────────────────────── */
+    .section-heading {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+      letter-spacing: 6px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Hero section
+    ───────────────────────────────────────────────────────── */
+    .case-study__hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      padding: 32px 0 60px;
+    }
+
+    .case-study__hero h1 {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 34px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      line-height: 1.2;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* Extension — secondary title line under the h1 (reused from bivouac) */
+    .hero-tagline {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 20px;
+      font-weight: 200;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      color: rgb(200, 200, 205);
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-family: Inter, sans-serif;
+      font-size: 16px;
+      font-weight: 200;
+      color: rgb(190, 190, 195);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Tags — skills and meta rows
+    ───────────────────────────────────────────────────────── */
+    .tags {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tags li {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.3px;
+      color: rgb(130, 225, 255);
+      border: 1px solid rgba(130, 225, 255, 0.28);
+      padding: 3px 11px;
+      white-space: nowrap;
+    }
+
+    .tags--meta li {
+      color: rgb(145, 145, 152);
+      border-color: rgba(145, 145, 152, 0.25);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       CTA buttons (reused from bivouac)
+    ───────────────────────────────────────────────────────── */
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: none;
+      background: rgb(130, 225, 255);
+      color: rgb(10, 15, 30);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: rgb(100, 200, 240);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 24px;
+      border: 1px solid rgb(130, 225, 255);
+      color: rgb(130, 225, 255);
+      background: transparent;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(130, 225, 255, 0.08);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Figures — real images (reused from bivouac)
+    ───────────────────────────────────────────────────────── */
+    .figure-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: zoom-in;
+    }
+
+    /* Extension — fullscreen lightbox for clicking a figure image
+       (reused from bivouac) */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10, 12, 20, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      cursor: zoom-out;
+    }
+
+    .lightbox-overlay.is-active {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(130, 225, 255, 0.4);
+      background: rgba(10, 12, 20, 0.6);
+      color: rgb(220, 235, 245);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(130, 225, 255, 0.12);
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    figcaption {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 200;
+      color: rgb(175, 175, 182);
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    /* Extension — forces two side-by-side photos of differing native
+       ratios to read at the same height (cropped, not stretched) */
+    .figure-grid--match-height .figure-image {
+      aspect-ratio: 3/2;
+      object-fit: cover;
+    }
+
+    /* Extension — 3-up row for a screen gallery; each image fills its
+       column edge to edge at a shared row height, cropped to match */
+    .figure-grid--3col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .figure-grid--3col .figure-image {
+      aspect-ratio: auto;
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Section content wrapper
+    ───────────────────────────────────────────────────────── */
+    .section-content {
+      padding: 60px 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body text
+    ───────────────────────────────────────────────────────── */
+    .body-text {
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 200;
+      color: rgb(190, 190, 195);
+      line-height: 1.85;
+      max-width: 760px;
+    }
+
+    .body-text + .body-text {
+      margin-top: 18px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Context grid — two-column meta
+    ───────────────────────────────────────────────────────── */
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .info-list dt {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-top: 28px;
+      margin-bottom: 6px;
+    }
+
+    .info-list dt:first-child {
+      margin-top: 0;
+    }
+
+    .info-list dd {
+      font-family: Inter, sans-serif;
+      font-size: 13.5px;
+      font-weight: 200;
+      color: rgb(190, 190, 197);
+      line-height: 1.75;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Callout — accent left border
+    ───────────────────────────────────────────────────────── */
+    .callout {
+      border-left: 2px solid rgb(130, 225, 255);
+      padding-left: 22px;
+      margin-top: 24px;
+      max-width: 760px;
+    }
+
+    .callout p {
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      font-weight: 200;
+      color: rgb(220, 220, 225);
+      line-height: 1.75;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Research list — styled bullet
+    ───────────────────────────────────────────────────────── */
+    .research-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 28px;
+      max-width: 760px;
+    }
+
+    .research-list li {
+      font-family: Inter, sans-serif;
+      font-size: 13.5px;
+      font-weight: 200;
+      color: rgb(190, 190, 197);
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .research-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 1px;
+      background: rgb(130, 225, 255);
+      opacity: 0.55;
+    }
+
+    .research-list li strong {
+      color: rgb(220, 220, 225);
+      font-weight: 200;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Decision cards — 2×2 grid
+    ───────────────────────────────────────────────────────── */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    /* Extension — 3-column variant for the takeaway cards (reused from bivouac) */
+    .decisions-grid--3col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .decision-card {
+      border: 1px solid rgba(130, 225, 255, 0.14);
+      padding: 28px 24px 32px;
+      background: rgba(130, 225, 255, 0.025);
+    }
+
+    .decision-card .card-label {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      opacity: 0.8;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .decision-card h3 {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 13px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(130, 225, 255, 0.18);
+    }
+
+    .decision-card p {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 200;
+      color: rgb(185, 185, 192);
+      line-height: 1.65;
+    }
+
+    /* Extension — "Cost:" annotation line at the end of a decision card
+       (reused from bivouac) */
+    .decision-card .card-cost {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(130, 225, 255, 0.10);
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 200;
+      font-style: italic;
+      color: rgb(150, 150, 158);
+      line-height: 1.6;
+    }
+
+    .decision-card .card-cost strong {
+      font-style: normal;
+      color: rgb(170, 170, 177);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Track header — divider between product tracks
+    ───────────────────────────────────────────────────────── */
+    .track-header {
+      border-top: 1px solid rgba(130, 225, 255, 0.15);
+      padding-top: 40px;
+      margin-top: 52px;
+    }
+
+    .track-header .section-label {
+      margin-bottom: 16px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Project blobs section
+    ───────────────────────────────────────────────────────── */
+    .section-projects {
+      padding-top: 60px;
+      padding-bottom: 0;
+    }
+
+    .projects-grid {
+      display: flex;
+    }
+
+    .project-card {
+      flex: 1;
+      display: flex;
+      text-decoration: none;
+    }
+
+    .project-figure {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      width: 100%;
+      height: 250px;
+      margin: 0;
+      background: transparent;
+    }
+
+    .lava-canvas {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      mix-blend-mode: normal;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .project-blend {
+      display: block;
+      width: 55%;
+      position: relative;
+      z-index: 2;
+      filter: invert(1) brightness(0.6);
+      mix-blend-mode: color-dodge;
+    }
+
+    .project-blend img {
+      display: block;
+      width: 100%;
+      height: auto;
+      opacity: 0.9;
+      mix-blend-mode: normal;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────────────────────── */
+    .section-footer {
+      display: flex;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .footer-text {
+      flex: 1;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11.2px;
+      font-weight: 700;
+      letter-spacing: 2.24px;
+      color: rgba(160, 200, 255, 0.80);
+      line-height: 17.92px;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(19, 104, 255);
+      font-size: 18px;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .social-link:hover {
+      opacity: 0.6;
+    }
+
+    .social-link:active {
+      opacity: 0.4;
+    }
+
+    .social-link .fa-github {
+      font-size: 20px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — tablet (≤ 768px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .projects-grid { flex-wrap: wrap; }
+      .project-card  { flex: 0 0 50%; }
+
+      .case-study__hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 24px 0 48px;
+      }
+
+      .case-study__hero h1 {
+        font-size: 24px;
+        letter-spacing: 3px;
+      }
+
+      .hero-tagline {
+        font-size: 17px;
+      }
+
+      .context-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .decisions-grid,
+      .decisions-grid--3col {
+        grid-template-columns: 1fr;
+      }
+
+      .figure-grid,
+      .figure-grid--3col {
+        grid-template-columns: 1fr;
+      }
+
+      .figure-grid--match-height .figure-image {
+        aspect-ratio: auto;
+      }
+
+      .figure-grid--3col .figure-image {
+        height: auto;
+      }
+
+      .section-content {
+        padding: 48px 0;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — mobile (≤ 480px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .project-card   { flex: 0 0 50%; }
+      .project-figure { height: 180px; }
+
+      .sticky-header__inner {
+        padding: 0 16px;
+      }
+
+      .btn-label-full {
+        display: none;
+      }
+
+      .btn-label-short {
+        display: inline;
+      }
+
+      .container {
+        padding: 54px 16px 0;
+      }
+
+      .case-study__hero h1 {
+        font-size: 19px;
+        letter-spacing: 2px;
+      }
+
+      .hero-tagline {
+        font-size: 15px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .section-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 30px 0;
+      }
+
+      .section-content {
+        padding: 40px 0;
+      }
+    }
+    /* ─────────────────────────────────────────────────────────
+       Timeline list — dated lines in the Timeline entry
+       (reused from bivouac)
+    ───────────────────────────────────────────────────────── */
+    .timeline-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-list li {
+      font-family: Inter, sans-serif;
+      font-size: 13.5px;
+      font-weight: 200;
+      color: rgb(190, 190, 197);
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .timeline-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 1px;
+      background: rgb(130, 225, 255);
+      opacity: 0.55;
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Pierre Grambert", "item": "https://pierregrambert.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Mercator Ocean", "item": "https://pierregrambert.fr/mercator-ocean/" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <!-- ── Sticky header ── -->
+  <header class="sticky-header">
+    <div class="sticky-header__inner">
+      <a href="../" class="site-name">← Pierre Grambert</a>
+      <nav class="sticky-header__nav" aria-label="Page actions">
+        <a href="../bivouac/" class="btn-sticky-secondary" aria-label="Bivouac project"><span class="btn-label-full">Next project</span><span class="btn-label-short">Next</span> <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <main>
+      <article class="case-study" itemscope itemtype="https://schema.org/CreativeWork">
+
+        <!-- ── Section 01 — Hero ── -->
+        <header class="case-study__hero">
+
+          <div class="hero-text">
+            <h1 itemprop="name">Mercator Ocean</h1>
+            <p class="hero-tagline">Designing five ocean-data applications around one design system</p>
+            <p class="hero-subtitle" itemprop="description">Lead UX/UI designer at Camptocamp on the five applications Mercator Ocean International commissioned to show how the Copernicus Marine Service can support decisions: four web apps hosted on the European Digital Twin of the Ocean, and one mobile app. Each one puts ocean models in front of people who are not oceanographers, without letting the data say more than the model knows.</p>
+
+            <ul class="tags" aria-label="Skills and tools">
+              <li>Product Design</li>
+              <li>UX Framing</li>
+              <li>Design System</li>
+              <li>Scientific Data Visualisation</li>
+              <li>Geospatial &amp; Map UX</li>
+              <li>AI-assisted Design</li>
+            </ul>
+            <ul class="tags tags--meta" aria-label="Project meta">
+              <li>2026 → ongoing</li>
+              <li>UX lead, Camptocamp</li>
+            </ul>
+
+            <div class="hero-ctas">
+              <a href="#design-decisions" class="btn-secondary">Jump to design decisions</a>
+            </div>
+          </div>
+
+          <div class="hero-image">
+            <figure>
+              <img class="figure-image" data-id="IMAGE_01" src="../assets/build/MERCATOR/IMAGE_01.png" width="1920" height="1080" alt="Virtual Ocean wireframe, under water at 45 m in the Bay of Biscay: depth cursor with the key depths on the left, temperature profile on the right, analysis and forecast time scrubber at the bottom, numbered annotations">
+              <figcaption>Virtual Ocean, wireframe: the water column at a chosen point, with the depth cursor, the reading at 45 m and the time scrubber</figcaption>
+            </figure>
+          </div>
+
+        </header>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 01b — What I want you to take from this project ── -->
+        <section id="takeaway" aria-labelledby="takeaway-heading" class="section-content">
+          <h2 id="takeaway-heading" class="section-heading">What I want you to take from this project</h2>
+
+          <p class="body-text">Three things, if you are deciding whether to talk to me.</p>
+
+          <div class="decisions-grid decisions-grid--3col">
+            <article class="decision-card">
+              <h3>I turn a specification into a design brief</h3>
+              <p>Behind the twenty requirements of the immersive application sat four interface objects. Each of the five lots went through the same framing: what the specification actually asks, the tensions it leaves open, and the questions only the client can answer, each with a default answer it can confirm in a word.</p>
+            </article>
+
+            <article class="decision-card">
+              <h3>I keep model data honest</h3>
+              <p>A value on screen describes a model grid cell kilometres wide, at set depths and time steps, and a forecast is a spread of possible outcomes. The interfaces show where the data stops and how sure it is through the way they draw, before any caption has to explain it.</p>
+            </article>
+
+            <article class="decision-card">
+              <h3>I hold five products to one system</h3>
+              <p>Five applications, four on the web and one native, move at different speeds on one shared library. A change made for one of them enters the library as an option that leaves the other four untouched, and each component reaches the developers with its behaviour, not just its look.</p>
+            </article>
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 02 — Project context ── -->
+        <section id="context" aria-labelledby="context-heading" class="section-content">
+          <h2 id="context-heading" class="section-heading">Project context</h2>
+          <div class="context-grid">
+
+            <div>
+              <dl class="info-list">
+                <dt>Role</dt>
+                <dd>UX lead at Camptocamp across the five lots, from the tender onwards. UX framing, personas and journeys, information architecture, design system, wireframes and high-fidelity design, interactive prototypes for developer handoff.</dd>
+
+                <dt>Team</dt>
+                <dd>A project manager who co-owns the product, a head of technology, and engineers in front-end, 3D, data and DevOps, shared between the lots. On the client side, a product owner and the scientific teams behind each model.</dd>
+
+                <dt>Timeline</dt>
+                <dd>
+                  <ul class="timeline-list">
+                    <li>May → June 2026. Tender. UX prototypes of the iceberg and fisheries applications in support of the bid.</li>
+                    <li>September 2026. Kick-off. Framing and wireframes of the five applications, shared library.</li>
+                    <li>October 2026. First client workshop. High-fidelity design under way.</li>
+                    <li>→ May 2028. Development and delivery, lot by lot.</li>
+                  </ul>
+                </dd>
+
+                <dt>Tools</dt>
+                <dd>Figma · Figma Variables · FigJam · Claude Code with the Figma MCP server · Vue 3 prototypes · Phosphor Icons · Confluence</dd>
+              </dl>
+            </div>
+
+            <div>
+              <dl class="info-list">
+                <dt>Applications designed</dt>
+                <dd>Virtual Ocean: an immersive scene of the ocean at any point, from above the surface down to the seabed, driven by Copernicus Marine models.<br><br>Arctic Iceberg Navigation Risk: iceberg-drift simulations set against a ship's route, with the collision risk hour by hour.<br><br>Fish Stock Spatial Management: Pacific tuna-fishery scenarios run on a population model, with biomass and catch to 2050.<br><br>Dynamic Marine Protected Area Management: the state of a protected area, its anomalies and forecasts, and management measures to accept, amend or dismiss.<br><br>MyOcean Mobile: Copernicus Marine data on a phone, at your position, with offline download.</dd>
+
+                <dt>Ecosystem</dt>
+                <dd>Copernicus Marine Service · European Digital Twin of the Ocean (EDITO) · MyOcean Pro</dd>
+
+                <dt>Client</dt>
+                <dd>Mercator Ocean International, Toulouse, which runs the Copernicus Marine Service for the European Commission.</dd>
+
+                <dt>Current status</dt>
+                <dd>Framing and wireframes done for the five applications, shared library in place, high-fidelity design under way on three of them. First client workshop in October 2026.</dd>
+              </dl>
+            </div>
+
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 03 — The problem ── -->
+        <section id="problem" aria-labelledby="problem-heading" class="section-content">
+          <h2 id="problem-heading" class="section-heading">The problem</h2>
+
+          <p class="body-text">The Copernicus Marine Service publishes some of the most complete ocean data there is: currents, waves, sea ice, temperature, oxygen, chlorophyll, from thirty-year reanalyses to ten-day forecasts. Scientists produce it, document it for other scientists, and are still its main readers.</p>
+          <p class="body-text">Mercator Ocean wants five applications that show what this data can do for everyone else: a teacher in front of a class, a captain deciding whether to cross iceberg waters, an analyst preparing a fisheries negotiation for Pacific island states, the manager of a marine protected area facing a heatwave, a sailor heading offshore for the weekend. The web applications also have to hold up on large screens at conferences, where nobody has the mouse.</p>
+          <p class="body-text">The specification of the immersive application puts a screenshot from a naval video game next to a rule against any visual artefact that could compromise scientific interpretation. That pair sums up the brief for all five: make model output readable by a non-specialist, without letting the interface claim more than the model knows.</p>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_02" src="../assets/build/MERCATOR/IMAGE_02.svg" width="1200" height="740" alt="Matrix of shared components against the five applications: the time scrubber, the source line, point reading and the generic base of buttons, fields, lists and dialogs serve all five; the depth cursor serves Virtual Ocean only">
+            <figcaption>Five applications, one library: the shared components each application draws on</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 04 — Constraints ── -->
+        <section id="constraints" aria-labelledby="constraints-heading" class="section-content">
+          <h2 id="constraints-heading" class="section-heading">Constraints</h2>
+
+          <ul class="research-list" aria-label="Project constraints">
+            <li><strong>A scientific jury.</strong> Oceanographers judge every rendering. Each lot has its own credibility judge among the personas: a scientist who is not a target user, but whose objection would sink the product.</li>
+            <li><strong>Five products, one design budget.</strong> The five lots run in parallel on a tight design budget. Sharing one library across them is a condition of feasibility, not an optimisation.</li>
+            <li><strong>Three kinds of screen.</strong> Conference screens at 1920×1080, laptops, and phones, where one of the five applications lives entirely.</li>
+            <li><strong>Accessibility.</strong> WCAG 2.1 AA on all web content, including an immersive WebGL scene that cannot meet it on its own.</li>
+            <li><strong>Mockups before code.</strong> The specification requires mockups and usability tests before development. The first client workshop settles the audiences, the variables and who validates the science.</li>
+            <li><strong>Open source.</strong> Everything ships under the EUPL 1.2 licence and runs on EDITO, the platform of the European Digital Twin of the Ocean.</li>
+          </ul>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_03" src="../assets/build/MERCATOR/IMAGE_03.png" width="2043" height="1695" alt="The five pages of the framing board side by side, Virtual Ocean, Iceberg Navigation, Fish Stock, Protected Areas and MyOcean Mobile, each organised in the same seven rows: personas, journeys, tensions, client questions, design matrix, team work, feature catalogue">
+            <figcaption>The framing board: one page per application, the same seven rows on each, from personas to the feature catalogue</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 05 — Design decisions ── -->
+        <section id="design-decisions" aria-labelledby="decisions-heading" class="section-content">
+          <h2 id="decisions-heading" class="section-heading">Design decisions</h2>
+
+          <p class="body-text">Each decision had to hold up in front of an oceanographer and still read for someone who is not one. Each one has a cost I accepted.</p>
+
+          <!-- Track A — Five applications, one system -->
+          <div class="track-header">
+            <span class="section-label">Track A — Five applications, one system</span>
+          </div>
+
+          <div class="decisions-grid">
+            <article class="decision-card">
+              <span class="card-label">Decision 01</span>
+              <h3>One library for five products</h3>
+              <p>The five applications share one Figma library: tokens in dark and light modes, desktop and mobile densities, eight scientific colour ramps, and components no public design system offers, such as a depth cursor, a time scrubber or a value readout that carries its source and freshness. Once the five sets of wireframes existed, a cross-analysis of 143 screens decided what joined the library and what stayed local. The time scrubber is one component with options per application: the analysis and forecast window of the immersive app, a ship's route tinted by collision probability on the iceberg app, yearly steps on the fisheries app.</p>
+              <p class="card-cost"><strong>Cost:</strong> every component is specified for applications that have not reached it yet. When a decision on one lot contradicts the library, the library changes, and I validate each change before it is written.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 02</span>
+              <h3>Nothing is drawn without a source</h3>
+              <p>The first wireframes of the immersive application held 57 elements. Fifteen came from the specification. Every element now carries its origin: owed under the specification, committed in our offer, proposed by the framing and awaiting the client, or an addition, flagged as such and never drawn in silence. Nineteen elements with no source came out on review, from a loop-playback button to a "Cite this data" action.</p>
+              <p class="card-cost"><strong>Cost:</strong> the mockups show less than they could, and good ideas wait for a workshop instead of selling themselves on screen. On a fixed-price contract, anything drawn becomes something the client expects.</p>
+            </article>
+          </div>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_04" src="../assets/build/MERCATOR/IMAGE_04.svg" width="1200" height="432" alt="Stacked bars of feature origins in four catalogues. Iceberg Navigation, 77 features: 20 owed, 27 committed, 27 proposed, 3 added. Fish Stock, 76: 20, 19, 34, 3. Protected Areas, 68: 22, 14, 29, 3. MyOcean Mobile, 84: 39, 16, 27, 2. Between 26 and 46 % of each catalogue is owed">
+            <figcaption>Where each feature comes from, in the catalogues of four applications</figcaption>
+          </figure>
+
+          <!-- Track B — Honest about what the model knows -->
+          <div class="track-header">
+            <span class="section-label">Track B — Honest about what the model knows</span>
+          </div>
+
+          <div class="decisions-grid">
+            <article class="decision-card">
+              <span class="card-label">Decision 03</span>
+              <h3>A verdict always travels with its uncertainty</h3>
+              <p>Decision-makers want a verdict; models give a distribution. Each application has a rule that keeps the two together. On the iceberg app, a three-step verdict (free, watch, closed) never appears without the probability lines it comes from. On the fisheries app, "about a quarter lower than in 2024" comes with the spread of the climate models, and when the models disagree on the direction, that disagreement is the result. On the mobile app, a value under the finger carries its validity time, its nature and the grid cell it covers: "24 °C" alone would tell a swimmer something the model never said.</p>
+              <p class="card-cost"><strong>Cost:</strong> the headline is never as striking as the specification hopes, and rounding to what can be defended gives up a precise-looking number on purpose.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 04</span>
+              <h3>The depth scale shows its own breaks</h3>
+              <p>The water column runs from 50 m above the surface to more than 4,000 m below, and half of the model's depth levels sit in the first 200 m. Instead of one linear scale, the depth cursor follows the ocean's own layers: three regular tiers for the sunlit zone, the twilight zone and the deep ocean. Each change of tier is drawn as a dotted line across the colour ramp, never as a gap, because a gap reads as missing data. The handle moves continuously and settles on the depths where the model has values, and the key depths of the descent (thermocline, chlorophyll maximum, oxygen minimum) are one click away. On a phone the tier breaks go, since a finger cannot use that precision, and the key depths become detents.</p>
+              <p class="card-cost"><strong>Cost:</strong> below 1,000 m the cursor moves from one model level to the next, a few hundred metres apart, rather than metre by metre. The interface does not offer a precision the data does not have.</p>
+            </article>
+
+            <article class="decision-card">
+              <span class="card-label">Decision 05</span>
+              <h3>Values appear only where they are true</h3>
+              <p>The values card keeps a fixed size and changes its content with the handle: the sea state at the surface (wind, waves, swell, surface current), the water at the handle's depth below it (temperature, oxygen, chlorophyll, salinity, pH, nitrate, current, light). A value that means nothing where you are is not greyed out. It is not there. The title follows, "At the surface", "At this depth" or "At the seabed", and nothing in the panel changes size while you move.</p>
+              <p class="card-cost"><strong>Cost:</strong> surface and depth cannot be read side by side in one card. Comparing them means moving the handle.</p>
+            </article>
+          </div>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_05" src="../assets/build/MERCATOR/IMAGE_05.png" width="1871" height="1382" alt="Three wireframes. The iceberg application's risk map with a free, watch and closed scale and the 10, 25 and 50 % probability contours. The fisheries results with skipjack biomass about a quarter lower by 2050, a range from −38 to −12 % and all four models projecting a decline. A phone screen with waves, current and temperature at a point, and the model cell of about 4 km drawn around it">
+            <figcaption>The same rule in three wireframes: a verdict with the ensemble behind it, a projection with the spread of four models, a value on a phone with the model cell it covers</figcaption>
+          </figure>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_06" src="../assets/build/MERCATOR/IMAGE_06.svg" width="1200" height="800" alt="The same water column drawn on one linear scale, where the first 200 m take 5 % of the height and the key depths are crushed into a few pixels, and on three tiers following the sunlit and twilight zones, where the first 200 m take 55 % and the key depths separate">
+            <figcaption>Two scales for one water column: on a linear scale the first 200 m all but disappear; the three tiers give them more than half of the cursor</figcaption>
+          </figure>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_07" src="../assets/build/MERCATOR/IMAGE_07.svg" width="1200" height="620" alt="Schema of the values card following the depth cursor: with the handle at the surface, one card titled At the surface lists wind, waves, swell and surface current; with the handle at 45 m, the same card, same size and place, titled At this depth lists chlorophyll, oxygen, salinity, pH, nitrate, current and light">
+            <figcaption>The values card follows the handle: one card, the same size and place, with the sea state at the surface and the water at the handle's depth below it</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 06 — Process ── -->
+        <section id="process" aria-labelledby="process-heading" class="section-content">
+          <h2 id="process-heading" class="section-heading">Process: from a specification to components developers can read</h2>
+
+          <p class="body-text">Each application started with a framing note: what the specification really asks, who the application is for, the tensions it leaves open, and the questions for the client, each with a default answer. A design matrix crossed what the data is with how it can be shown. For the immersive application, every ocean variable met its form of rendering (3D, overlay, chart, text) and its level of honesty: driven by the data, indexed on it, or pure dressing. That convention stays a working tool for reviews with oceanographers, not an element on screen.</p>
+          <p class="body-text">The notes were written into a FigJam board, one page per application and the same seven rows on every page: personas, journeys, tensions, questions for the client, matrix, team feedback, feature catalogue. The board is generated from the files, so a correction made in a file reaches the board and nothing gets lost between reviews. Once the client workshop has validated it, the board becomes the reference.</p>
+          <p class="body-text">Wireframes came next for all five applications, then the cross-analysis that extended the shared library in four waves, then high fidelity. The components that carry the products (the depth cursor, the time scrubber, the place block with its compass and mini-map) were settled in interactive Vue prototypes before being built in Figma. Each has a page for the developers: current behaviour, states, gestures by mouse, keyboard and finger, platforms, variants per application, code, and a status saying whether the prototype is ahead of Figma or behind it. History stays out of it.</p>
+          <p class="body-text">The production was AI-assisted. Claude Code, connected to Figma, turned the framing files into boards, components, screens and prototypes, which is how five applications fit in the time available. I set the rules it worked to and reviewed every output; most of the decisions above were made in that review.</p>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_08" src="../assets/build/MERCATOR/IMAGE_08.svg" width="1200" height="650" alt="Process in nine steps and three phases. Frame: framing note, board, feature catalogue. Design: wireframes, cross-analysis, shared library, pilot screen. Hand off: interactive prototype, developer page. Every step reviewed by the designer">
+            <figcaption>From the specification to the developer page: nine steps, each one reviewed</figcaption>
+          </figure>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- ── Section 07 — Outcome and reflections ── -->
+        <section id="outcome" aria-labelledby="outcome-heading" class="section-content">
+          <h2 id="outcome-heading" class="section-heading">Outcome and reflections</h2>
+
+          <p class="body-text">The framing of the five applications, their wireframes and the shared library are in place, and high-fidelity design is under way on the immersive, iceberg and fisheries applications. Validation with Mercator Ocean starts with a workshop in October 2026 on the audiences, the list of variables and the scientific review.</p>
+
+          <span class="section-label" style="margin-top: 28px;">What this project sharpened in my practice</span>
+          <p class="body-text">A question with a default answer moves a workshop. "Which variables do you want?" opens a discussion. "Here is the list we will use unless you object" gets a decision.</p>
+          <p class="body-text">Honesty about data is drawn before it is written. A dotted line on a scale, a value that disappears where it stops making sense, a verdict that never leaves its spread: none of it needs a caption.</p>
+          <p class="body-text">Fast production makes a pilot screen more necessary, not less. Moving 29 screens of the immersive application to high fidelity at once left demo values behind and cost ten rounds of recomposition on its scene panels. The iceberg and fisheries applications started from one validated screen.</p>
+
+          <span class="section-label" style="margin-top: 28px;">What I would do differently</span>
+          <p class="body-text">Put the uncertainty into the first prototype. The prototypes I built for the bid, in May and June, showed a single "DANGER 84 %" on the iceberg application, and a fisheries verdict that stayed at "−23 % by 2055" whatever the inputs. They made the flow convincing and skipped the hard part, which is how sure the model is. Four months later, framing the same products, they were the first things I had to undo.</p>
+
+          <ul class="tags" style="margin-top: 28px;" aria-label="Summary tags">
+            <li>Five applications framed with one method</li>
+            <li>One Figma library shared by five products</li>
+            <li>Every element traced to the specification, the offer or a proposal</li>
+            <li>Verdicts that never leave their uncertainty</li>
+            <li>Scales that show where the data stops</li>
+            <li>Interactive prototypes as the developer handoff</li>
+          </ul>
+
+          <figure style="margin-top: 40px;">
+            <img class="figure-image" data-id="IMAGE_09" src="../assets/build/MERCATOR/IMAGE_09.svg" width="1200" height="690" alt="Schema of three settings of the same time scrubber: Virtual Ocean with an hourly analysis then a 10-day forecast; the iceberg application with the ship's passage from departure to arrival tinted by collision probability and a marker where the route closes; the fisheries application with yearly steps, a hindcast from 2000 and a projection to 2050">
+            <figcaption>One time scrubber, three settings</figcaption>
+          </figure>
+        </section>
+
+      </article>
+    </main>
+
+    <!-- ── Projects blobs — other projects nav ── -->
+    <hr class="section-divider">
+    <section class="section-projects">
+      <p class="section-label">More projects</p>
+      <div class="projects-grid">
+
+        <a class="project-card" href="../bivouac/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="../assets/build/logos/BIVOUAC.png" alt="Bivouac">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="../kairn/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="../assets/build/logos/KAIRN.png" alt="Kairn Design Studio">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="../saprea/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="../assets/build/logos/SAPREA.png" alt="Saprea">
+            </span>
+          </figure>
+        </a>
+
+        <a class="project-card" href="../georchestra/">
+          <figure class="project-figure">
+            <span class="project-blend">
+              <img src="../assets/build/logos/GEORCHESTRA.png" alt="geOrchestra">
+            </span>
+          </figure>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <hr class="section-divider">
+    <footer class="section-footer">
+      <p class="footer-text">© Pierre Grambert 2026 — Built with Claude Code, hosted on GitHub Pages</p>
+      <nav class="social-links" aria-label="Social links">
+        <a href="https://github.com/PierreGR01"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://500px.com/p/PierreGrambert?view=photos"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on 500px">
+          <i class="fa-brands fa-500px"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </nav>
+    </footer>
+
+  </div>
+
+  <!-- ── Fullscreen image lightbox (reused from bivouac) ── -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('lightbox');
+      var overlayImg = document.getElementById('lightbox-img');
+      var closeBtn = overlay.querySelector('.lightbox-close');
+
+      function openLightbox(img) {
+        overlayImg.src = img.src;
+        overlayImg.alt = img.alt;
+        overlay.classList.add('is-active');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('is-active');
+        overlay.setAttribute('aria-hidden', 'true');
+        overlayImg.src = '';
+      }
+
+      document.querySelectorAll('.figure-image').forEach(function (img) {
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', 'View full screen: ' + img.alt);
+        img.addEventListener('click', function () { openLightbox(img); });
+        img.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(img);
+          }
+        });
+      });
+
+      overlay.addEventListener('click', closeLightbox);
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () { initLavaWebGL(); });
+    window.addEventListener('load', initLavaWebGL);
+    setTimeout(initLavaWebGL, 800);
+
+    function initLavaWebGL() {
+      var figures = document.querySelectorAll('figure.project-figure');
+
+      figures.forEach(function (figure, index) {
+        if (figure.dataset.webglLavaReady === '1') return;
+        figure.dataset.webglLavaReady = '1';
+
+        figure.style.setProperty('--mx', '50%');
+        figure.style.setProperty('--my', '50%');
+
+        var canvas = document.createElement('canvas');
+        canvas.className = 'lava-canvas';
+        figure.insertBefore(canvas, figure.firstChild);
+
+        var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false }) ||
+                 canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+
+        if (!gl) { return; }
+
+        var vertexSource = [
+          'attribute vec2 a_position;',
+          'varying vec2 v_uv;',
+          'void main() {',
+          '  v_uv = a_position * 0.5 + 0.5;',
+          '  gl_Position = vec4(a_position, 0.0, 1.0);',
+          '}'
+        ].join('');
+
+        var fragmentSource = [
+          'precision mediump float;',
+          'varying vec2 v_uv;',
+          'uniform vec2 u_resolution;',
+          'uniform float u_time;',
+          'uniform vec2 u_mouse;',
+          'uniform float u_seed;',
+
+          'vec3 palette(float t) {',
+          '  vec3 c1 = vec3(0.01, 0.05, 0.16);',
+          '  vec3 c2 = vec3(0.02, 0.18, 0.45);',
+          '  vec3 c3 = vec3(0.20, 0.42, 0.90);',
+          '  vec3 c4 = vec3(0.82, 0.10, 0.82);',
+          '  vec3 c5 = vec3(0.45, 0.78, 1.00);',
+          '  vec3 col = mix(c1, c2, smoothstep(0.0, 0.2, t));',
+          '  col = mix(col, c3, smoothstep(0.18, 0.5, t));',
+          '  col = mix(col, c4, smoothstep(0.45, 0.75, t));',
+          '  col = mix(col, c5, smoothstep(0.72, 1.0, t));',
+          '  return col;',
+          '}',
+
+          'float metaball(vec2 p, vec2 c, float r) {',
+          '  float d = length(p - c);',
+          '  return exp(-d*d / (r*r));',
+          '}',
+
+          'float lava(vec2 p, float t, vec2 mouse) {',
+          '  vec2 c1 = vec2(sin(t*1.05), cos(t*0.92)) * vec2(0.15,0.10);',
+          '  vec2 c2 = vec2(cos(t*0.82+1.2), sin(t*1.18+0.4)) * vec2(0.13,0.12);',
+          '  vec2 c3 = vec2(sin(t*1.28+2.1), cos(t*1.04+2.6)) * vec2(0.12,0.13);',
+          '  vec2 c4 = vec2(cos(t*0.88+3.2), sin(t*1.16+1.8)) * vec2(0.10,0.09);',
+          '  vec2 c5 = vec2(sin(t*0.72+4.4), cos(t*0.84+0.9)) * vec2(0.09,0.08);',
+          '  vec2 c6 = mouse * 0.8;',
+          '  float f = 0.0;',
+          '  f += metaball(p,c1,0.18);',
+          '  f += metaball(p,c2,0.17);',
+          '  f += metaball(p,c3,0.16);',
+          '  f += metaball(p,c4,0.14);',
+          '  f += metaball(p,c5,0.13);',
+          '  f += metaball(p,c6,0.14);',
+          '  return f;',
+          '}',
+
+          'void main() {',
+          '  vec2 uv = v_uv;',
+          '  vec2 p = uv - 0.5;',
+          '  p.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float t = u_time * 0.38 + u_seed * 5.7;',
+          '  vec2 mouse = u_mouse - 0.5;',
+          '  mouse.x *= u_resolution.x / max(u_resolution.y, 1.0);',
+          '  float field = lava(p, t, mouse);',
+          '  float eps = 0.008;',
+          '  float dx = lava(p + vec2(eps, 0.0), t, mouse) - lava(p - vec2(eps, 0.0), t, mouse);',
+          '  float dy = lava(p + vec2(0.0, eps), t, mouse) - lava(p - vec2(0.0, eps), t, mouse);',
+          '  vec2 grad = vec2(dx, dy) * 0.5;',
+          '  vec2 warp = grad * 1.35;',
+          '  vec2 q = p + warp;',
+          '  float flow = sin(q.x * 4.0 + t * 1.3);',
+          '  flow += sin(q.y * 4.6 - t * 1.15);',
+          '  flow += sin((q.x + q.y) * 3.1 + t * 0.9);',
+          '  flow /= 3.0;',
+          '  flow = flow * 0.5 + 0.5;',
+          '  flow = pow(flow, 1.35);',
+          '  float micro = sin(q.x * 18.0 + t * 2.4) * sin(q.y * 18.0 - t * 2.1);',
+          '  micro = micro * 0.5 + 0.5;',
+          '  float rings = sin((field * 0.1 + flow * 0.05 - micro * 2.0) * 6.28318);',
+          '  rings = rings * 0.5 + 0.5;',
+          '  float sheen = flow * 0.92 + micro * 0.05 + rings * 0.05;',
+          '  vec2 ca = normalize(grad + vec2(0.0001)) * 0.09;',
+          '  float rField = clamp(lava(p + ca, t, mouse), 0.0, 1.0);',
+          '  float gField = clamp(field, 0.0, 1.0);',
+          '  float bField = clamp(lava(p - ca, t, mouse), 0.0, 1.0);',
+          '  float rMix = clamp(gField * 0.45 + sheen * 0.95 + rField * 0.25, 0.0, 1.0);',
+          '  float gMix = clamp(gField * 0.55 + sheen * 0.75, 0.0, 1.0);',
+          '  float bMix = clamp(gField * 0.40 + sheen * 1.05 + bField * 0.25, 0.0, 1.0);',
+          '  vec3 colR = palette(rMix);',
+          '  vec3 colG = palette(gMix);',
+          '  vec3 colB = palette(bMix);',
+          '  vec3 color = vec3(colR.r, colG.g, colB.b);',
+          '  float mask = smoothstep(0.42, 0.92, field);',
+          '  float edge = smoothstep(0.55, 1.05, field) - smoothstep(1.05, 1.45, field);',
+          '  float glow = edge * 0.22;',
+          '  vec3 normal = normalize(vec3(grad, 0.95));',
+          '  vec3 lightDir = normalize(vec3(-0.25, 0.45, 1.0));',
+          '  float lighting = clamp(dot(normal, lightDir), 0.0, 1.0);',
+          '  float spec = pow(clamp(dot(normal, normalize(lightDir + vec3(0.0, 0.0, 1.0))), 0.0, 1.0), 18.0);',
+          '  vec3 specCol = vec3(0.51, 0.88, 1.0) * spec * 0.28;',
+          '  vec3 base = color * (0.62 + lighting * 0.28);',
+          '  vec3 finalColor = base * (mask + glow) + specCol * mask;',
+          '  float alpha = clamp(mask * 0.88, 0.0, 0.82);',
+          '  gl_FragColor = vec4(finalColor, alpha);',
+          '}'
+        ].join('\n');
+
+        var program = createProgram(gl, vertexSource, fragmentSource);
+        if (!program) { return; }
+
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER,
+          new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]),
+          gl.STATIC_DRAW);
+
+        var aPosition   = gl.getAttribLocation(program, 'a_position');
+        var uResolution = gl.getUniformLocation(program, 'u_resolution');
+        var uTime       = gl.getUniformLocation(program, 'u_time');
+        var uMouse      = gl.getUniformLocation(program, 'u_mouse');
+        var uSeed       = gl.getUniformLocation(program, 'u_seed');
+
+        var mouseX = 0.5, mouseY = 0.5;
+        var targetMouseX = 0.5, targetMouseY = 0.5;
+        var seed = (index + 1) * 0.173;
+
+        figure.addEventListener('mousemove', function (e) {
+          var rect = figure.getBoundingClientRect();
+          targetMouseX = (e.clientX - rect.left) / rect.width;
+          targetMouseY = 1.0 - ((e.clientY - rect.top) / rect.height);
+        });
+        figure.addEventListener('mouseleave', function () {
+          targetMouseX = 0.5; targetMouseY = 0.5;
+        });
+
+        function render(now) {
+          resizeCanvas(canvas, gl);
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          mouseX += (targetMouseX - mouseX) * 0.08;
+          mouseY += (targetMouseY - mouseY) * 0.08;
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(program);
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.enableVertexAttribArray(aPosition);
+          gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(uResolution, canvas.width, canvas.height);
+          gl.uniform1f(uTime, now * 0.001);
+          gl.uniform2f(uMouse, mouseX, mouseY);
+          gl.uniform1f(uSeed, seed);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      });
+    }
+
+    function resizeCanvas(canvas, gl) {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var width  = Math.max(1, Math.round(rect.width  * dpr));
+      var height = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width; canvas.height = height;
+      }
+    }
+
+    function createShader(gl, type, source) {
+      var shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    function createProgram(gl, vertexSource, fragmentSource) {
+      var vs = createShader(gl, gl.VERTEX_SHADER, vertexSource);
+      var fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vs || !fs) return null;
+      var program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+      }
+      return program;
+    }
+  </script>
+</body>
+</html>

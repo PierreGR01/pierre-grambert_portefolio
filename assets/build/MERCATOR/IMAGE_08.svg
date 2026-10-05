@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" width="1200" height="650" role="img" aria-labelledby="t d">
+  <title id="t">From the specification to the developer page</title>
+  <desc id="d">The process in nine steps and three phases. Frame: a framing note per application, a board with one page per application and seven rows written from the files, a feature catalogue with the origin of every feature. Design: wireframes for the five applications, a cross-analysis of 143 screens, a shared library built in four waves with each change validated before it is written, a pilot screen validated before the others. Hand off: an interactive prototype that settles behaviour before Figma, and a developer page with behaviour, states, gestures, platforms and status against Figma. Every step is reviewed by the designer.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7A8890"/>
+    </marker>
+    <linearGradient id="risk" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#F7E3C8"/>
+      <stop offset="0.45" stop-color="#EDB277"/>
+      <stop offset="0.62" stop-color="#C2602E"/>
+      <stop offset="0.72" stop-color="#EDB277"/>
+      <stop offset="1" stop-color="#F7E3C8"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .h2 { font-size: 15px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 14px; }
+    .small { font-size: 12px; fill: #5A6870; }
+    .phase { font-size: 12px; font-weight: 600; letter-spacing: 2px; fill: #1D5C63; }
+    .num { font-size: 12px; font-weight: 700; fill: #FFFFFF; }
+  </style>
+  <rect width="1200" height="650" fill="#FFFFFF"/>
+  <text class="phase" x="60" y="64">FRAME</text>
+  <rect x="60" y="92" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="86" cy="120" r="12" fill="#1D5C63"/>
+  <text class="num" x="86" y="124" text-anchor="middle">1</text>
+  <text class="h2" x="108" y="125">Framing note</text>
+  <text class="small" x="108" y="148">Tensions, client questions with</text>
+  <text class="small" x="108" y="165">a default answer, design matrix</text>
+  <line x1="86" y1="182" x2="86" y2="198" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="202" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="86" cy="230" r="12" fill="#1D5C63"/>
+  <text class="num" x="86" y="234" text-anchor="middle">2</text>
+  <text class="h2" x="108" y="235">Board</text>
+  <text class="small" x="108" y="258">One page per application, seven</text>
+  <text class="small" x="108" y="275">rows, written from the files</text>
+  <line x1="86" y1="292" x2="86" y2="308" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="312" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="86" cy="340" r="12" fill="#1D5C63"/>
+  <text class="num" x="86" y="344" text-anchor="middle">3</text>
+  <text class="h2" x="108" y="345">Feature catalogue</text>
+  <text class="small" x="108" y="368">Every feature with its origin:</text>
+  <text class="small" x="108" y="385">owed, committed, proposed, added</text>
+  <text class="phase" x="440" y="64">DESIGN</text>
+  <rect x="440" y="92" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="466" cy="120" r="12" fill="#1D5C63"/>
+  <text class="num" x="466" y="124" text-anchor="middle">4</text>
+  <text class="h2" x="488" y="125">Wireframes</text>
+  <text class="small" x="488" y="148">143 screens across the</text>
+  <text class="small" x="488" y="165">five applications</text>
+  <line x1="466" y1="182" x2="466" y2="198" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="440" y="202" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="466" cy="230" r="12" fill="#1D5C63"/>
+  <text class="num" x="466" y="234" text-anchor="middle">5</text>
+  <text class="h2" x="488" y="235">Cross-analysis</text>
+  <text class="small" x="488" y="258">What recurs joins the</text>
+  <text class="small" x="488" y="275">shared library</text>
+  <line x1="466" y1="292" x2="466" y2="308" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="440" y="312" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="466" cy="340" r="12" fill="#1D5C63"/>
+  <text class="num" x="466" y="344" text-anchor="middle">6</text>
+  <text class="h2" x="488" y="345">Shared library</text>
+  <text class="small" x="488" y="368">Built in four waves, each change</text>
+  <text class="small" x="488" y="385">validated before it is written</text>
+  <line x1="466" y1="402" x2="466" y2="418" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="440" y="422" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="466" cy="450" r="12" fill="#1D5C63"/>
+  <text class="num" x="466" y="454" text-anchor="middle">7</text>
+  <text class="h2" x="488" y="455">Pilot screen</text>
+  <text class="small" x="488" y="478">Validated in high fidelity</text>
+  <text class="small" x="488" y="495">before the others follow</text>
+  <text class="phase" x="820" y="64">HAND OFF</text>
+  <rect x="820" y="92" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="846" cy="120" r="12" fill="#1D5C63"/>
+  <text class="num" x="846" y="124" text-anchor="middle">8</text>
+  <text class="h2" x="868" y="125">Interactive prototype</text>
+  <text class="small" x="868" y="148">Behaviour settled before it is</text>
+  <text class="small" x="868" y="165">built in Figma</text>
+  <line x1="846" y1="182" x2="846" y2="198" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="820" y="202" width="320" height="88" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <circle cx="846" cy="230" r="12" fill="#1D5C63"/>
+  <text class="num" x="846" y="234" text-anchor="middle">9</text>
+  <text class="h2" x="868" y="235">Developer page</text>
+  <text class="small" x="868" y="258">Behaviour, states, gestures,</text>
+  <text class="small" x="868" y="275">platforms, status against Figma</text>
+  <line x1="386" y1="136.0" x2="432" y2="136.0" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="766" y1="136.0" x2="812" y2="136.0" stroke="#7A8890" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="550" width="1080" height="64" rx="8" fill="#FFFFFF" stroke="#1D5C63" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="h2" x="84" y="577">Review at every step</text>
+  <text class="small" x="84" y="597">AI-assisted production, rules and review kept by the designer. After the client workshop, the board becomes the reference.</text>
+</svg>

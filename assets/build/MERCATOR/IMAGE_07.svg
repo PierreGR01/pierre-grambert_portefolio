@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-labelledby="t d">
+  <title id="t">The values card follows the handle</title>
+  <desc id="d">The values card of Virtual Ocean follows the depth cursor. With the handle at the surface, the card is titled At the surface and shows wind at 10 m, wind waves, wave height, swell, secondary swell and surface current, with an ice tag only when there is ice. With the handle at 45 m, the same card, same size and place, is titled At this depth and shows chlorophyll, dissolved oxygen, salinity, pH, nitrate, current and light; temperature is read on the cursor. Values that mean nothing where the handle is are not shown.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7A8890"/>
+    </marker>
+    <linearGradient id="risk" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#F7E3C8"/>
+      <stop offset="0.45" stop-color="#EDB277"/>
+      <stop offset="0.62" stop-color="#C2602E"/>
+      <stop offset="0.72" stop-color="#EDB277"/>
+      <stop offset="1" stop-color="#F7E3C8"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .h2 { font-size: 15px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 14px; }
+    .small { font-size: 12px; fill: #5A6870; }
+    .phase { font-size: 12px; font-weight: 600; letter-spacing: 2px; fill: #1D5C63; }
+    .num { font-size: 12px; font-weight: 700; fill: #FFFFFF; }
+  </style>
+  <rect width="1200" height="620" fill="#FFFFFF"/>
+  <text class="h" x="60" y="56">The water column</text>
+  <text class="sub" x="60" y="78">not to scale</text>
+  <rect x="150" y="96" width="22" height="44" rx="3" fill="#F2F5F7"/>
+  <rect x="150" y="140" width="22" height="436" fill="#E4EEF1"/>
+  <line x1="144" y1="140" x2="178" y2="140" stroke="#2B3A42" stroke-width="1.5"/>
+  <line x1="144" y1="576" x2="178" y2="576" stroke="#2B3A42" stroke-width="2"/>
+  <text class="small" x="136" y="104" text-anchor="end">+50 m</text>
+  <text class="small" x="136" y="144" text-anchor="end">0 m</text>
+  <text class="small" x="136" y="390" text-anchor="end">45 m</text>
+  <text class="small" x="136" y="580" text-anchor="end">Seabed</text>
+  <circle cx="161" cy="140" r="9" fill="#1D5C63" stroke="#FFFFFF" stroke-width="2"/>
+  <circle cx="161" cy="386" r="9" fill="#1D5C63" stroke="#FFFFFF" stroke-width="2"/>
+  <path d="M172,140 C240,140 260,140 324,140" fill="none" stroke="#1D5C63" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="330" y="104" width="560" height="214" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="h2" x="354" y="140">At the surface</text>
+  <rect x="480" y="124" width="92" height="24" rx="12" fill="none" stroke="#7A8890" stroke-width="1" stroke-dasharray="3 3"/>
+  <text class="small" x="526" y="140" text-anchor="middle">Ice · %</text>
+  <text class="small" x="354" y="170">Wind at 10 m</text>
+  <rect x="354" y="178" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="530" y="170">Wind waves</text>
+  <rect x="530" y="178" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="706" y="170">Wave height</text>
+  <rect x="706" y="178" width="76" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="354" y="212">Swell</text>
+  <rect x="354" y="220" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="530" y="212">Secondary swell</text>
+  <rect x="530" y="220" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="706" y="212">Surface current</text>
+  <rect x="706" y="220" width="76" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="354" y="304" font-style="italic">Ice appears as a tag beside the title, only when there is ice</text>
+  <path d="M172,386 C240,386 260,386 324,386" fill="none" stroke="#1D5C63" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="330" y="350" width="560" height="214" rx="8" fill="#F2F5F7" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="h2" x="354" y="386">At this depth</text>
+  <text class="small" x="354" y="416">Chlorophyll a</text>
+  <rect x="354" y="424" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="530" y="416">Dissolved oxygen</text>
+  <rect x="530" y="424" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="354" y="458">Salinity</text>
+  <rect x="354" y="466" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="530" y="458">pH</text>
+  <rect x="530" y="466" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="706" y="458">Nitrate</text>
+  <rect x="706" y="466" width="76" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="354" y="500">Current</text>
+  <rect x="354" y="508" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="530" y="500">Light</text>
+  <rect x="530" y="508" width="96" height="9" rx="4.5" fill="#D8DFE3"/>
+  <text class="small" x="354" y="550" font-style="italic">Temperature is read on the cursor, against the handle, so the card leaves it out</text>
+  <text class="h2" x="930" y="140">One card, two contents</text>
+  <line x1="930" y1="162" x2="944" y2="162" stroke="#1D5C63" stroke-width="2"/>
+  <text class="lab" x="930" y="182">Same size, same place: nothing</text>
+  <text class="lab" x="930" y="202">moves while the handle travels.</text>
+  <line x1="930" y1="242" x2="944" y2="242" stroke="#1D5C63" stroke-width="2"/>
+  <text class="lab" x="930" y="262">Under water, no sea state.</text>
+  <text class="lab" x="930" y="282">Above the water, no water values.</text>
+  <line x1="930" y1="322" x2="944" y2="322" stroke="#1D5C63" stroke-width="2"/>
+  <text class="lab" x="930" y="342">A value that means nothing</text>
+  <text class="lab" x="930" y="362">where you are is not greyed out.</text>
+  <text class="lab" x="930" y="382">It is not there.</text>
+  <line x1="930" y1="422" x2="944" y2="422" stroke="#1D5C63" stroke-width="2"/>
+  <text class="lab" x="930" y="442">The title follows the handle:</text>
+  <text class="lab" x="930" y="462">at the surface, at this depth,</text>
+  <text class="lab" x="930" y="482">at the seabed.</text>
+</svg>

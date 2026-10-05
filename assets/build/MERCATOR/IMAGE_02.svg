@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" width="1200" height="740" role="img" aria-labelledby="t d">
+  <title id="t">Five applications, one library</title>
+  <desc id="d">A matrix of the shared design library against the five applications. The time scrubber, the source line, point reading and definitions, and the generic base of buttons, fields, lists and dialogs serve all five. The nature-of-data label, the colour legend and map drawing serve the four map and mobile applications. The side panel and the top bar serve the four web applications. The mobile bottom sheet serves four. The computation status on EDITO serves the three map applications, the verdict with its uncertainty two, and the depth cursor only Virtual Ocean.</desc>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 15px; }
+    .num { font-size: 15px; font-weight: 600; fill: #5A6870; }
+    .note { font-size: 13px; fill: #5A6870; }
+    .in-dark { font-size: 19px; font-weight: 700; fill: #FFFFFF; }
+    .in-light { font-size: 19px; font-weight: 700; fill: #2B3A42; }
+  </style>
+  <rect width="1200" height="740" fill="#FFFFFF"/>
+  <text class="h" x="451" y="84" text-anchor="middle" font-size="15">Virtual Ocean</text>
+  <text class="sub" x="451" y="106" text-anchor="middle">Web · 3D scene</text>
+  <text class="h" x="593" y="84" text-anchor="middle" font-size="15">Iceberg</text>
+  <text class="sub" x="593" y="106" text-anchor="middle">Web · map</text>
+  <text class="h" x="735" y="84" text-anchor="middle" font-size="15">Fish Stock</text>
+  <text class="sub" x="735" y="106" text-anchor="middle">Web · map</text>
+  <text class="h" x="877" y="84" text-anchor="middle" font-size="15">Protected Areas</text>
+  <text class="sub" x="877" y="106" text-anchor="middle">Web · map</text>
+  <text class="h" x="1019" y="84" text-anchor="middle" font-size="15">MyOcean Mobile</text>
+  <text class="sub" x="1019" y="106" text-anchor="middle">iOS · Android</text>
+  <text class="sub" x="1140" y="106" text-anchor="end">Shared by</text>
+  <text class="sub" x="60" y="106">Component</text>
+  <line x1="60" y1="128" x2="1140" y2="128" stroke="#2B3A42" stroke-width="1"/>
+  <text class="lab" x="60" y="173">Time scrubber</text>
+  <circle cx="451" cy="168" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="168" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="168" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="168" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="168" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="173" text-anchor="end">5</text>
+  <line x1="60" y1="188" x2="1140" y2="188" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="213">Source line</text>
+  <circle cx="451" cy="208" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="208" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="208" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="208" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="208" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="213" text-anchor="end">5</text>
+  <line x1="60" y1="228" x2="1140" y2="228" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="253">Point reading and definitions</text>
+  <circle cx="451" cy="248" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="248" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="248" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="248" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="248" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="253" text-anchor="end">5</text>
+  <line x1="60" y1="268" x2="1140" y2="268" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="293">Buttons, fields, lists, dialogs</text>
+  <circle cx="451" cy="288" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="288" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="288" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="288" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="288" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="293" text-anchor="end">5</text>
+  <line x1="60" y1="308" x2="1140" y2="308" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="333">Nature of the data</text>
+  <circle cx="451" cy="328" r="2.5" fill="#C9D2D7"/>
+  <circle cx="593" cy="328" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="328" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="328" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="328" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="333" text-anchor="end">4</text>
+  <line x1="60" y1="348" x2="1140" y2="348" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="373">Colour legend</text>
+  <circle cx="451" cy="368" r="2.5" fill="#C9D2D7"/>
+  <circle cx="593" cy="368" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="368" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="368" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="368" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="373" text-anchor="end">4</text>
+  <line x1="60" y1="388" x2="1140" y2="388" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="413">Drawing on the map</text>
+  <circle cx="451" cy="408" r="2.5" fill="#C9D2D7"/>
+  <circle cx="593" cy="408" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="408" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="408" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="408" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="413" text-anchor="end">4</text>
+  <line x1="60" y1="428" x2="1140" y2="428" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="453">Side panel</text>
+  <circle cx="451" cy="448" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="448" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="448" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="448" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="448" r="2.5" fill="#C9D2D7"/>
+  <text class="num" x="1140" y="453" text-anchor="end">4</text>
+  <line x1="60" y1="468" x2="1140" y2="468" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="493">Top bar</text>
+  <circle cx="451" cy="488" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="488" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="488" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="488" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="488" r="2.5" fill="#C9D2D7"/>
+  <text class="num" x="1140" y="493" text-anchor="end">4</text>
+  <line x1="60" y1="508" x2="1140" y2="508" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="533">Mobile bottom sheet</text>
+  <circle cx="451" cy="528" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="528" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="528" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="528" r="2.5" fill="#C9D2D7"/>
+  <circle cx="1019" cy="528" r="7" fill="#1D5C63"/>
+  <text class="num" x="1140" y="533" text-anchor="end">4</text>
+  <line x1="60" y1="548" x2="1140" y2="548" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="573">Computation status on EDITO</text>
+  <circle cx="451" cy="568" r="2.5" fill="#C9D2D7"/>
+  <circle cx="593" cy="568" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="568" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="568" r="7" fill="#1D5C63"/>
+  <circle cx="1019" cy="568" r="2.5" fill="#C9D2D7"/>
+  <text class="num" x="1140" y="573" text-anchor="end">3</text>
+  <line x1="60" y1="588" x2="1140" y2="588" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="613">Verdict with its uncertainty</text>
+  <circle cx="451" cy="608" r="2.5" fill="#C9D2D7"/>
+  <circle cx="593" cy="608" r="7" fill="#1D5C63"/>
+  <circle cx="735" cy="608" r="7" fill="#1D5C63"/>
+  <circle cx="877" cy="608" r="2.5" fill="#C9D2D7"/>
+  <circle cx="1019" cy="608" r="2.5" fill="#C9D2D7"/>
+  <text class="num" x="1140" y="613" text-anchor="end">2</text>
+  <line x1="60" y1="628" x2="1140" y2="628" stroke="#E3E8EB" stroke-width="1"/>
+  <text class="lab" x="60" y="653">Depth cursor</text>
+  <circle cx="451" cy="648" r="7" fill="#1D5C63"/>
+  <circle cx="593" cy="648" r="2.5" fill="#C9D2D7"/>
+  <circle cx="735" cy="648" r="2.5" fill="#C9D2D7"/>
+  <circle cx="877" cy="648" r="2.5" fill="#C9D2D7"/>
+  <circle cx="1019" cy="648" r="2.5" fill="#C9D2D7"/>
+  <text class="num" x="1140" y="653" text-anchor="end">1</text>
+  <line x1="60" y1="668" x2="1140" y2="668" stroke="#2B3A42" stroke-width="1"/>
+  <text class="note" x="60" y="706">Recurring elements counted across the 143 wireframe screens of the five applications, September 2026.</text>
+</svg>

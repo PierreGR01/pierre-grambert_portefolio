@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" width="1200" height="690" role="img" aria-labelledby="t d">
+  <title id="t">One time scrubber, three settings</title>
+  <desc id="d">Three settings of the same time scrubber. Virtual Ocean: an hourly analysis up to now, then a 10-day forecast. Arctic Iceberg Navigation Risk: hours over three days, with the ship's passage from departure to arrival drawn under the scrubber and tinted by collision probability, and a marker where the route closes. Fish Stock Spatial Management: yearly steps, a hindcast from 2000 then a projection to 2050, with closures in force from 2026.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7A8890"/>
+    </marker>
+    <linearGradient id="risk" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#F7E3C8"/>
+      <stop offset="0.45" stop-color="#EDB277"/>
+      <stop offset="0.62" stop-color="#C2602E"/>
+      <stop offset="0.72" stop-color="#EDB277"/>
+      <stop offset="1" stop-color="#F7E3C8"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: Inter, "Helvetica Neue", Arial, sans-serif; fill: #2B3A42; }
+    .h { font-size: 16px; font-weight: 600; }
+    .h2 { font-size: 15px; font-weight: 600; }
+    .sub { font-size: 13px; fill: #5A6870; }
+    .lab { font-size: 14px; }
+    .small { font-size: 12px; fill: #5A6870; }
+    .phase { font-size: 12px; font-weight: 600; letter-spacing: 2px; fill: #1D5C63; }
+    .num { font-size: 12px; font-weight: 700; fill: #FFFFFF; }
+  </style>
+  <rect width="1200" height="690" fill="#FFFFFF"/>
+  <text class="h2" x="60" y="64">Virtual Ocean</text>
+  <text class="sub" x="178" y="64">hourly analysis, then the 10-day forecast</text>
+  <rect x="61.0" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="99.6" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="138.1" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="176.7" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="215.3" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="253.9" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="292.4" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="331.0" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="369.6" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="408.1" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="446.7" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="485.3" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="523.9" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="562.4" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="601.0" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="639.6" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="678.1" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="716.7" y="114" width="36.6" height="14" fill="#9AA6AD"/>
+  <rect x="754.3" y="106" width="385.7" height="30" fill="#EAF3F4"/>
+  <rect x="755.3" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="793.9" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="832.4" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="871.0" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="909.6" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="948.1" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="986.7" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="1025.3" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="1063.9" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <rect x="1102.4" y="114" width="36.6" height="14" fill="#4f9a9e"/>
+  <line x1="754.3" y1="100" x2="754.3" y2="136" stroke="#2B3A42" stroke-width="1.5"/>
+  <text class="small" x="760.3" y="96" fill="#2B3A42">Now · 10-day forecast</text>
+  <text class="small" x="60" y="96">Analysis · hourly</text>
+  <circle cx="754.3" cy="121" r="9" fill="#1D5C63" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="60.0" y1="142" x2="60.0" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="60.0" y="162" text-anchor="middle">6 Sep</text>
+  <line x1="330.0" y1="142" x2="330.0" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="330.0" y="162" text-anchor="middle">13</text>
+  <line x1="600.0" y1="142" x2="600.0" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="600.0" y="162" text-anchor="middle">20</text>
+  <line x1="754.3" y1="142" x2="754.3" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="754.3" y="162" text-anchor="middle">24</text>
+  <line x1="1024.3" y1="142" x2="1024.3" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="1024.3" y="162" text-anchor="middle">1 Oct</text>
+  <line x1="1140.0" y1="142" x2="1140.0" y2="148" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="1140.0" y="162" text-anchor="middle">4</text>
+  <text class="h2" x="60" y="268">Arctic Iceberg Navigation Risk</text>
+  <text class="sub" x="298" y="268">the ship's passage, tinted by collision probability</text>
+  <rect x="61.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="76.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="91.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="106.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="121.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="136.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="151.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="166.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="181.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="196.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="211.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="226.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="241.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="256.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="271.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="286.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="301.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="316.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="331.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="346.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="361.0" y="324" width="13.0" height="14" fill="#9AA6AD"/>
+  <rect x="375.0" y="316" width="765.0" height="30" fill="#EAF3F4"/>
+  <rect x="376.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="391.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="406.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="421.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="436.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="451.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="466.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="481.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="496.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="511.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="526.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="541.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="556.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="571.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="586.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="601.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="616.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="631.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="646.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="661.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="676.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="691.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="706.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="721.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="736.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="751.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="766.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="781.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="796.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="811.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="826.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="841.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="856.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="871.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="886.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="901.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="916.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="931.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="946.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="961.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="976.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="991.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1006.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1021.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1036.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1051.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1066.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1081.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1096.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1111.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <rect x="1126.0" y="324" width="13.0" height="14" fill="#4f9a9e"/>
+  <line x1="375.0" y1="310" x2="375.0" y2="346" stroke="#2B3A42" stroke-width="1.5"/>
+  <text class="small" x="381.0" y="306" fill="#2B3A42">Now · drift forecast</text>
+  <rect x="510.0" y="350" width="561.0" height="7" rx="3.5" fill="#E3E8EB"/>
+  <rect x="510.0" y="350" width="561.0" height="7" rx="3.5" fill="url(#risk)"/>
+  <line x1="510.0" y1="314" x2="510.0" y2="357" stroke="#2B3A42" stroke-width="1" opacity="0.6"/>
+  <circle cx="510.0" cy="304" r="6" fill="#FFFFFF" stroke="#2B3A42" stroke-width="1.5"/>
+  <circle cx="510.0" cy="304" r="2" fill="#2B3A42"/>
+  <line x1="750.0" y1="314" x2="750.0" y2="357" stroke="#2B3A42" stroke-width="1" opacity="0.6"/>
+  <circle cx="750.0" cy="304" r="6.5" fill="#FFFFFF" stroke="#2B3A42" stroke-width="1.5"/>
+  <line x1="745.5" y1="308.5" x2="754.5" y2="299.5" stroke="#2B3A42" stroke-width="1.5"/>
+  <line x1="1071.0" y1="314" x2="1071.0" y2="357" stroke="#2B3A42" stroke-width="1" opacity="0.6"/>
+  <line x1="1066.0" y1="311" x2="1066.0" y2="295" stroke="#2B3A42" stroke-width="1.5"/>
+  <rect x="1066.0" y="295" width="11" height="8" fill="none" stroke="#2B3A42" stroke-width="1.2"/>
+  <rect x="1066.0" y="295" width="3.7" height="4" fill="#2B3A42"/>
+  <rect x="1073.3" y="295" width="3.7" height="4" fill="#2B3A42"/>
+  <rect x="1069.7" y="299" width="3.6" height="4" fill="#2B3A42"/>
+  <circle cx="660.0" cy="331" r="9" fill="#1D5C63" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="60.0" y1="370" x2="60.0" y2="376" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="60.0" y="390" text-anchor="middle">Wed 14 Oct</text>
+  <line x1="420.0" y1="370" x2="420.0" y2="376" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="420.0" y="390" text-anchor="middle">Thu 15</text>
+  <line x1="780.0" y1="370" x2="780.0" y2="376" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="780.0" y="390" text-anchor="middle">Fri 16</text>
+  <line x1="1140.0" y1="370" x2="1140.0" y2="376" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="1140.0" y="390" text-anchor="middle">Sat 17</text>
+  <text class="small" x="522.0" y="308" fill="#2B3A42">Departure</text>
+  <text class="small" x="762.0" y="308" fill="#2B3A42">Route closes</text>
+  <text class="small" x="1059.0" y="308" text-anchor="end" fill="#2B3A42">Arrival</text>
+  <text class="h2" x="60" y="506">Fish Stock Spatial Management</text>
+  <text class="sub" x="298" y="506">yearly, hindcast then projection to 2050</text>
+  <rect x="61.0" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="82.2" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="103.4" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="124.5" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="145.7" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="166.9" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="188.1" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="209.2" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="230.4" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="251.6" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="272.8" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="293.9" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="315.1" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="336.3" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="357.5" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="378.6" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="399.8" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="421.0" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="442.2" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="463.4" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="484.5" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="505.7" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="526.9" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="548.1" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="569.2" y="556" width="19.2" height="14" fill="#9AA6AD"/>
+  <rect x="589.4" y="548" width="550.6" height="30" fill="#EAF3F4"/>
+  <rect x="590.4" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="611.6" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="632.8" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="653.9" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="675.1" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="696.3" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="717.5" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="738.6" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="759.8" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="781.0" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="802.2" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="823.4" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="844.5" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="865.7" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="886.9" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="908.1" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="929.2" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="950.4" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="971.6" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="992.8" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1013.9" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1035.1" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1056.3" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1077.5" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1098.6" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <rect x="1119.8" y="556" width="19.2" height="14" fill="#4f9a9e"/>
+  <line x1="589.4" y1="542" x2="589.4" y2="578" stroke="#2B3A42" stroke-width="1.5"/>
+  <text class="small" x="60" y="538">Hindcast · yearly</text>
+  <text class="small" x="595.4" y="538" fill="#2B3A42">Projection · to 2050</text>
+  <rect x="610.6" y="582" width="529.4" height="7" rx="3.5" fill="#1D5C63" opacity="0.35"/>
+  <text class="small" x="610.6" y="606">Closures in force from 2026</text>
+  <circle cx="716.5" cy="563" r="9" fill="#1D5C63" stroke="#FFFFFF" stroke-width="2"/>
+  <line x1="60.0" y1="618" x2="60.0" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="60.0" y="638" text-anchor="middle">2000</text>
+  <line x1="271.8" y1="618" x2="271.8" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="271.8" y="638" text-anchor="middle">2010</text>
+  <line x1="483.5" y1="618" x2="483.5" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="483.5" y="638" text-anchor="middle">2020</text>
+  <line x1="695.3" y1="618" x2="695.3" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="695.3" y="638" text-anchor="middle">2030</text>
+  <line x1="907.1" y1="618" x2="907.1" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="907.1" y="638" text-anchor="middle">2040</text>
+  <line x1="1118.8" y1="618" x2="1118.8" y2="624" stroke="#7A8890" stroke-width="1"/>
+  <text class="small" x="1118.8" y="638" text-anchor="middle">2050</text>
+</svg>

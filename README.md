@@ -12,6 +12,7 @@ Source code for [pierregrambert.fr](https://pierregrambert.fr), hosted on GitHub
 ├── kairn/                  # Case study — Kairn Design Studio (embedded UI)
 ├── saprea/                 # Case study — Saprea (non-profit digital platform)
 ├── georchestra/            # Case study — geOrchestra (open-source geospatial SDI)
+├── mercator-ocean/         # Case study — Mercator Ocean (five Copernicus Marine applications)
 ├── assets/                 # Images, fonts, shared resources
 ├── sitemap.xml
 └── robots.txt

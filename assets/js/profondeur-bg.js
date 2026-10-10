@@ -188,6 +188,7 @@ uniform vec4  u_block;      /* header copy box, css px */
 uniform float u_blockK;
 uniform vec4  u_well;       /* the cursor's mass: xyz (focal plane, grid cells), strength (signed) */
 uniform float u_wellR;      /* its reach, grid cells */
+uniform float u_wellK;      /* how awake it is: 1 while the pointer moves, 0 once it rests */
 layout(location = 0) out vec4 o_pos;
 layout(location = 1) out vec4 o_vel;
 
@@ -273,10 +274,10 @@ void main() {
 
   /* the cursor's well: 1/r² with a flat core, nothing far away, and a soft repulsive heart,
      so falling cells settle into a ring around the pointer instead of piling up; a swirl
-     around the line of sight makes them circle it */
+     around the line of sight makes them circle it; it lets go as the pointer comes to rest */
   vec3 dw = u_well.xyz - p;
   float r2 = dot(dw, dw);
-  float held = u_well.w != 0.0 ? exp(-r2 / (u_wellR * u_wellR)) : 0.0;
+  float held = u_well.w != 0.0 ? u_wellK * exp(-r2 / (u_wellR * u_wellR)) : 0.0;
   vec3 radial = dw * inversesqrt(r2 + 1e-4);
   vec3 swirl = normalize(cross(vec3(0.0, 0.0, 1.0), radial) + vec3(1e-5));
   /* each cell has its own orbit: the ring thickens into a swirling disc */
@@ -710,7 +711,7 @@ void main() {
     U = {
       step: uniforms(P.step, GRID.concat(['u_pos', 'u_vel', 'u_trail', 'u_occ', 'u_frame', 'u_sa', 'u_so', 'u_speed',
         'u_turn', 'u_sharp', 'u_gravity', 'u_gLod', 'u_gReach', 'u_drag', 'u_cross', 'u_gCross', 'u_warmReach', 'u_src', 'u_srcK',
-        'u_cam', 'u_view', 'u_block', 'u_blockK', 'u_well', 'u_wellR'])),
+        'u_cam', 'u_view', 'u_block', 'u_blockK', 'u_well', 'u_wellR', 'u_wellK'])),
       mark: uniforms(P.mark, GRID.concat(['u_pos', 'u_vel', 'u_aw', 'u_deposit'])),
       diffuse: uniforms(P.diffuse, GRID.concat(['u_trail', 'u_occ', 'u_decay', 'u_diffuse', 'u_voids', 'u_frame'])),
       points: uniforms(P.points, GRID.concat(['u_pos', 'u_prev', 'u_vel', 'u_trail', 'u_aw', 'u_viewM', 'u_projM',
@@ -773,7 +774,9 @@ void main() {
   var frame = 0, simTime = 0, acc = 0, lastNow = 0, startAt = performance.now();
   var raf = 0, shown = false, built = '', boost = 1;
   var quality = 1, frames = 0, frameAcc = 0;
-  var mouse = { x: -1e4, y: -1e4, k: 0, kt: 0 };
+  /* the well only pulls while the pointer moves: STILL ms without a move and it lets go */
+  var STILL = 120;
+  var mouse = { x: -1e4, y: -1e4, k: 0, kt: 0, at: -1e9 };
   var par = { x: 0, y: 0, tx: 0, ty: 0 };
   var hover = [0, 0, 0, 0, 0], hoverTarget = [0, 0, 0, 0, 0];
   var view = new Float32Array(16), proj = new Float32Array(16), focus = 0;
@@ -782,11 +785,11 @@ void main() {
      would leave the well (and the parallax) stuck where the last scroll began */
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType === 'touch') return;
-    mouse.x = e.clientX; mouse.y = e.clientY; mouse.kt = 1;
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.at = performance.now();
     par.tx = e.clientX / Math.max(innerWidth, 1) - 0.5;
     par.ty = e.clientY / Math.max(innerHeight, 1) - 0.5;
   }, { passive: true });
-  document.addEventListener('pointerleave', function () { mouse.kt = 0; par.tx = 0; par.ty = 0; });
+  document.addEventListener('pointerleave', function () { mouse.at = -1e9; par.tx = 0; par.ty = 0; });
 
   document.querySelectorAll('.project-card').forEach(function (card, k) {
     if (k > 4) return;
@@ -1149,6 +1152,7 @@ void main() {
     gl.uniform4f(U.step.u_well, e[0] + (mouse.x - W / 2) * Dw / F, e[1] - (mouse.y - H / 2) * Dw / F, e[2] + Dw,
                  state.cursor ? state.well * mouse.k : 0);
     gl.uniform1f(U.step.u_wellR, state.wellR);
+    gl.uniform1f(U.step.u_wellK, mouse.k);
     gl.bindVertexArray(vaoTri);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     unbind(4);
@@ -1237,7 +1241,11 @@ void main() {
     }
 
     for (var i = 0; i < 5; i++) hover[i] += (hoverTarget[i] - hover[i]) * ease(0.3);
-    mouse.k += (mouse.kt - mouse.k) * ease(0.3);
+    /* wakes quickly when the pointer moves, lets go a little slower when it rests, and is
+       set to nothing once faint (the well's hold on the cells goes with it) */
+    mouse.kt = now - mouse.at < STILL ? 1 : 0;
+    mouse.k += (mouse.kt - mouse.k) * ease(mouse.kt > mouse.k ? 0.1 : 0.35);
+    if (!mouse.kt && mouse.k < 0.005) mouse.k = 0;
     par.x += (par.tx - par.x) * ease(1.2);
     par.y += (par.ty - par.y) * ease(1.2);
 
@@ -1578,7 +1586,7 @@ void main() {
       return { stepMs: +((t1 - t0) / n).toFixed(3), frameMs: +((t2 - t1) / 10).toFixed(3) };
     },
     /* lab: put the pointer somewhere at once (for advance() tests) */
-    pointer: function (x, y) { mouse.x = x; mouse.y = y; mouse.k = mouse.kt = 1; },
+    pointer: function (x, y) { mouse.x = x; mouse.y = y; mouse.k = mouse.kt = 1; mouse.at = performance.now(); },
     get: function () {
       return Object.assign({ quality: quality, frame: frame, agentsCount: count, grid: [NX, NY, NZ],
                              calm: calm, enabled: enabled, focus: focus }, state);

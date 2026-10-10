@@ -231,7 +231,10 @@
       flex: 1;
       border: 1px solid rgba(130, 225, 255, 0.14);
       padding: 28px 24px 32px;
-      background: rgba(130, 225, 255, 0.025);
+      /* frosted like the top bar, but dark: the moving background blurs behind the card */
+      background: rgba(14, 16, 38, 0.5);
+      -webkit-backdrop-filter: blur(45px) saturate(1.3);
+      backdrop-filter: blur(45px) saturate(1.3);
     }
 
     .skill-card-title {
@@ -378,7 +381,10 @@
       padding: 5px 14px;
       border: 1px solid rgba(130, 225, 255, 0.5);
       color: rgb(130, 225, 255);
-      background: transparent;
+      /* frosted like the top bar, but dark: the moving background blurs behind it */
+      background: rgba(14, 16, 38, 0.5);
+      -webkit-backdrop-filter: blur(45px) saturate(1.3);
+      backdrop-filter: blur(45px) saturate(1.3);
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 11px;
       font-weight: 400;
@@ -389,7 +395,7 @@
     }
 
     .btn-recommendation:hover {
-      background: rgba(130, 225, 255, 0.07);
+      background: rgba(29, 43, 66, 0.54);
       border-color: rgb(130, 225, 255);
     }
 
@@ -1294,5 +1300,6 @@ and cross-functional collaboration with engineering teams.</p>
       return program;
     }
   </script>
+  <script src="assets/js/profondeur-bg.js" data-calm defer></script>
 </body>
 </html>

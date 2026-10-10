@@ -20,7 +20,8 @@
 
    The cursor is a mass in the focal plane: the cells near it fall in,
    gather speed, curl around it and light up as they go; when it moves on,
-   they drift back into the network.
+   they drift back into the network. A finger is not a cursor: on touch
+   screens there is no mass.
 
    WebGL2 + EXT_color_buffer_float, all on the GPU:
    1. cells — position (RGBA32F: xyz, size) and velocity (xyz, family),
@@ -49,10 +50,12 @@
   var me = document.currentScript;
   var calm = !!(me && me.hasAttribute('data-calm'));
 
-  /* the canvas sits behind the content, above the CSS gradient that stays as a fallback */
+  /* the canvas sits behind the content, above the CSS gradient that stays as a fallback;
+     it is as tall as the screen with the mobile toolbars folded (lvh), so that folding
+     them on scroll neither rescales the scene nor rebuilds the network */
   var style = document.createElement('style');
   style.textContent =
-    '#profondeur-bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-1;' +
+    '#profondeur-bg{position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;display:block;z-index:-1;' +
     'pointer-events:none;opacity:0;transition:opacity 1.4s ease}' +
     'html.profondeur-on #profondeur-bg{opacity:1}' +
     'html.profondeur-on body,html.profondeur-on .page-bg{animation:none}' +
@@ -748,7 +751,10 @@ void main() {
   var hover = [0, 0, 0, 0, 0], hoverTarget = [0, 0, 0, 0, 0];
   var view = new Float32Array(16), proj = new Float32Array(16), focus = 0;
 
+  /* only a mouse or a pen holds the well: a finger lifts without a pointerleave, which
+     would leave the well (and the parallax) stuck where the last scroll began */
   window.addEventListener('pointermove', function (e) {
+    if (e.pointerType === 'touch') return;
     mouse.x = e.clientX; mouse.y = e.clientY; mouse.kt = 1;
     par.tx = e.clientX / Math.max(innerWidth, 1) - 0.5;
     par.ty = e.clientY / Math.max(innerHeight, 1) - 0.5;

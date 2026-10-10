@@ -178,6 +178,37 @@
       border-left: 1px solid rgba(165, 165, 165, 0.3);
     }
 
+    /* the PDF version of this page, beside the identity items */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border: 1px solid rgba(130, 225, 255, 0.5);
+      color: rgb(130, 225, 255);
+      /* frosted like the top bar, but dark: the moving background blurs behind it */
+      background: rgba(14, 16, 38, 0.5);
+      -webkit-backdrop-filter: blur(45px) saturate(1.3);
+      backdrop-filter: blur(45px) saturate(1.3);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-download:hover {
+      background: rgba(29, 43, 66, 0.54);
+      border-color: rgb(130, 225, 255);
+    }
+
+    .btn-download svg {
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
     /* ─────────────────────────────────────────────────────────
        Section divider shared
     ───────────────────────────────────────────────────────── */
@@ -321,6 +352,10 @@
       padding: 3px 11px;
       letter-spacing: 0.3px;
       white-space: nowrap;
+      /* frosted like the top bar, but dark: the moving background blurs behind it */
+      background: rgba(14, 16, 38, 0.5);
+      -webkit-backdrop-filter: blur(45px) saturate(1.3);
+      backdrop-filter: blur(45px) saturate(1.3);
     }
 
     /* ─────────────────────────────────────────────────────────
@@ -763,6 +798,14 @@
         <span class="identity-item">Grenoble, France</span>
         <span class="identity-item">Fluent in French &amp; English</span>
         <span class="identity-item">10+ years of experience</span>
+        <span class="identity-item">
+          <a href="assets/files/pierre-grambert-resume.pdf" class="btn-download" download="Pierre-Grambert-Resume.pdf" type="application/pdf">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 10h8M6 2v6M3 5l3 3 3-3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download PDF
+          </a>
+        </span>
       </div>
 
     </section>

@@ -36,7 +36,11 @@
 
    The script makes its own canvas, behind the content (inside .page-bg
    where the page has one). <script data-calm> dims it for reading pages.
-   Without WebGL2 the canvas stays hidden and the CSS gradient shows.
+   A switch, always at hand in the bottom right corner, turns the particles
+   off and brings back the original CSS gradient; the choice is remembered
+   from page to page, and while it is off nothing is even compiled.
+   Without WebGL2 the canvas stays hidden, there is no switch and the CSS
+   gradient shows.
    Tuning lab: _lab/profondeur/ (not published).
 ───────────────────────────────────────────────────────── */
 (function () {
@@ -51,7 +55,22 @@
     '#profondeur-bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-1;' +
     'pointer-events:none;opacity:0;transition:opacity 1.4s ease}' +
     'html.profondeur-on #profondeur-bg{opacity:1}' +
-    'html.profondeur-on body,html.profondeur-on .page-bg{animation:none}';
+    'html.profondeur-on body,html.profondeur-on .page-bg{animation:none}' +
+    /* the switch: an outlined, frosted control like the site's buttons */
+    '.pg-particles{position:fixed;right:16px;bottom:16px;z-index:90;display:inline-flex;align-items:center;' +
+    'gap:10px;height:30px;padding:0 14px 0 10px;border:1px solid rgba(130,225,255,.5);color:rgb(130,225,255);' +
+    'background:rgba(14,16,38,.5);-webkit-backdrop-filter:blur(45px) saturate(1.3);backdrop-filter:blur(45px) saturate(1.3);' +
+    'font:400 11px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;' +
+    'cursor:pointer;transition:background .2s ease,border-color .2s ease,bottom .25s ease}' +
+    '.pg-particles:hover{background:rgba(31,47,70,.54);border-color:rgb(130,225,255)}' +
+    '.pg-particles:focus-visible{outline:2px solid rgb(130,225,255);outline-offset:3px}' +
+    '.pg-particles__switch{position:relative;width:22px;height:12px;border:1px solid currentColor}' +
+    '.pg-particles__switch::after{content:"";position:absolute;top:2px;left:2px;width:6px;height:6px;' +
+    'background:currentColor;transition:transform .2s ease}' +
+    '.pg-particles[aria-pressed="true"] .pg-particles__switch::after{transform:translateX(10px)}' +
+    '.pg-particles[aria-pressed="false"] .pg-particles__switch{opacity:.55}' +
+    '@media (prefers-reduced-motion:reduce){.pg-particles,.pg-particles__switch::after{transition:none}}' +
+    '@media print{.pg-particles{display:none}}';
   document.head.appendChild(style);
   var canvas = document.getElementById('profondeur-bg');
   if (!canvas) {
@@ -67,6 +86,11 @@
     console.warn('WebGL2 / EXT_color_buffer_float indisponible — dégradé CSS conservé');
     return;
   }
+
+  /* particles or the original gradient: the visitor's choice, remembered across pages */
+  var PREF = 'pg-particles';
+  var enabled = true;
+  try { enabled = localStorage.getItem(PREF) !== 'off'; } catch (e) { /* storage blocked: particles */ }
 
   var MAX_TEX = gl.getParameter(gl.MAX_TEXTURE_SIZE);
   var MAX_POINT = Math.min(56, gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1]);
@@ -636,51 +660,60 @@ void main() {
   o = vec4(col, 1.0);
 }`;
 
-  var P = {
-    step: createProgram(FS_VERT, STEP_FRAG),
-    mark: createProgram(MARK_VERT, MARK_FRAG),
-    diffuse: createProgram(FS_VERT, DIFFUSE_FRAG),
-    points: createProgram(POINTS_VERT, POINTS_FRAG),
-    merge: createProgram(FS_VERT, MERGE_FRAG),
-    down: createProgram(FS_VERT, DOWN_FRAG),
-    up: createProgram(FS_VERT, UP_FRAG),
-    soft: createProgram(FS_VERT, SOFT_FRAG),
-    compose: createProgram(FS_VERT, COMPOSE_FRAG)
-  };
-  for (var name in P) if (!P[name]) return;
+  var P = null, U = null, vaoTri = null, vaoCells = null, bufIds = null, broken = false;
 
-  var GRID = ['u_grid', 'u_cols', 'u_atlas'];
-  var U = {
-    step: uniforms(P.step, GRID.concat(['u_pos', 'u_vel', 'u_trail', 'u_occ', 'u_frame', 'u_sa', 'u_so', 'u_speed',
-      'u_turn', 'u_sharp', 'u_gravity', 'u_gLod', 'u_gReach', 'u_drag', 'u_cross', 'u_gCross', 'u_warmReach', 'u_src', 'u_srcK',
-      'u_cam', 'u_view', 'u_block', 'u_blockK', 'u_well', 'u_wellR'])),
-    mark: uniforms(P.mark, GRID.concat(['u_pos', 'u_vel', 'u_aw', 'u_deposit'])),
-    diffuse: uniforms(P.diffuse, GRID.concat(['u_trail', 'u_occ', 'u_decay', 'u_diffuse', 'u_voids', 'u_frame'])),
-    points: uniforms(P.points, GRID.concat(['u_pos', 'u_prev', 'u_vel', 'u_trail', 'u_aw', 'u_viewM', 'u_projM',
-      'u_alpha', 'u_focus', 'u_coc', 'u_dpr', 'u_maxPoint', 'u_gain', 'u_densK', 'u_bokeh', 'u_time', 'u_layer',
-      'u_iri', 'u_cloudK'])),
-    merge: uniforms(P.merge, ['u_l0', 'u_l1', 'u_l2', 'u_l3', 'u_dst']),
-    down: uniforms(P.down, ['u_src', 'u_texel', 'u_dst']),
-    up: uniforms(P.up, ['u_coarse', 'u_fine', 'u_texel', 'u_dst', 'u_keep']),
-    soft: uniforms(P.soft, ['u_l1', 'u_l2', 'u_l3', 'u_glow', 'u_sky', 'u_dst', 'u_r2', 'u_r3', 'u_skyRes',
-      'u_glowK', 'u_skyK', 'u_split']),
-    compose: uniforms(P.compose, ['u_l0', 'u_soft', 'u_res', 'u_amount', 'u_fringe', 'u_dpr', 'u_veil', 'u_veil2'])
-  };
+  /* programs and buffers, made on first use — never, while the visitor keeps the gradient */
+  function init() {
+    if (P || broken) return !broken;
+    var made = {
+      step: createProgram(FS_VERT, STEP_FRAG),
+      mark: createProgram(MARK_VERT, MARK_FRAG),
+      diffuse: createProgram(FS_VERT, DIFFUSE_FRAG),
+      points: createProgram(POINTS_VERT, POINTS_FRAG),
+      merge: createProgram(FS_VERT, MERGE_FRAG),
+      down: createProgram(FS_VERT, DOWN_FRAG),
+      up: createProgram(FS_VERT, UP_FRAG),
+      soft: createProgram(FS_VERT, SOFT_FRAG),
+      compose: createProgram(FS_VERT, COMPOSE_FRAG)
+    };
+    for (var name in made) if (!made[name]) { broken = true; return false; }
+    P = made;
 
-  var vaoTri = gl.createVertexArray();
-  gl.bindVertexArray(vaoTri);
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0);
-  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    var GRID = ['u_grid', 'u_cols', 'u_atlas'];
+    U = {
+      step: uniforms(P.step, GRID.concat(['u_pos', 'u_vel', 'u_trail', 'u_occ', 'u_frame', 'u_sa', 'u_so', 'u_speed',
+        'u_turn', 'u_sharp', 'u_gravity', 'u_gLod', 'u_gReach', 'u_drag', 'u_cross', 'u_gCross', 'u_warmReach', 'u_src', 'u_srcK',
+        'u_cam', 'u_view', 'u_block', 'u_blockK', 'u_well', 'u_wellR'])),
+      mark: uniforms(P.mark, GRID.concat(['u_pos', 'u_vel', 'u_aw', 'u_deposit'])),
+      diffuse: uniforms(P.diffuse, GRID.concat(['u_trail', 'u_occ', 'u_decay', 'u_diffuse', 'u_voids', 'u_frame'])),
+      points: uniforms(P.points, GRID.concat(['u_pos', 'u_prev', 'u_vel', 'u_trail', 'u_aw', 'u_viewM', 'u_projM',
+        'u_alpha', 'u_focus', 'u_coc', 'u_dpr', 'u_maxPoint', 'u_gain', 'u_densK', 'u_bokeh', 'u_time', 'u_layer',
+        'u_iri', 'u_cloudK'])),
+      merge: uniforms(P.merge, ['u_l0', 'u_l1', 'u_l2', 'u_l3', 'u_dst']),
+      down: uniforms(P.down, ['u_src', 'u_texel', 'u_dst']),
+      up: uniforms(P.up, ['u_coarse', 'u_fine', 'u_texel', 'u_dst', 'u_keep']),
+      soft: uniforms(P.soft, ['u_l1', 'u_l2', 'u_l3', 'u_glow', 'u_sky', 'u_dst', 'u_r2', 'u_r3', 'u_skyRes',
+        'u_glowK', 'u_skyK', 'u_split']),
+      compose: uniforms(P.compose, ['u_l0', 'u_soft', 'u_res', 'u_amount', 'u_fringe', 'u_dpr', 'u_veil', 'u_veil2'])
+    };
 
-  /* one vertex per cell; the id comes from gl_VertexID, the buffer only keeps drivers happy */
-  var vaoCells = gl.createVertexArray(), bufIds = gl.createBuffer();
-  gl.bindVertexArray(vaoCells);
-  gl.bindBuffer(gl.ARRAY_BUFFER, bufIds);
-  gl.enableVertexAttribArray(0);
-  gl.vertexAttribPointer(0, 1, gl.FLOAT, false, 0, 0);
-  gl.bindVertexArray(null);
+    vaoTri = gl.createVertexArray();
+    gl.bindVertexArray(vaoTri);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+    /* one vertex per cell; the id comes from gl_VertexID, the buffer only keeps drivers happy */
+    vaoCells = gl.createVertexArray();
+    bufIds = gl.createBuffer();
+    gl.bindVertexArray(vaoCells);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufIds);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 1, gl.FLOAT, false, 0, 0);
+    gl.bindVertexArray(null);
+    return true;
+  }
 
   /* ─────────────────────────────────────────────────────────
      State
@@ -736,6 +769,7 @@ void main() {
     e.preventDefault();
     cancelAnimationFrame(raf); raf = 0;
     document.documentElement.classList.remove('profondeur-on');
+    toggle.hidden = true;
   });
 
   /* ≤ 1.5 dpr and ≤ ~2.4 Mpx for the display */
@@ -1063,7 +1097,8 @@ void main() {
   ───────────────────────────────────────────────────────── */
   function render(now) {
     raf = 0;
-    if (state.mode === 0 || state.freeze) return;
+    if (!enabled || state.mode === 0 || state.freeze) return;
+    if (!init()) { toggle.hidden = true; return; }
 
     var dt = lastNow ? Math.min(now - lastNow, 250) : 16;
     if (lastNow) {
@@ -1080,7 +1115,8 @@ void main() {
     measureLayout();
     if (built !== key()) {
       build();
-      preRoll(PRE);
+      /* reduced motion: let the network form off-screen, then show it still */
+      preRoll(reduced ? PRE * 3 : PRE);
     }
 
     for (var i = 0; i < 5; i++) hover[i] += (hoverTarget[i] - hover[i]) * ease(0.3);
@@ -1232,16 +1268,57 @@ void main() {
   }
 
   function kick() {
-    if (!raf && state.mode !== 0) raf = requestAnimationFrame(render);
+    if (!raf && enabled && state.mode !== 0) raf = requestAnimationFrame(render);
   }
 
   window.addEventListener('resize', kick);
 
-  /* Reduced motion: let the network form off-screen, then show it still */
-  if (reduced) {
-    resize(); measureLayout(); build();
-    preRoll(PRE * 3);
+  /* ─────────────────────────────────────────────────────────
+     The switch: particles, or the original gradient
+  ───────────────────────────────────────────────────────── */
+  var toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'pg-particles';
+  toggle.title = 'Animated background: particles, or the original gradient';
+  toggle.innerHTML = '<span class="pg-particles__switch" aria-hidden="true"></span>Particles';
+  toggle.setAttribute('aria-pressed', String(enabled));
+  document.body.appendChild(toggle);
+
+  function setEnabled(on) {
+    enabled = on;
+    toggle.setAttribute('aria-pressed', String(on));
+    try { localStorage.setItem(PREF, on ? 'on' : 'off'); } catch (e) { /* not remembered */ }
+    if (on) {
+      lastNow = 0;
+      kick();
+    } else {
+      cancelAnimationFrame(raf); raf = 0;
+      shown = false;
+      /* the canvas fades out and the CSS gradient starts moving again */
+      document.documentElement.classList.remove('profondeur-on');
+    }
   }
+  toggle.addEventListener('click', function () { setEnabled(!enabled); });
+
+  /* keep it clear of the footer when the footer comes into view */
+  var footer = document.querySelector('.section-footer'), placing = 0;
+  function place() {
+    placing = 0;
+    var b = 16;
+    if (footer) {
+      var over = innerHeight - footer.getBoundingClientRect().top;
+      if (over > 0) b = Math.min(innerHeight - 60, Math.max(16, over + 10));
+    }
+    toggle.style.bottom = b + 'px';
+  }
+  function schedule() { if (!placing) placing = requestAnimationFrame(place); }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  /* the footer moves when the page settles: images, fonts */
+  window.addEventListener('load', schedule);
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(document.body);
+  place();
+
   kick();
 
   /* ─────────────────────────────────────────────────────────
@@ -1318,7 +1395,7 @@ void main() {
   window.ProfondeurBG = {
     set: function (opts) {
       Object.keys(opts).forEach(function (k) { state[k] = opts[k]; });
-      document.documentElement.classList.toggle('profondeur-on', state.mode !== 0 && (shown || !!state.freeze));
+      document.documentElement.classList.toggle('profondeur-on', enabled && state.mode !== 0 && (shown || !!state.freeze));
       kick();
     },
     restart: function () { state.restart = (state.restart || 0) + 1; kick(); },
@@ -1330,9 +1407,10 @@ void main() {
       return REGIMES.custom;
     },
     /* lab: one display frame without stepping */
-    show: function () { resize(); measureLayout(); display(performance.now()); },
+    show: function () { if (!init()) return; resize(); measureLayout(); display(performance.now()); },
     /* run n steps at once (lab: see the network form without waiting) */
     advance: function (n) {
+      if (!init()) return;
       resize(); measureLayout();
       if (built !== key()) build();
       for (var i = 0; i < n; i++) step();
@@ -1340,6 +1418,7 @@ void main() {
     },
     /* lab: GPU time of n steps and of one frame (the reads force the queue to finish) */
     bench: function (n) {
+      if (!init()) return null;
       var px = new Float32Array(4);
       var sync = function () {
         gl.bindFramebuffer(gl.FRAMEBUFFER, trailA.fbo);
@@ -1360,7 +1439,7 @@ void main() {
     pointer: function (x, y) { mouse.x = x; mouse.y = y; mouse.k = mouse.kt = 1; },
     get: function () {
       return Object.assign({ quality: quality, frame: frame, agentsCount: count, grid: [NX, NY, NZ],
-                             calm: calm, focus: focus }, state);
+                             calm: calm, enabled: enabled, focus: focus }, state);
     }
   };
 })();

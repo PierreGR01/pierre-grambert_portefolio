@@ -36,7 +36,10 @@
       a pyramid of all that light gives the glow and, at its widest, the sky.
 
    The script makes its own canvas, behind the content (inside .page-bg
-   where the page has one). <script data-calm> dims it for reading pages.
+   where the page has one). <script data-calm> dims it for reading pages,
+   and there the light under the copy falls out of focus: around the text
+   the grains melt into the haze of their own light, so it reads on a calm
+   ground while the margins keep the whole system.
    A small icon button, always at hand in the bottom right corner, turns the
    particles off and brings back the original CSS gradient; the choice is
    remembered from page to page, and while it is off nothing is even compiled.
@@ -98,6 +101,7 @@
   var RATIO = 2.6;     /* distance of the back of the volume / distance of its front */
   var RATE = 20;       /* simulation steps per second; the display interpolates */
   var PRE = 100;       /* steps run before the first frame, at four times the speed */
+  var MAX_TEXT = 32;   /* boxes of copy the display knows at once (reading pages) */
 
   /* ─────────────────────────────────────────────────────────
      Shaders
@@ -585,7 +589,10 @@ void main() {
 }`;
 
   /* Display, 4: everything soft at half resolution — the wider layers, the glow and the
-     sky (the system's light at its widest) */
+     sky (the system's light at its widest). On reading pages the light under the copy
+     falls out of focus: there the grains, the discs and their glow give way to the same
+     light blurred wider, the haze; how far it has gone goes out in alpha, for the grains
+     of the last pass */
   var SOFT_FRAG = `#version 300 es
 precision highp float;
 precision highp sampler2D;
@@ -594,16 +601,32 @@ uniform sampler2D u_l2;
 uniform sampler2D u_l3;
 uniform sampler2D u_glow;
 uniform sampler2D u_sky;
+uniform sampler2D u_haze;
 uniform vec2  u_dst;
 uniform vec2  u_r2;
 uniform vec2  u_r3;
 uniform vec2  u_skyRes;
+uniform vec2  u_hazeRes;
 uniform float u_glowK;
 uniform float u_skyK;
 uniform float u_split;      /* the glow's colour split on its edges, texels */
+uniform vec4  u_text[${MAX_TEXT}];  /* the copy in view, css px from the top left */
+uniform int   u_textN;
+uniform vec2  u_css;        /* the canvas, css px */
+uniform float u_read;       /* how far the light under the copy falls out of focus */
+uniform float u_readReach;  /* over how many css px around it */
 out vec4 o;
 ` + BICUBIC + `
 float lum(vec3 c) { return dot(c, vec3(0.3, 0.45, 0.25)); }
+float underCopy(vec2 p) {
+  float d = 1e10;
+  for (int i = 0; i < ${MAX_TEXT}; i++) {
+    if (i >= u_textN) break;
+    vec2 q = max(max(u_text[i].xy - p, p - u_text[i].zw), 0.0);
+    d = min(d, dot(q, q));
+  }
+  return 1.0 - smoothstep(0.0, u_readReach, sqrt(d));
+}
 void main() {
   vec2 uv = gl_FragCoord.xy / u_dst, e = 1.5 / u_dst;
   /* the clouds' edges split like the blobs': the channels slide apart along the slope */
@@ -611,8 +634,11 @@ void main() {
                 lum(texture(u_glow, uv + vec2(0.0, e.y)).rgb) - lum(texture(u_glow, uv - vec2(0.0, e.y)).rgb));
   vec2 off = g / (length(g) + 1e-4) * u_split * smoothstep(0.0, 0.02, length(g)) / u_dst;
   vec3 glow = vec3(texture(u_glow, uv + off).r, texture(u_glow, uv).g, texture(u_glow, uv - off).b);
-  o = vec4(texture(u_l1, uv).rgb + bicubic(u_l2, uv, u_r2).rgb + bicubic(u_l3, uv, u_r3).rgb
-         + glow * u_glowK + bicubic(u_sky, uv, u_skyRes).rgb * u_skyK, 1.0);
+  vec3 near = texture(u_l1, uv).rgb + bicubic(u_l2, uv, u_r2).rgb + bicubic(u_l3, uv, u_r3).rgb + glow * u_glowK;
+  float m = u_textN > 0 ? u_read * underCopy(vec2(uv.x, 1.0 - uv.y) * u_css) : 0.0;
+  /* the haze carries the light of every layer, the sharp grains' too */
+  vec3 haze = bicubic(u_haze, uv, u_hazeRes).rgb * (1.0 + u_glowK);
+  o = vec4(mix(near, haze, m) + bicubic(u_sky, uv, u_skyRes).rgb * u_skyK, m);
 }`;
 
   /* Display, 5: the night, the soft light, the sharp grains (split a little by the lens
@@ -628,6 +654,7 @@ uniform float u_fringe;
 uniform float u_dpr;
 uniform vec4  u_veil;       /* header copy, device px */
 uniform vec4  u_veil2;      /* footer line */
+uniform float u_readDim;    /* how much the haze under the copy dims */
 out vec4 o;
 
 const vec3 NIGHT = vec3(0.030, 0.008, 0.052);
@@ -652,7 +679,9 @@ void main() {
                   texelFetch(u_l0, ivec2(fc), 0).g,
                   texture(u_l0, (fc - ca) / u_res).b);
   float veil = veilAt(u_veil, fc, 0.5, 150.0) * veilAt(u_veil2, fc, 0.45, 70.0);
-  vec3 light = (pts + texture(u_soft, uv).rgb) * u_amount * veil;
+  /* under the copy of the reading pages the sharp grains are already in the haze */
+  vec4 soft = texture(u_soft, uv);
+  vec3 light = (pts * (1.0 - soft.a) + soft.rgb) * u_amount * veil * (1.0 - u_readDim * soft.a);
   vec3 col = 1.0 - (1.0 - NIGHT) * exp(-light);
   col += (hash12(fc) - 0.5) / 255.0;
   o = vec4(col, 1.0);
@@ -690,9 +719,10 @@ void main() {
       merge: uniforms(P.merge, ['u_l0', 'u_l1', 'u_l2', 'u_l3', 'u_dst']),
       down: uniforms(P.down, ['u_src', 'u_texel', 'u_dst']),
       up: uniforms(P.up, ['u_coarse', 'u_fine', 'u_texel', 'u_dst', 'u_keep']),
-      soft: uniforms(P.soft, ['u_l1', 'u_l2', 'u_l3', 'u_glow', 'u_sky', 'u_dst', 'u_r2', 'u_r3', 'u_skyRes',
-        'u_glowK', 'u_skyK', 'u_split']),
-      compose: uniforms(P.compose, ['u_l0', 'u_soft', 'u_res', 'u_amount', 'u_fringe', 'u_dpr', 'u_veil', 'u_veil2'])
+      soft: uniforms(P.soft, ['u_l1', 'u_l2', 'u_l3', 'u_glow', 'u_sky', 'u_haze', 'u_dst', 'u_r2', 'u_r3', 'u_skyRes',
+        'u_hazeRes', 'u_glowK', 'u_skyK', 'u_split', 'u_text', 'u_textN', 'u_css', 'u_read', 'u_readReach']),
+      compose: uniforms(P.compose, ['u_l0', 'u_soft', 'u_res', 'u_amount', 'u_fringe', 'u_dpr', 'u_veil', 'u_veil2',
+        'u_readDim'])
     };
 
     vaoTri = gl.createVertexArray();
@@ -727,12 +757,14 @@ void main() {
     mode: 1, regime: 'drift', fill: 0.02, speed: 0.5, gravity: 0, amount: 1.5, sky: 3, glow: 1, dof: 1.25,
     well: 1.2, wellR: 28, bokeh: 0.6, gain: 0.9, densK: 0.25, food: 0.5, blockK: 1.5, voids: 0.06, drag: 0.02,
     gLod: 2, gReach: 6, warm: 0.3, cross: 0.45, gCross: 0.15, warmReach: 1.35, iri: 1, cloudK: 1.2, split: 6, fringe: 1.2,
+    read: 0, readDim: 0.35, readReach: 72, haze: 20,
     focusDrift: true, drift: true, parallax: true, sources: true, avoid: true, cursor: true, veil: true,
     paused: false
   };
 
-  /* reading pages: less light behind the text, a gentler cursor */
-  if (calm) { state.amount *= 0.6; state.sky *= 0.75; state.well *= 0.6; }
+  /* reading pages: less light behind the text, a gentler cursor, and the light under the
+     copy out of focus */
+  if (calm) { state.amount *= 0.6; state.sky *= 0.75; state.well *= 0.6; state.read = 0.9; }
 
   var NX = 0, NY = 0, NZ = 0, cols = 1, atlasW = 0, atlasH = 0, AH = 0, count = 0, levels = 1;
   var camD = 0, tanH = 0.6;
@@ -803,6 +835,90 @@ void main() {
     veilCss = box(rects('.site-title, .hero-text'));
     footCss = box(rects('.footer-text, .social-links'));
     blobs = rects('.project-figure').slice(0, 5);
+    if (textDirty && calm) measureCopy();
+  }
+
+  /* Reading pages: where the copy stands on the page (css px, page coordinates), merged
+     into blocks. Text on a frosted card, a tag, a button or a fixed bar is left out: it
+     has its own ground already. Measured again whenever the page reflows. */
+  var copyPage = [], textDirty = true, textBoxes = new Float32Array(4 * MAX_TEXT), textN = 0;
+
+  function measureCopy() {
+    textDirty = false;
+    var apart = new Map(), found = [], range = document.createRange();
+    var standsApart = function (el) {
+      var path = [], verdict = false;
+      for (var e = el; e && e !== document.body; e = e.parentElement) {
+        if (apart.has(e)) { verdict = apart.get(e); break; }
+        path.push(e);
+        var cs = getComputedStyle(e), frost = cs.backdropFilter || cs.webkitBackdropFilter || 'none';
+        if (/^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE|BUTTON)$/.test(e.tagName) || frost !== 'none' ||
+            cs.position === 'fixed' || cs.position === 'sticky') { verdict = true; break; }
+      }
+      path.forEach(function (e) { apart.set(e, verdict); });
+      return verdict;
+    };
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) { return /\S/.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
+    });
+    for (var n = walker.nextNode(); n; n = walker.nextNode()) {
+      if (standsApart(n.parentElement)) continue;
+      range.selectNodeContents(n);
+      var r = range.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) continue;
+      found.push([r.left + scrollX, r.top + scrollY, r.right + scrollX, r.bottom + scrollY]);
+    }
+    /* the lines and the runs of a paragraph, and the paragraphs that touch, make one block */
+    copyPage = mergeBoxes(found, 12);
+  }
+
+  /* boxes nearer to each other than `join` (css px) become one */
+  function mergeBoxes(list, join) {
+    var boxes = list.slice(), merged = true;
+    while (merged) {
+      merged = false;
+      for (var i = 0; i < boxes.length && !merged; i++) {
+        for (var j = i + 1; j < boxes.length; j++) {
+          var a = boxes[i], b = boxes[j];
+          if (a[0] - join <= b[2] && b[0] - join <= a[2] && a[1] - join <= b[3] && b[1] - join <= a[3]) {
+            boxes[i] = [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])];
+            boxes.splice(j, 1);
+            merged = true;
+            break;
+          }
+        }
+      }
+    }
+    return boxes;
+  }
+
+  function reading() { return calm && state.read > 0 && state.veil; }
+
+  /* the blocks in view, from the top left of the canvas, a little wider than the glyphs;
+     if they are too many, the nearest merge */
+  function copyInView() {
+    textN = 0;
+    if (!reading()) return;
+    var W = canvas.clientWidth, H = canvas.clientHeight, reach = state.readReach, pad = 8;
+    var seen = [];
+    copyPage.forEach(function (b) {
+      var x0 = b[0] - scrollX - pad, y0 = b[1] - scrollY - pad, x1 = b[2] - scrollX + pad, y1 = b[3] - scrollY + pad;
+      if (x1 > -reach && x0 < W + reach && y1 > -reach && y0 < H + reach) seen.push([x0, y0, x1, y1]);
+    });
+    for (var join = 24; seen.length > MAX_TEXT; join *= 2) seen = mergeBoxes(seen, join);
+    seen.forEach(function (b, k) { textBoxes.set(b, k * 4); });
+    textN = seen.length;
+  }
+
+  /* the copy moves when the page reflows: width, images, fonts; with reduced motion the
+     still frame is drawn again when the page reflows or scrolls, for the haze to follow */
+  function reflowed() { textDirty = true; if (reduced) kick(); }
+  if (calm) {
+    window.addEventListener('resize', reflowed);
+    window.addEventListener('load', reflowed);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reflowed);
+    if (window.ResizeObserver) new ResizeObserver(reflowed).observe(document.body);
+    if (reduced) window.addEventListener('scroll', function () { kick(); }, { passive: true });
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -1228,7 +1344,14 @@ void main() {
     }
     unbind(2);
 
-    /* 3. the soft light (wide layers, glow, sky) at half resolution */
+    /* 3. the soft light (wide layers, glow, sky) at half resolution; on reading pages,
+       the haze under the copy: the level whose texels are nearest to state.haze css px */
+    var cssW = canvas.clientWidth, hz = 2;
+    for (var q = 3; q <= down.length - 2; q++) {
+      if (Math.abs(cssW / up[q].w - state.haze) < Math.abs(cssW / up[hz].w - state.haze)) hz = q;
+    }
+    hz = Math.min(hz, down.length - 2);
+    copyInView();
     gl.bindFramebuffer(gl.FRAMEBUFFER, soft.fbo);
     gl.viewport(0, 0, soft.w, soft.h);
     gl.useProgram(P.soft);
@@ -1237,15 +1360,22 @@ void main() {
     bind(2, layers[3].tex[0], U.soft.u_l3);
     bind(3, up[1].tex[0], U.soft.u_glow);
     bind(4, up[skyLevel].tex[0], U.soft.u_sky);
+    bind(5, up[hz].tex[0], U.soft.u_haze);
     gl.uniform2f(U.soft.u_dst, soft.w, soft.h);
     gl.uniform2f(U.soft.u_r2, layers[2].w, layers[2].h);
     gl.uniform2f(U.soft.u_r3, layers[3].w, layers[3].h);
     gl.uniform2f(U.soft.u_skyRes, up[skyLevel].w, up[skyLevel].h);
+    gl.uniform2f(U.soft.u_hazeRes, up[hz].w, up[hz].h);
     gl.uniform1f(U.soft.u_glowK, 1.4 * state.glow);
     gl.uniform1f(U.soft.u_skyK, 3.0 * state.sky);
     gl.uniform1f(U.soft.u_split, state.split);
+    gl.uniform4fv(U.soft.u_text, textBoxes);
+    gl.uniform1i(U.soft.u_textN, textN);
+    gl.uniform2f(U.soft.u_css, cssW, canvas.clientHeight);
+    gl.uniform1f(U.soft.u_read, state.read);
+    gl.uniform1f(U.soft.u_readReach, state.readReach);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    unbind(5);
+    unbind(6);
 
     /* 4. night + soft light + the sharp grains */
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
@@ -1254,15 +1384,18 @@ void main() {
     bind(0, layers[0].tex[0], U.compose.u_l0);
     bind(1, soft.tex[0], U.compose.u_soft);
     gl.uniform2f(U.compose.u_res, w, h);
-    gl.uniform1f(U.compose.u_amount, state.amount * Math.min(1, (now - startAt) / 1500));
+    /* the light comes up in the first second and a half; a still frame (reduced motion) shows it whole */
+    gl.uniform1f(U.compose.u_amount, state.amount * (reduced ? 1 : Math.min(1, (now - startAt) / 1500)));
     gl.uniform1f(U.compose.u_fringe, state.fringe);
     gl.uniform1f(U.compose.u_dpr, s);
+    gl.uniform1f(U.compose.u_readDim, state.readDim);
     var H = canvas.clientHeight;
     var veilBox = function (loc, b) {
       if (state.veil) gl.uniform4f(loc, b[0] * s, (H - b[3]) * s, b[2] * s, (H - b[1]) * s);
       else gl.uniform4f(loc, -1e5, -1e5, -1e5, -1e5);
     };
-    veilBox(U.compose.u_veil, veilCss);
+    /* where the haze follows the copy, it replaces the veil of the header */
+    veilBox(U.compose.u_veil, reading() ? [-1e5, -1e5, -1e5, -1e5] : veilCss);
     veilBox(U.compose.u_veil2, footCss);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     unbind(2);

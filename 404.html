@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | Pierre Grambert</title>
+  <meta name="robots" content="noindex">
+
+  <!-- GitHub Pages serves this page for any missing address, at any depth: every path is absolute -->
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/build/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/build/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/build/favicon/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/assets/build/favicon/favicon.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&family=Inter:wght@200&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (social icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       CSS Houdini — animatable custom properties for gradient
+    ───────────────────────────────────────────────────────── */
+    @property --x1 { syntax: "<percentage>"; inherits: false; initial-value: 80%;  }
+    @property --y1 { syntax: "<percentage>"; inherits: false; initial-value: 55%;  }
+    @property --x2 { syntax: "<percentage>"; inherits: false; initial-value: 20%;  }
+    @property --y2 { syntax: "<percentage>"; inherits: false; initial-value: 65%;  }
+    @property --x3 { syntax: "<percentage>"; inherits: false; initial-value: 50%;  }
+    @property --y3 { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+
+    @keyframes gradient {
+      0%   { --x1: 80%; --y1: 55%; --x2: 20%; --y2: 65%; --x3: 50%; --y3: 100%; }
+      50%  { --x1: 70%; --y1: 40%; --x2: 35%; --y2: 75%; --x3: 55%; --y3:  85%; }
+      100% { --x1: 75%; --y1: 65%; --x2: 25%; --y2: 60%; --x3: 45%; --y3: 110%; }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Reset
+    ───────────────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Body — animated gradient background
+    ───────────────────────────────────────────────────────── */
+    body {
+      --x1: 80%; --y1: 55%;
+      --x2: 20%; --y2: 65%;
+      --x3: 50%; --y3: 100%;
+
+      background:
+        radial-gradient(circle at var(--x1) var(--y1), rgba(0, 0, 255, 0.5)  0%, transparent  40%),
+        radial-gradient(circle at var(--x2) var(--y2), rgb(40, 0, 90)         0%, transparent  90%),
+        radial-gradient(circle at var(--x3) var(--y3), rgb(30, 0, 5)         50%, transparent 200%);
+
+      min-height: 100vh;
+      animation: gradient 6s ease-in-out infinite alternate;
+
+      color: rgb(200, 200, 205);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Layout
+    ───────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Header — same as the resume
+    ───────────────────────────────────────────────────────── */
+    .header-title-row {
+      padding: 40px 0 0;
+    }
+
+    .site-name {
+      display: inline-block;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    a.site-name:hover {
+      opacity: 0.7;
+    }
+
+    .site-title {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 56px;
+      font-weight: 200;
+      letter-spacing: 22px;
+      line-height: 80px;
+      color: rgb(235, 235, 240);
+      text-transform: uppercase;
+      margin-right: -22px;
+    }
+
+    .header-title-row hr {
+      border: none;
+      border-top: 1px solid rgb(165, 165, 165);
+      width: 300px;
+      margin: 12px 0 0 0;
+      opacity: 0.4;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Where to go — every page of the site, by name
+    ───────────────────────────────────────────────────────── */
+    .lead {
+      max-width: 620px;
+      margin: 36px 0 56px;
+      font-family: Inter, sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+      line-height: 1.6;
+      color: rgb(220, 220, 225);
+    }
+
+    .section-label {
+      font-family: "Titillium Web", sans-serif;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 5px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .page-list {
+      list-style: none;
+      border-top: 1px solid rgba(165, 165, 165, 0.15);
+      margin-bottom: 64px;
+    }
+
+    .page-list li {
+      border-bottom: 1px solid rgba(165, 165, 165, 0.15);
+    }
+
+    .page-list a {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 14px 0;
+      text-decoration: none;
+    }
+
+    .page-name {
+      flex: 0 0 260px;
+      font-family: "Titillium Web", sans-serif;
+      font-size: 15px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      color: rgb(130, 225, 255);
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+    }
+
+    .page-desc {
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 200;
+      color: rgb(185, 185, 190);
+    }
+
+    .page-list a:hover .page-name,
+    .page-list a:focus-visible .page-name {
+      opacity: 0.7;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────────────────────── */
+    .section-footer {
+      display: flex;
+      align-items: center;
+      padding: 40px 0;
+      margin-top: auto;
+      border-top: 1px solid rgba(165, 165, 165, 0.15);
+    }
+
+    .footer-text {
+      flex: 1;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 11.2px;
+      font-weight: 700;
+      letter-spacing: 2.24px;
+      color: rgba(160, 200, 255, 0.80);
+      line-height: 17.92px;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(19, 104, 255);
+      font-size: 18px;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .social-link:hover {
+      opacity: 0.6;
+    }
+
+    .social-link .fa-github {
+      font-size: 20px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — tablet (≤ 768px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .site-title {
+        font-size: 36px;
+        letter-spacing: 10px;
+        margin-right: -10px;
+        line-height: 52px;
+      }
+
+      .header-title-row hr {
+        width: 180px;
+      }
+
+      .page-list a {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .page-name {
+        flex-basis: auto;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       Responsive — mobile (≤ 480px)
+    ───────────────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .site-title {
+        font-size: 22px;
+        letter-spacing: 5px;
+        margin-right: -5px;
+        line-height: 36px;
+      }
+
+      .header-title-row hr {
+        width: 100px;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .section-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 30px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="header-title-row">
+      <a href="/" class="site-name">← Pierre Grambert</a>
+      <h1 class="site-title">Not found</h1>
+      <hr>
+    </header>
+
+    <main>
+      <p class="lead">This page does not exist, or no longer does. The portfolio was rebuilt in 2026 and some older pages were not carried over.</p>
+
+      <p class="section-label">Where to go from here</p>
+      <nav aria-label="Pages of this site">
+        <ul class="page-list">
+          <li><a href="/"><span class="page-name">Home</span><span class="page-desc">UX/Product Designer, geospatial and open source</span></a></li>
+          <li><a href="/my-resume.html"><span class="page-name">Resume</span><span class="page-desc">10+ years of data-driven interfaces, geospatial tools and design systems</span></a></li>
+          <li><a href="/bivouac/"><span class="page-name">Bivouac</span><span class="page-desc">Mapping bivouac regulations across the French mountains</span></a></li>
+          <li><a href="/kairn/"><span class="page-name">Kairn Design Studio</span><span class="page-desc">Embedded interfaces for two hardware products</span></a></li>
+          <li><a href="/saprea/"><span class="page-name">Saprea</span><span class="page-desc">Two platforms rebuilt on one structure</span></a></li>
+          <li><a href="/georchestra/"><span class="page-name">geOrchestra</span><span class="page-desc">Product design for public spatial data infrastructure</span></a></li>
+          <li><a href="/mercator-ocean/"><span class="page-name">Mercator Ocean</span><span class="page-desc">Five ocean-data applications, one design system</span></a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <footer class="section-footer">
+      <p class="footer-text">© Pierre Grambert 2026 — Built with Claude Code, hosted on GitHub Pages</p>
+      <nav class="social-links" aria-label="Social links">
+        <a href="https://github.com/PierreGR01"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://500px.com/p/PierreGrambert?view=photos"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on 500px">
+          <i class="fa-brands fa-500px"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/pierregrambert/"
+           class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pierre Grambert on LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </nav>
+    </footer>
+
+  </div>
+
+  <script src="/assets/js/profondeur-bg.js?v=2026-10-10c" data-calm defer></script>
+</body>
+</html>

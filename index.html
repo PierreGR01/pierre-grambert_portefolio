@@ -113,7 +113,9 @@
       padding: clamp(28px, 6vh, 63px) 0;
     }
 
+    /* Name and title are the two lines of the H1: the name is what people search for */
     .site-name {
+      display: block;
       font-family: "Titillium Web", sans-serif;
       font-size: 13px;
       font-weight: 200;
@@ -124,6 +126,7 @@
     }
 
     .site-title {
+      display: block;
       --title-track: clamp(10px, 2.4vh, 22px);
       font-family: "Titillium Web", sans-serif;
       font-size: clamp(34px, 6.2vh, 56px);
@@ -462,18 +465,61 @@
       }
     }
   </style>
+  <!-- Structured data: the site (its name in Google results), this page, and the person it is about -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Pierre Grambert",
-    "jobTitle": "UX/Product Designer",
-    "url": "https://pierregrambert.fr",
-    "sameAs": [
-      "https://www.linkedin.com/in/pierregrambert/",
-      "https://github.com/pierregr01",
-      "https://www.malt.fr/profile/pierregrambert",
-      "https://500px.com/p/PierreGrambert"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://pierregrambert.fr/#website",
+        "url": "https://pierregrambert.fr/",
+        "name": "Pierre Grambert",
+        "alternateName": "pierregrambert.fr",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://pierregrambert.fr/#person" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://pierregrambert.fr/#profile",
+        "url": "https://pierregrambert.fr/",
+        "name": "Pierre Grambert — UX/Product Designer, Geospatial & Open Source",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://pierregrambert.fr/#website" },
+        "mainEntity": { "@id": "https://pierregrambert.fr/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://pierregrambert.fr/#person",
+        "name": "Pierre Grambert",
+        "url": "https://pierregrambert.fr/",
+        "jobTitle": "UX/Product Designer",
+        "description": "UX/Product Designer specializing in geospatial data interfaces, open-source ecosystems and design systems for public institutions.",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Camptocamp",
+          "url": "https://www.camptocamp.com/"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Grenoble",
+          "addressCountry": "FR"
+        },
+        "knowsAbout": [
+          "UX design",
+          "Product design",
+          "Geospatial data interfaces",
+          "Design systems",
+          "Open-source software",
+          "Accessibility"
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/pierregrambert/",
+          "https://github.com/PierreGR01",
+          "https://www.malt.fr/profile/pierregrambert",
+          "https://500px.com/p/PierreGrambert"
+        ]
+      }
     ]
   }
   </script>
@@ -485,8 +531,10 @@
     <section class="section-header">
 
       <div class="header-title-row">
-        <p class="site-name">Pierre Grambert</p>
-        <h1 class="site-title">UX/Product Designer</h1>
+        <h1>
+          <span class="site-name">Pierre Grambert</span>
+          <span class="site-title">UX/Product Designer</span>
+        </h1>
         <hr>
       </div>
 
@@ -509,7 +557,7 @@
         <a class="project-card" href="bivouac/">
           <figure class="project-figure">
             <span class="project-blend">
-              <img src="assets/build/logos/BIVOUAC.png" alt="Bivouac">
+              <img src="assets/build/logos/BIVOUAC.png" alt="Bivouac case study">
             </span>
           </figure>
         </a>
@@ -517,7 +565,7 @@
         <a class="project-card" href="kairn/">
           <figure class="project-figure">
             <span class="project-blend">
-              <img src="assets/build/logos/KAIRN.png" alt="Kairn Design Studio">
+              <img src="assets/build/logos/KAIRN.png" alt="Kairn Design Studio case study">
             </span>
           </figure>
         </a>
@@ -525,7 +573,7 @@
         <a class="project-card" href="saprea/">
           <figure class="project-figure">
             <span class="project-blend">
-              <img src="assets/build/logos/SAPREA.png" alt="Saprea">
+              <img src="assets/build/logos/SAPREA.png" alt="Saprea case study">
             </span>
           </figure>
         </a>
@@ -533,7 +581,7 @@
         <a class="project-card" href="georchestra/">
           <figure class="project-figure">
             <span class="project-blend">
-              <img src="assets/build/logos/GEORCHESTRA.png" alt="geOrchestra">
+              <img src="assets/build/logos/GEORCHESTRA.png" alt="geOrchestra case study">
             </span>
           </figure>
         </a>
@@ -541,7 +589,7 @@
         <a class="project-card" href="mercator-ocean/">
           <figure class="project-figure">
             <span class="project-blend">
-              <img src="assets/build/logos/MERCATOR.png" alt="Mercator Ocean">
+              <img src="assets/build/logos/MERCATOR.png" alt="Mercator Ocean case study">
             </span>
           </figure>
         </a>

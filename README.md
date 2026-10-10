@@ -14,9 +14,22 @@ Source code for [pierregrambert.fr](https://pierregrambert.fr), hosted on GitHub
 ├── georchestra/            # Case study — geOrchestra (open-source geospatial SDI)
 ├── mercator-ocean/         # Case study — Mercator Ocean (five Copernicus Marine applications)
 ├── assets/                 # Images, fonts, shared resources
+├── 404.html                # Served by GitHub Pages for any missing address
 ├── sitemap.xml
 └── robots.txt
 ```
+
+## Redirects from the former WordPress site
+
+Until 2026 the domain served a WordPress site under `www.`. GitHub Pages cannot send server redirects, so each old address that has a current equivalent keeps a small `index.html` with an instant meta refresh (read by Google as a permanent redirect) and a canonical link to the new page:
+
+| Old address | Now |
+| --- | --- |
+| `/kairn-design-studio/` | `/kairn/` |
+| `/saprea-2/`, `/saprea-support-groups/`, `/saprea-operations-resources/` | `/saprea/` |
+| `/my-resume/` | `/my-resume.html` |
+
+Old pages without an equivalent (`/petzl/`, `/brgm/`, `/my-skills/…`) land on `404.html`, which lists every page of the site. Redirect folders stay out of `sitemap.xml`.
 
 ## Stack
 

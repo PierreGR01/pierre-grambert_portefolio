@@ -37,10 +37,10 @@
 
    The script makes its own canvas, behind the content (inside .page-bg
    where the page has one). <script data-calm> dims it for reading pages.
-   A switch, always at hand in the bottom right corner, turns the particles
-   off and brings back the original CSS gradient; the choice is remembered
-   from page to page, and while it is off nothing is even compiled.
-   Without WebGL2 the canvas stays hidden, there is no switch and the CSS
+   A small icon button, always at hand in the bottom right corner, turns the
+   particles off and brings back the original CSS gradient; the choice is
+   remembered from page to page, and while it is off nothing is even compiled.
+   Without WebGL2 the canvas stays hidden, there is no button and the CSS
    gradient shows.
    Tuning lab: _lab/profondeur/ (not published).
 ───────────────────────────────────────────────────────── */
@@ -59,20 +59,15 @@
     'pointer-events:none;opacity:0;transition:opacity 1.4s ease}' +
     'html.profondeur-on #profondeur-bg{opacity:1}' +
     'html.profondeur-on body,html.profondeur-on .page-bg{animation:none}' +
-    /* the switch: an outlined, frosted control like the site's buttons */
-    '.pg-particles{position:fixed;right:16px;bottom:16px;z-index:90;display:inline-flex;align-items:center;' +
-    'gap:10px;height:30px;padding:0 14px 0 10px;border:1px solid rgba(130,225,255,.5);color:rgb(130,225,255);' +
+    /* the particles button: a small outlined, frosted square like the site's buttons */
+    '.pg-particles{position:fixed;right:16px;bottom:16px;z-index:90;display:flex;align-items:center;justify-content:center;' +
+    'width:30px;height:30px;padding:0;border:1px solid rgba(130,225,255,.5);color:rgb(130,225,255);' +
     'background:rgba(14,16,38,.5);-webkit-backdrop-filter:blur(45px) saturate(1.3);backdrop-filter:blur(45px) saturate(1.3);' +
-    'font:400 11px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;' +
     'cursor:pointer;transition:background .2s ease,border-color .2s ease,bottom .25s ease}' +
     '.pg-particles:hover{background:rgba(31,47,70,.54);border-color:rgb(130,225,255)}' +
     '.pg-particles:focus-visible{outline:2px solid rgb(130,225,255);outline-offset:3px}' +
-    '.pg-particles__switch{position:relative;width:22px;height:12px;border:1px solid currentColor}' +
-    '.pg-particles__switch::after{content:"";position:absolute;top:2px;left:2px;width:6px;height:6px;' +
-    'background:currentColor;transition:transform .2s ease}' +
-    '.pg-particles[aria-pressed="true"] .pg-particles__switch::after{transform:translateX(10px)}' +
-    '.pg-particles[aria-pressed="false"] .pg-particles__switch{opacity:.55}' +
-    '@media (prefers-reduced-motion:reduce){.pg-particles,.pg-particles__switch::after{transition:none}}' +
+    '.pg-particles svg{display:block}' +
+    '@media (prefers-reduced-motion:reduce){.pg-particles{transition:none}}' +
     '@media print{.pg-particles{display:none}}';
   document.head.appendChild(style);
   var canvas = document.getElementById('profondeur-bg');
@@ -1280,19 +1275,27 @@ void main() {
   window.addEventListener('resize', kick);
 
   /* ─────────────────────────────────────────────────────────
-     The switch: particles, or the original gradient
+     The button: particles, or the original gradient
   ───────────────────────────────────────────────────────── */
   var toggle = document.createElement('button');
   toggle.type = 'button';
   toggle.className = 'pg-particles';
-  toggle.title = 'Animated background: particles, or the original gradient';
-  toggle.innerHTML = '<span class="pg-particles__switch" aria-hidden="true"></span>Particles';
-  toggle.setAttribute('aria-pressed', String(enabled));
+  /* a few grains of light, sharp and out of focus, as in the background itself */
+  toggle.innerHTML = '<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">' +
+    '<circle cx="10.4" cy="10.4" r="3.8" opacity=".35"/><circle cx="4.6" cy="5" r="2" opacity=".6"/>' +
+    '<circle cx="12.2" cy="3.6" r="1.15"/><circle cx="3.8" cy="12.3" r="1.1"/><circle cx="7.5" cy="8.2" r=".8"/></svg>';
+  /* the icon never changes: its name says what a click will do */
+  function label() {
+    var name = enabled ? 'Turn particles off' : 'Turn particles on';
+    toggle.setAttribute('aria-label', name);
+    toggle.title = name;
+  }
+  label();
   document.body.appendChild(toggle);
 
   function setEnabled(on) {
     enabled = on;
-    toggle.setAttribute('aria-pressed', String(on));
+    label();
     try { localStorage.setItem(PREF, on ? 'on' : 'off'); } catch (e) { /* not remembered */ }
     if (on) {
       lastNow = 0;
